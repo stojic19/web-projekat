@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unos nove vrste obroka</title>
+  <script src="jquery-3.3.1.min.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+<div id="original">
+  <h1 style="color: orange">REST. Unos nove vrste obroka</h1>
+    <table>
+    <tr>
+    	<td><b>Identifikator obroka (id):</b></td>
+    	<td><input type="text" name="id" id="id" required></td>
+    </tr>
+    <tr>
+    	<td><b>Naziv jela:</b></td>
+    	<td><input type="text" name="naziv" id="naziv" required></td>
+    </tr>
+    <tr>
+    	<td><b>Priprema šef kuhinje:</b></td>
+    	<td><input type="text" name="sef" id="sef" required></td>
+    </tr>
+    <tr>
+    	<td><b>Količina sastojaka:</b></td>
+    	<td><input type="text" name="kolicina" id="kolicina" required></td>
+    </tr>
+    <tr>
+    	<td><b>Vreme služenja:</b></td>
+    	<td><select name="vreme" id="vreme">
+      		<option value="DORUCAK">DORUČAK</option>
+      		<option value="RUCAK">RUČAK</option>
+      		<option value="VECERA">VEČERA</option>
+    	</select></td>
+    </tr>
+    <tr>
+    	<td><b>Cena:</b></td>
+    	<td><input type="text" name="cena" id="cena" required></td>
+    </tr>
+    <tr>
+    <td>
+    <td><input id="dodajDugme" type="submit" value="Posalji"></td>
+    </table>
+    </div>
+</body>
+</html>
