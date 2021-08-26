@@ -1,0 +1,844 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+#container{
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	z-index: -1;
+	background-color: rgba(0, 0, 0, 0.416);
+}
+#slider{
+	width: 300%;
+	height: 100%;
+	display: flex;
+	transition: .5s;
+}
+.slid{
+	width: 33.33%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-color: rgba(0, 0, 0, 0.573);
+	background-blend-mode: multiply;
+}
+#slid1{
+	background-image: url(img/img1.jpg);
+}
+#slid2{
+	background-image: url(img/img2.jpg);
+}
+#slid3{
+	background-image: url(img/img3.jpg);
+}
+.content{
+	width: 80%;
+}
+.line{
+	width: 100%;
+	height: 3px;
+	background: #02c98d;
+	transition: .5s;
+}
+.heading,.des{
+	overflow: hidden;
+}
+.heading{
+	position: abosolute;
+	margin-top: 600px;
+	height: 200px;
+}
+
+p{
+	text-transform: uppercase;
+	color: #000;
+}
+nav{
+	width: 100%;
+	height: 60px;
+	display: flex;
+	justify-content: space-between;
+}
+h2{
+	color: #000;
+}
+#menu{
+	width: 50%;
+	height: 50px;
+}
+ul{
+	white-space: 100%;
+	height: 100%;
+	list-style-type: none;
+	display: flex;
+	justify-content: space-around;
+}
+li{
+
+	line-height: 35px;
+	
+}
+a{
+	text-decoration: none;
+	color: #fff;
+}
+
+
+html {
+ 
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size:100% 100%;
+  background-attachment: fixed;
+}
+
+/* Style for navbar & header */
+
+h1{
+    color: white;
+	text-shadow: #444;
+	letter-spacing: 3px;
+    line-height: 70px;
+    transition: .5s;
+    position: relative;
+}
+
+ul{
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+}
+li{
+    display: inline-block;
+    margin: 0 10px;
+}
+a{
+    color: #fff;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 10px;
+}
+nav{
+    background: #444;
+    padding: 14px 0;
+    margin-bottom: 40px;
+}
+
+.router-link-active{
+    background: #eee;
+    color: #444;
+}
+
+table{
+	opacity: 0.7;
+
+}
+
+/* End of style for navbar & header */
+
+
+
+/* For registration form style*/
+.forica form {
+    margin: 75px;
+    width:300px;
+}
+.forica input {
+  	margin: 10px;
+ 	padding:10px;
+  	width: 100%;
+  	border: 3px solid #d4ffe6;
+}
+.forica button {
+  padding:10px
+}
+.forica select {
+	margin: 10px;
+ 	padding:10px;
+  	width: 100%;
+  	border: 3px solid #d4ffe6;
+}
+
+/* End of registration form style */
+
+
+/* Style for button at navbar in guest mode */
+#divHeaderGuest nav ul li button {
+    border: none;
+    cursor:pointer;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 10px;
+}
+
+/* Style for Profile */
+
+#styleForProfile{
+	background-color: #cdf3b9;
+	width: 80%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px 100px;
+    box-sizing: border-box;
+    border-radius: 30px;
+}
+#styleForProfile h1{
+	color: black;
+	padding: 20px;
+}
+#styleForProfile h2{
+	font-size: 30px;
+	padding: 20px;
+}
+
+/* End of style for button at navbar in guest mode */
+
+#styleForApartmentsView{
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+#styleForApartmentsView ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+}
+#styleForApartmentsView li{
+	flex-grow: 1;
+    flex-basis: 300px;
+    text-align: center;
+    padding: 30px;
+    border: 2px solid #222;
+	margin: 10px;
+	border-radius: 15px;
+    background-color: #e6fbef;
+}
+
+#styleForApartmentsView li button{
+	height: 30px;
+    border-radius: 10px;
+    width: 150px;
+    border: 2px solid white;
+    background-color: #95ffaa;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+#styleForApartmentsView li button:hover{
+	background-color: #bfffcc;
+}
+
+.tableInCards{
+	border-collapse: separate !important;
+    background-color: #cdf3b9;
+    color: black;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.tableInProfil{
+	border-collapse: separate !important;
+    background-color: #cdf3b9;
+    color: black;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 96%;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+
+.tableInProfil th{
+	border:2px solid white !important;
+}
+
+.tableInProfil td{
+	border: 2px solid white!important;
+}
+
+.tableInProfil input {
+    height: 30px;
+    border-radius: 10px;
+    width: 100%;
+    border: 2px solid white;
+	text-align: center;
+	font-weight: bold;
+}
+
+.saveChanges{
+	height: 30px;
+    border-radius: 10px;
+    width: 150px;
+    border: 2px solid white;
+    background-color: #95ffaa;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    margin: -10px 20px 35px 40px;
+}
+
+button.saveChanges:hover{
+	background-color: #bdffca;
+}
+
+.tableInCards td{
+	border:none !important;
+}
+.deleteButtonStyle{
+	background-color: #f6825b !important;
+}
+.changeButtonStyle{
+	background-color: rgb(255, 201, 100) !important;
+}
+
+.endButtonStyle{
+	background-color: #81d8f3 !important;
+}
+
+button.changeButtonStyle:hover{
+	background-color: rgb(255, 225, 168) !important;
+}
+
+button.deleteButtonStyle:hover{
+	background-color: #fd9a79 !important;
+}
+
+button.endButtonStyle:hover{
+	background-color: #b1edff;
+}
+
+/* Style for apartments view */
+
+/* Style for dialog part */
+.bgModal {
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.bgModalShow {
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 100%;
+	height: 1300px;
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bgModalShowAmenities {
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 100%;
+	height: 900px;
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#dijalogDeo .modal-contents {
+	z-index: 1;
+	height: 1100px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 50px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#dijalogDeo input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+#dijalogDeo .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+/* End of style for dialog part*/
+
+/* Style for dialog of change amenities */
+
+#dialogForAmenities .modal-contents {
+	z-index: 1;
+	height: 135px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#dialogForAmenities input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+#dialogForAmenities .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+/* End of style for dialog of change amenities */
+
+
+/* Style for dialog of adding amenities */
+
+#addDialogForAmenities .modal-contents {
+	z-index: 1;
+	height: 135px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#addDialogForAmenities input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+#addDialogForAmenities .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+/* End of style for dialog of adding amenities */
+
+/* Style for dialog of adding apartments of HOST */
+
+#addDialogForApartments .modal-contents {
+	z-index: 1;
+	height: 800px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#addDialogForApartments input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+#addDialogForApartments .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+/* End of style for dialog of adding apartments of HOST */
+
+/* Style for map chosing location */
+
+/* In host mode */
+.map {
+	height: 500px;
+	width: 800px;
+}
+
+/* In admin mode */
+.mapSearch{
+	height: 500px;
+	width: 800px;
+}
+
+/* End of style for map chosing location */
+
+/* Style for dialog of adding NEW USER - HOST */
+
+#addDialogForUsers .modal-contents {
+	z-index: 1;
+	height: 330px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#addDialogForUsers input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+#addDialogForUsers .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+/* End of style for dialog of adding NEW HOST */
+
+
+/* Style for images of apartments */
+
+img.imagesOfApartment{
+	border-radius: 10px;
+	border: 2px solid white;
+	height: 220px;
+	width: 350px;
+}
+
+/* End of images for apartments */
+
+
+/* Style for buttons */
+.btn {
+	background-color: #d4ffe6;
+	border: 1px solid #222;
+	border-radius: 7px;
+	font-weight: bold;
+	color: black;
+	padding: 12px 16px;
+	font-size: 12px;
+	cursor: pointer;
+	width: 150px;
+    margin: 3px;
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+	background-color: #5bf099;
+  }
+
+
+/* End of style for buttons */
+
+
+/* Style for tables */
+
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 15px;
+	text-align: left;
+}
+
+td button{
+	height: 40px;
+	border-radius: 10px;
+	width: 100%;
+	border: 2px solid white;
+	color: black;
+	font-weight: bold;
+	text-align: center;
+	background-color: #95ffaa;
+}
+
+.blockUser{
+	background-color: #f6825b !important;
+}
+
+.styleForTable {
+	width: 100%;    
+	border-radius: 15px;
+	background-color: #cdf3b9;
+	font-weight: bold;
+	font-size: 16px;
+  }
+
+/* End of style for tables */
+
+
+/* Style for search, sort, filters */
+
+/* Search on home page for unregister users */
+.searchFilterSortApartmentsUnregister{
+	width: 500px;
+    height: 230px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.searchFilterSortApartmentsUnregister input{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    text-align: center;
+}
+
+.searchFilterSortApartmentsUnregister button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    background-color: #95ffaa;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+/* End of search on home page for unregister users */
+
+/* Start style for search of users HOST */
+
+.searchUsers{
+	width: 700px;
+    height: 88px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.searchUsers input{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    text-align: center;
+}
+
+.searchUsers button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid gray;
+    background-color: #95dfff;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+/* End style for search of users HOST */
+
+/* Start style for search of users ADMIN */
+
+.searchUsersAdmin{
+	width: 900px;
+    height: 88px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.searchUsersAdmin input{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    text-align: center;
+}
+
+.searchUsersAdmin button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid gray;
+    background-color: #95dfff;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+/* End style for search of users ADMIN */
+
+
+/* Start of style for search of guest in reservations */
+
+.searchGuestsByUsername{
+	width: 500px;
+    height: 88px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+.searchGuestsByUsername input{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    text-align: center;
+}
+
+/* End of style for search of guest in reservations */
+
+
+/* Start style filter for ADMIN apartments */
+.filterForAdminApartments{
+	width: 500px;
+    height: 200px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.filterForAdminApartments select{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    text-align: center;
+}
+
+.multipleSelectAmenities {
+	height: 90px !important;
+    width: 400px !important;
+}
+
+/* End style filter for ADMIN apartments */
+
+/* Start style filter for reservations */
+.filterForReservationsStatus{
+	width: 500px;
+    height: 85px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.filterForReservationsStatus select{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    text-align: center;
+}
+/* End of style for filter reservations (status of reservation) */
+
+/* Sort in app */
+.sortInApp{
+	width: 500px;
+    height: 80px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.sortInApp button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+	border: 2px solid white;
+    background-color: #95ffaa;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* End of sort in app */
+
+
+.filledInput{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid gray;
+    text-align: center;
+    background-color: #a4f4ff;
+    font-size: 14px;
+    font-weight: bold;
+}
+/* End of style for search, sort, filters */
+
+/* Adding new apartment */
+
+.addingNewApartment{
+	background-color: #cdf3b9;
+    width: 80%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px 100px;
+    box-sizing: border-box;
+    border-radius: 30px;
+}
+
+.tableForAddingNewApartment {
+    border-collapse: separate !important;
+    background-color: #cdf3b9;
+    color: black;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 96%;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.tableForAddingNewApartment input {
+    height: 30px;
+    border-radius: 10px;
+    width: 100%;
+    border: 2px solid white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.tableForAddingNewApartment select {
+    height: 80px;
+    border-radius: 10px;
+    width: 100%;
+    border: 2px solid white;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* End of adding new apartment style */

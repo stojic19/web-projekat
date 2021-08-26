@@ -28,8 +28,7 @@ public class Korisnik {
 	}
 
 	public Korisnik(Integer iD, Integer logickiObrisan, Integer blokiran, String korisnickoIme, String lozinka,
-			String ime, String prezime, String pol, Date datumRodjenja, String uloga, List<Integer> idPorudzbina,
-			String idKorpe, String idRestorana, Integer brojSakupljenihBodova, TipKupca tip) {
+			String ime, String prezime, String pol, Date datumRodjenja, String uloga) {
 		super();
 		ID = iD;
 		this.logickiObrisan = logickiObrisan;
@@ -41,11 +40,11 @@ public class Korisnik {
 		this.pol = pol;
 		this.datumRodjenja = datumRodjenja;
 		this.uloga = uloga;
-		this.idPorudzbina = idPorudzbina;
-		this.idKorpe = idKorpe;
-		this.idRestorana = idRestorana;
-		this.brojSakupljenihBodova = brojSakupljenihBodova;
-		this.tip = tip;
+		// this.idPorudzbina = idPorudzbina;
+		this.idKorpe = "0";
+		this.idRestorana = "0";
+		this.brojSakupljenihBodova = 0;
+		// this.tip = tip;
 	}
 
 	public Integer getID() {

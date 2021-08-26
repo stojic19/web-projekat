@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unos nove vrste obroka</title>
-  <script src="jquery-3.3.1.min.js"></script>
-  <script src="script.js"></script>
+<link href="css/toast.css" rel="stylesheet" />
+	<link href="css/styles.css" rel="stylesheet" />
+	<link href="css/toastr.min.css" rel="stylesheet"/>
+	<link href="js/v5.3.0-dist/ol.css" rel="styleesheet"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naslovna</title>
 </head>
 <body>
-<div id="original">
-  <h1 style="color: orange">REST. Unos nove vrste obroka</h1>
-    <table>
-    <tr>
-    	<td><b>Identifikator obroka (id):</b></td>
-    	<td><input type="text" name="id" id="id" required></td>
-    </tr>
-    <tr>
-    	<td><b>Naziv jela:</b></td>
-    	<td><input type="text" name="naziv" id="naziv" required></td>
-    </tr>
-    <tr>
-    	<td><b>Priprema šef kuhinje:</b></td>
-    	<td><input type="text" name="sef" id="sef" required></td>
-    </tr>
-    <tr>
-    	<td><b>Količina sastojaka:</b></td>
-    	<td><input type="text" name="kolicina" id="kolicina" required></td>
-    </tr>
-    <tr>
-    	<td><b>Vreme služenja:</b></td>
-    	<td><select name="vreme" id="vreme">
-      		<option value="DORUCAK">DORUČAK</option>
-      		<option value="RUCAK">RUČAK</option>
-      		<option value="VECERA">VEČERA</option>
-    	</select></td>
-    </tr>
-    <tr>
-    	<td><b>Cena:</b></td>
-    	<td><input type="text" name="cena" id="cena" required></td>
-    </tr>
-    <tr>
-    <td>
-    <td><input id="dodajDugme" type="submit" value="Posalji"></td>
-    </table>
-    </div>
+	<div align = "center" id="application">
+		
+		<zaglavlje></zaglavlje>
+		
+		<h1>Dobrodošli u NjamNjam!</h1>
+		
+		<router-view></router-view>
+	</div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- Libs includes -->
+	<script src="js/vue.js"></script>
+	<script src="js/vue-router.js"></script>
+	<script src="js/axios.js"></script>
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/toast.js"></script>
+	<script src="js/toastr.min.js"></script>
+	<script src="js/v5.3.0-dist/ol.js"></script> <!-- For maps chosing -->
+    <!-- End of libs includes-->
+    
+    <script src="app/komponente/prijava.js"></script>
+	<script src="app/komponente/registracija.js"></script> 
+	<script src="app/komponente/zaglavljeAplikacije.js"></script>
+	<!-- <script src="app/komponente/restorani.js"></script> -->
+	<script src="app/app.js"></script>
+	
 </body>
 </html>
