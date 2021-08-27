@@ -81,12 +81,10 @@ public class OdjavaServis {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
-			System.out.println(korisnik.getUloga());
 			if(korisnik.getUloga().equals("KUPAC")) {
 				return true;
 			}
 		}	
-		System.out.println("\n\n\nNULL JE\n\n\n");
 		return false;
 	}
 }

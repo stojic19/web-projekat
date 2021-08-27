@@ -163,6 +163,11 @@ public class KorisnikDAO {
 				user.setSurname(updatedUser.surname);
 				user.setRole(updatedUser.role);
 				*/
+				korisnik.setIme(azuriranKorisnik.ime);
+				korisnik.setPrezime(azuriranKorisnik.prezime);
+				korisnik.setLozinka(azuriranKorisnik.lozinka);
+				korisnik.setPol(azuriranKorisnik.pol);
+				korisnik.setDatumRodjenja(azuriranKorisnik.datumRodjenja);
 				
 				sacuvajKorisnikeJSON();
 

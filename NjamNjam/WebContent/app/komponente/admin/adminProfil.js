@@ -83,13 +83,13 @@ Vue.component("admin-profil", {
     methods: {
         sacuvajPromene: function () {
             axios
-                .post('rest/izmene/sacuvajIzmeneKorisnika', {
+                .post('rest/profil/sacuvajIzmeneKorisnika', {
                     "korisnickoIme": this.korisnik.korisnickoIme,
                     "lozinka": this.izmeneProfila.lozinka,
                     "ime": this.izmeneProfila.ime,
                     "prezime": this.izmeneProfila.prezime,
                     "uloga": this.korisnik.uloga,
-                    "datumRodjenja":this.korisnicko.datumRodjenja,
+                    "datumRodjenja":this.korisnik.datumRodjenja,
                     "pol":this.korisnik.pol
                 })
                 .then(response => {
@@ -102,7 +102,7 @@ Vue.component("admin-profil", {
     },
     mounted() {
         axios
-            .get('rest/izmene/profilKorisnika')
+            .get('rest/profil/profilKorisnika')
             .then(response => this.korisnik = response.data)
     },
 
