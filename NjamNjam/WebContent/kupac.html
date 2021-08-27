@@ -12,12 +12,11 @@
 </head>
 <body>
     <div id="guestID" align = "center"> 
-        <h1>Kupac</h1>
-        <!-- zaglavlje stranice kupca  -->
+        
+        <kupac-zaglavlje></kupac-zaglavlje>
+        
         <router-view></router-view>
-        <div id="container">
-
-	</div>
+        
     </div>
 
     <!-- Libs includes -->
@@ -29,7 +28,11 @@
     <script src="js/toastr.min.js"></script>
     <script src="js/v5.3.0-dist/ol.js"></script> <!-- For maps chosing -->
     <!-- End of libs includes-->
-    <!-- Ispod dodavati komponente kupca -->
+    
+	<!-- <script src="app/komponente/kupac/kupacProfil.js"></script>  -->
+	<script src="app/komponente/kupac/kupacZaglavlje.js"></script>
+	<script src="app/komponente/kupac/kupacPocetnaStrana.js"></script>
+	<script src="app/komponente/kupac/kupac.js"></script>
 
 </body>
 </html>

@@ -19,7 +19,7 @@
     "hideMethod": "fadeOut"
 }
 
-Vue.component("app-login",{
+Vue.component("prijava",{
     data() {
         return {
             noviKorisnik: {},

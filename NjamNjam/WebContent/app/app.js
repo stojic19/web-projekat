@@ -1,6 +1,6 @@
-// const RestoraniKomponenta = { template: '<view-apartments></view-apartments>'}
+// const RestoraniKomponenta = { template: '<></>'}
 const RegistracijaKomponenta = { template: '<registracija></registracija>'}
-const PrijavaKomponenta = { template: '<app-login></app-login>'}
+const PrijavaKomponenta = { template: '<prijava></prijava>'}
 
 
 const router = new VueRouter({

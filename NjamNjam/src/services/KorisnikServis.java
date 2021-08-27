@@ -57,7 +57,7 @@ public class KorisnikServis {
 
 
 		if (korisnik.getUloga().equals("ADMIN")) {
-			// return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/").build();
+			return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/admin.html").build();
 
 		} else if (korisnik.getUloga().equals("KUPAC")) {
 			return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/kupac.html").build();
