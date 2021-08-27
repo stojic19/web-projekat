@@ -4,42 +4,7 @@
 	box-sizing: border-box;
 	font-family: sans-serif;
 }
-#container{
-	width: 100%;
-	height: 100vh;
-	overflow: hidden;
-	position: fixed;
-	top: 0;
-	z-index: -1;
-	background-color: rgba(0, 0, 0, 0.416);
-}
-#slider{
-	width: 300%;
-	height: 100%;
-	display: flex;
-	transition: .5s;
-}
-.slid{
-	width: 33.33%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	background-color: rgba(0, 0, 0, 0.573);
-	background-blend-mode: multiply;
-}
-#slid1{
-	background-image: url(img/img1.jpg);
-}
-#slid2{
-	background-image: url(img/img2.jpg);
-}
-#slid3{
-	background-image: url(img/img3.jpg);
-}
+
 .content{
 	width: 80%;
 }
@@ -171,7 +136,85 @@ table{
 
 /* End of registration form style */
 
+/* ADMIN - KORISNICI - dijalogZaDodavanjeKorisnika */
 
+#dijalogZaDodavanjeKorisnika .modal-contents {
+	z-index: 1;
+	height: 480px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#dijalogZaDodavanjeKorisnika input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+#dijalogZaDodavanjeKorisnika select {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+#dijalogZaDodavanjeKorisnika .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+#dijalogZaDodavanjeKorisnika button {
+	padding:10px;
+	width: 100px
+}
+/*  */
+
+/* ADMIN - KORISNICI - PRETRAGA */
+
+.pretragaKorisnikaAdmin{
+	width: 900px;
+    height: 88px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.pretragaKorisnikaAdmin input{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    text-align: center;
+}
+
+.pretragaKorisnikaAdmin button{
+	height: 60px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid gray;
+    background-color: #95dfff;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+/*  */
+
+/* ADMIN - KORISNICI - DUGMAD ZA PRETRAGU I DODAVANJE KORISNIKA */
+#btnPretragaDodavanjeKorisnika button{
+	width: 300px;
+	height: 100%;
+}
 /* Style for button at navbar in guest mode */
 #divHeaderGuest nav ul li button {
     border: none;
@@ -505,37 +548,7 @@ button.endButtonStyle:hover{
 
 /* End of style for map chosing location */
 
-/* Style for dialog of adding NEW USER - HOST */
 
-#addDialogForUsers .modal-contents {
-	z-index: 1;
-	height: 330px;
-	width: 500px;
-	background-color: white;
-	text-align: center;
-	padding: 20px;
-	position: relative;
-	border-radius: 4px;
-}
-
-#addDialogForUsers input {
-	margin: 15px auto;
-	display: block;
-	width: 50%;
-	padding: 8px;
-	border: 1px solid gray;
-}
-
-#addDialogForUsers .close {
-	position: absolute;
-	top: 0;
-	right: 10px;
-	font-size: 42px;
-	color: #333;
-	transform: rotate(45deg);
-	cursor: pointer;
-}
-/* End of style for dialog of adding NEW HOST */
 
 
 /* Style for images of apartments */
@@ -671,37 +684,6 @@ td button{
     text-align: center;
 }
 /* End style for search of users HOST */
-
-/* Start style for search of users ADMIN */
-
-.searchUsersAdmin{
-	width: 900px;
-    height: 88px;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #e1f7df;
-}
-
-.searchUsersAdmin input{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid white;
-    text-align: center;
-}
-
-.searchUsersAdmin button{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid gray;
-    background-color: #95dfff;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-}
-/* End style for search of users ADMIN */
-
 
 /* Start of style for search of guest in reservations */
 

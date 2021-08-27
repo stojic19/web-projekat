@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import beans.Korisnik;
 import dao.KorisnikDAO;
 import dto.KorisnikDTO;
+import dto.KorisnikJSONDTO;
 import dto.KorisnikPrijavaDTO;
 
 @Path("/korisnici")
@@ -111,6 +112,49 @@ public class KorisnikServis {
 				.entity("Nedozvoljen pristup!").build();
 	}
 	
+	/*
+	@POST
+	@Path("/blokirajKorisnika")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response blokirajKorisnika(KorisnikJSONDTO korisnik){
+		
+		if(korisnikJeAdmin()) {
+			KorisnikDAO sviKorisnici = dobaviKorisnike();
+			sviKorisnici.blokirajKorisnikaPoID(korisnik.korisnik.getID());
+			
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS BLOCK")
+					.entity(dobaviKorisnike().getValues())
+					.build();
+		}
+		else {
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+			}
+		}
+	
+	@POST
+	@Path("/oblokirajKorisnika")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response oblokirajKorisnika(KorisnikJSONDTO korisnik){
+		
+		if(korisnikJeAdmin()) {
+		
+			KorisnikDAO sviKorisnici = dobaviKorisnike();
+			sviKorisnici.oblokirajKorisnikaPoID(korisnik.korisnik.getID());
+			
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS UNBLOCK")
+					.entity(dobaviKorisnike().getValues())
+					.build();
+		}
+		else {
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}}
+	*/
 	@GET
 	@Path("/dobaviNovogKorisnika")
 	@Produces(MediaType.APPLICATION_JSON)

@@ -33,17 +33,9 @@ public class KorisnikDAO {
 		this.imeFajla += File.separator + "korisnici.json";
 		this.korisnici = new LinkedHashMap<String, Korisnik>();
 		
-		// UNCOMMENT IF YOU WANT TO ADD MOCKUP DATA TO FILE addMockupData();
+		//  addMockupData();
 	}
 
-	/**
-	 * Read the data from the path.
-	 * 
-	 * @param path
-	 * @throws IOException
-	 * @throws JsonMappingException
-	 * @throws JsonParseException
-	 */
 	public void ucitajKorisnike() {
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -89,11 +81,6 @@ public class KorisnikDAO {
 		}
 	}
 	
-	
-	/**
-	 * Add new user to files.
-	 * @param user : user data from form
-	 */
 	public void dodajNovogKorisnika(KorisnikDTO korisnik) {
 		Korisnik noviKorisnik = new Korisnik(getValues().size() + 1, 0, 0, korisnik.korisnickoIme, korisnik.lozinka, korisnik.ime, korisnik.prezime, korisnik.pol, korisnik.datumRodjenja, korisnik.uloga);		
 		dodajKorisnika(noviKorisnik);
@@ -150,19 +137,12 @@ public class KorisnikDAO {
 
 	public Boolean promeniKorisnika(KorisnikDTO azuriranKorisnik) {
 
-		// Find user with that name, and change his data.
 		for (Korisnik korisnik : korisnici.values()) {
 			if (korisnik.getKorisnickoIme().equals(azuriranKorisnik.korisnickoIme)) {
 				System.out.println("NASAO SAM " + korisnik.getKorisnickoIme() + " i sad cu mu izmeniti podatke");
 				System.out.println("NJEGOVA ROLA JE TRENUTNO: " + korisnik.getTip());
 				System.out.println("A NOVA JE: " + azuriranKorisnik.tip);
 
-				/*	
-				user.setName(updatedUser.name);
-				user.setPassword(updatedUser.password);
-				user.setSurname(updatedUser.surname);
-				user.setRole(updatedUser.role);
-				*/
 				korisnik.setIme(azuriranKorisnik.ime);
 				korisnik.setPrezime(azuriranKorisnik.prezime);
 				korisnik.setLozinka(azuriranKorisnik.lozinka);
@@ -208,44 +188,35 @@ public class KorisnikDAO {
 		saveUsersJSON();
 
 	}
-
-	public User findUserById(Integer ID) {
-		for (User currentUser : getValues()) {
-			if(currentUser.getID().equals(ID))
-				return currentUser;
+*/
+	
+	public Korisnik nadjiKorisnikaPoID(Integer id) {
+		for (Korisnik korisnik : getValues()) {
+			if(korisnik.getID() == id)
+				return korisnik;
 		}
 		
 		return null;
 	}
-	*/
-	/**
-	 * Block user with forwarded id [ set property blocked to 1 ]
-	 * @param id : unique represent of user
-	 *//*
-	public void blockUserById(Integer id) {
+	/*	TODO: Resiti problem sa internal error-om
+	public void blokirajKorisnikaPoID(Integer id) {
 
-		User tempUser = findUserById(id);
-		if( tempUser != null) {
-			tempUser.setBlocked(1);
+		Korisnik korisnik = nadjiKorisnikaPoID(id);
+		if( korisnik != null) {
+			korisnik.setBlokiran(1);
+			sacuvajKorisnikeJSON();
 		}
-		
-		saveUsersJSON();
 	}
 	
-	/**
-	 * Unblock user with forwarded id [ set property blocked to 0 ]
-	 * @param id : unique represent of user
-	 *//*
-	public void unblockUserById(Integer id) {
+	public void oblokirajKorisnikaPoID(Integer id) {
 
-		User tempUser = findUserById(id);
-		if( tempUser != null) {
-			tempUser.setBlocked(0);
+		Korisnik korisnik = nadjiKorisnikaPoID(id);
+		if( korisnik != null) {
+			korisnik.setBlokiran(0);
+			sacuvajKorisnikeJSON();
 		}
-		
-		saveUsersJSON();
-	}*/
-	
+	}
+	*/
 	public boolean jeBlokiran(String korisnickoIme) {
 		
 		return ( dobaviKorisnikaPoKorisnickomImenu(korisnickoIme).getBlokiran() == 1 ) ? true : false;
