@@ -198,25 +198,34 @@ public class KorisnikDAO {
 		
 		return null;
 	}
-	/*	TODO: Resiti problem sa internal error-om
-	public void blokirajKorisnikaPoID(Integer id) {
-
-		Korisnik korisnik = nadjiKorisnikaPoID(id);
+	public Korisnik nadjiKorisnikaPoKorisnickomImenu(String korisnickoIme)
+	{
+		for (Korisnik korisnik : korisnici.values()) {
+			if (korisnik.getKorisnickoIme().equals(korisnickoIme)) {
+					return korisnik;
+				}
+			}
+		return null;
+	}
+	//	TODO: Resiti problem sa internal error-om
+	public void blokirajKorisnikaPoID(String korisnickoIme) {
+		
+		Korisnik korisnik = nadjiKorisnikaPoKorisnickomImenu(korisnickoIme);
 		if( korisnik != null) {
 			korisnik.setBlokiran(1);
 			sacuvajKorisnikeJSON();
 		}
 	}
 	
-	public void oblokirajKorisnikaPoID(Integer id) {
+	public void oblokirajKorisnikaPoID(String korisnickoIme) {
 
-		Korisnik korisnik = nadjiKorisnikaPoID(id);
+		Korisnik korisnik = nadjiKorisnikaPoKorisnickomImenu(korisnickoIme);
 		if( korisnik != null) {
 			korisnik.setBlokiran(0);
 			sacuvajKorisnikeJSON();
 		}
 	}
-	*/
+	
 	public boolean jeBlokiran(String korisnickoIme) {
 		
 		return ( dobaviKorisnikaPoKorisnickomImenu(korisnickoIme).getBlokiran() == 1 ) ? true : false;

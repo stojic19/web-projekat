@@ -112,7 +112,7 @@ public class KorisnikServis {
 				.entity("Nedozvoljen pristup!").build();
 	}
 	
-	/*
+	
 	@POST
 	@Path("/blokirajKorisnika")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -121,7 +121,7 @@ public class KorisnikServis {
 		
 		if(korisnikJeAdmin()) {
 			KorisnikDAO sviKorisnici = dobaviKorisnike();
-			sviKorisnici.blokirajKorisnikaPoID(korisnik.korisnik.getID());
+			sviKorisnici.blokirajKorisnikaPoID(korisnik.korisnik.getKorisnickoIme());
 			
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS BLOCK")
@@ -135,15 +135,15 @@ public class KorisnikServis {
 		}
 	
 	@POST
-	@Path("/oblokirajKorisnika")
+	@Path("/odblokirajKorisnika")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response oblokirajKorisnika(KorisnikJSONDTO korisnik){
+	public Response odblokirajKorisnika(KorisnikJSONDTO korisnik){
 		
 		if(korisnikJeAdmin()) {
 		
 			KorisnikDAO sviKorisnici = dobaviKorisnike();
-			sviKorisnici.oblokirajKorisnikaPoID(korisnik.korisnik.getID());
+			sviKorisnici.oblokirajKorisnikaPoID(korisnik.korisnik.getKorisnickoIme());
 			
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS UNBLOCK")
@@ -154,7 +154,7 @@ public class KorisnikServis {
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();
 	}}
-	*/
+	
 	@GET
 	@Path("/dobaviNovogKorisnika")
 	@Produces(MediaType.APPLICATION_JSON)

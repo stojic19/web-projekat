@@ -137,11 +137,10 @@ Vue.component("admin-korisnici", {
                 })
 
         },
-        blokirajKorisnika: function (korisnik) {
-
+        blokirajKorisnika: function (korisnikParam) {
             axios
-                .post('rest/korisnici/blockUser', {
-                    user: korisnik
+                .post('rest/korisnici/blokirajKorisnika', {
+                    korisnik: korisnikParam
                 })
                 .then(response => {
                     this.korisnici = [];
@@ -153,10 +152,10 @@ Vue.component("admin-korisnici", {
                 });
 
         },
-        oblokirajKorisnika: function (korisnik) {
+        odblokirajKorisnika: function (korisnikParam) {
             axios
-                .post('rest/korisnici/unblockUser', {
-                    user: korisnik
+                .post('rest/korisnici/odblokirajKorisnika', {
+                    korisnik: korisnikParam
                 })
                 .then(response => {
                     this.korisnici = [];
