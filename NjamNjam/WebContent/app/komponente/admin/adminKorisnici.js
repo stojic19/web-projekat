@@ -7,9 +7,19 @@ Vue.component("admin-korisnici", {
                 ime: '',
                 prezime: ''
             },
+            podaciZaFiltriranjeKorisnika: {
+                uloga: "",
+                tip: ""
+            },
+            imeBrojac : 0,
+            prezimeBrojac : 0,
+            korisnickoImeBrojac : 0,
+            brojBodovaBrojac : 0,
             dijalogZaDodavanjeSakriven: true,
             noviKorisnik: {},
             prostorZaPretraguVidljiv: false,
+            prostorZaFiltereVidljiv: false,
+            prostorZaSortiranjeVidljiv: false
         }
     },
 
@@ -17,7 +27,9 @@ Vue.component("admin-korisnici", {
     <div>
 
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
-        <button type="button" @click="dodajNovogKorisnika()" class="btn"><i class="fa fa-plus" aria-hidden="true"></i> Dodaj novog korisnika </button>
+        <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
+        <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
+        <button type="button" @click="dodajNovogKorisnika()" class="btn"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj korisnika</button>
         <br><br>
 
         <!-- Pretraga -->
@@ -31,7 +43,42 @@ Vue.component("admin-korisnici", {
             </form>
         </div>
         <!-- Kraj pretrage -->
-        <br>
+        <br><br>
+
+        <!-- Filtriranje korisnika -->
+        <div class="filterZaKorisnikeAdmin" v-if="prostorZaFiltereVidljiv">
+            <form method='post' 
+                <select v-model="podaciZaFiltriranjeKorisnika.uloga" @change="onchangeUlogaKorisnika()">
+                    <option value="">Bez filtera za ulogu</option>
+                    <option>KUPAC</option>
+                    <option>MENADZER</option>
+                    <option>DOSTAVLJAC</option>
+                </select>
+
+                <select v-model="podaciZaFiltriranjeKorisnika.tip" @change="onchangeTipKorisnika()">
+                    <option value="">Bez filtera za tip</option>
+                    <option>Bronza</option>
+                    <option>Srebro</option>
+                    <option>Zlato</option>
+                    <option>Dijamant</option>
+                </select>
+            </form>
+        </div>
+        <!-- Kraj filtriranja korisnika -->
+
+        <br><br>
+        <!-- Sortiranje korisnika -->
+        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranje">
+            <form method='post'>
+
+                <button type="button" @click="sortirajIme"><i class="fa fa-sort" aria-hidden="true"></i> Ime </button>
+                <button type="button" @click="sortirajPrezime"><i class="fa fa-sort" aria-hidden="true"></i> Prezime</button>
+                <button type="button" @click="sortirajKorisnickoIme"><i class="fa fa-sort" aria-hidden="true"></i> Korisničko ime </button>
+                <button type="button" @click="sortirajBrojBodova"><i class="fa fa-sort" aria-hidden="true"></i> Broj sakupljenih poena </button>
+
+            </form>
+        </div>
+        <!-- Kraj sortiranja korisnika -->
 
 
         <!-- Tabela korisnika -->
@@ -183,7 +230,158 @@ Vue.component("admin-korisnici", {
 
             return true;
         },
+		onchangeUlogaKorisnika: function () {
+            if (this.podaciZaFiltriranjeKorisnika.uloga == "") {
+                axios
+                    .get('rest/korisnici/dobaviKorisnikeBezAdmina')
+                    .then(response => {
+                        this.korisnici = [];
+                        response.data.forEach(el => {
+                            if (el.uloga != "ADMIN")
+                                this.korisnici.push(el);
+                        });
+                        return this.korisnici;
+                    });
 
+            } else {
+                let filterKorisnici = (this.korisnici).filter(korisnik => korisnik.uloga == this.podaciZaFiltriranjeKorisnika.uloga);
+                this.korisnici = filterKorisnici;
+            }
+        },
+        onchangeTipKorisnika: function () {
+            if (this.podaciZaFiltriranjeKorisnika.status == "") {
+                axios
+                    .get('rest/apartments/dobaviKorisnikeBezAdmina')
+                    .then(response => {
+                        this.korisnici = [];
+                        response.data.forEach(el => {
+                            if (el.tip != null)
+                                this.korisnici.push(el);
+                        });
+                        return this.korisnici;
+                    });
+
+            } else {
+                let filterKorisnici = (this.korisnici).filter(korisnik => korisnik.tip == this.podaciZaFiltriranjeKorisnika.tip);
+                this.korisnici = filterKorisnici;
+            }
+        },
+        sortirajIme: function () {
+            this.imeBrojac ++;
+            if(this.imeBrojac % 3 == 0)
+            {
+                axios
+                    .get('rest/korisnici/dobaviKorisnikeBezAdmina')
+                    .then(response => {
+                        this.korisnici = [];
+                        response.data.forEach(el => {
+                            if (el.uloga != "ADMIN")
+                                this.korisnici.push(el);
+                        });
+                        return this.korisnici;
+                    });
+            }else if(this.imeBrojac % 3 == 1)
+            {
+                this.multisort(this.korisnici, ['ime', 'ime'], ['ASC', 'DESC']);
+            }else{
+                this.multisort(this.korisnici, ['ime', 'ime'], ['DESC', 'ASC']);
+            }  
+        },
+        sortirajPrezime: function () {
+            this.prezimeBrojac ++;
+            if(this.prezimeBrojac % 3 == 0)
+            {
+                axios
+                    .get('rest/korisnici/dobaviKorisnikeBezAdmina')
+                    .then(response => {
+                        this.korisnici = [];
+                        response.data.forEach(el => {
+                            if (el.uloga != "ADMIN")
+                                this.korisnici.push(el);
+                        });
+                        return this.korisnici;
+                    });
+            }else if(this.prezimeBrojac % 3 == 1)
+            {
+                this.multisort(this.korisnici, ['prezime', 'prezime'], ['ASC', 'DESC']);
+            }else{
+                this.multisort(this.korisnici, ['prezime', 'prezime'], ['DESC', 'ASC']);
+            }
+        },
+        sortirajKorisnickoIme: function(){
+            this.korisnickoImeBrojac ++;
+            if(this.korisnickoImeBrojac % 3 == 0)
+            {
+                axios
+                    .get('rest/korisnici/dobaviKorisnikeBezAdmina')
+                    .then(response => {
+                        this.korisnici = [];
+                        response.data.forEach(el => {
+                            if (el.uloga != "ADMIN")
+                                this.korisnici.push(el);
+                        });
+                        return this.korisnici;
+                    });
+            }else if(this.korisnickoImeBrojac % 3 == 1)
+            {
+                this.multisort(this.korisnici, ['korisnickoIme', 'korisnickoIme'], ['ASC', 'DESC']);
+            }else{
+                this.multisort(this.korisnici, ['korisnickoIme', 'korisnickoIme'], ['DESC', 'ASC']);
+            }
+        },
+        sortirajBrojBodova: function(){
+            //TODO: uraditi da profil sadrzi broj bodova
+        },
+        multisort: function (arr, columns, order_by) {
+            if (typeof columns == 'undefined') {
+                columns = []
+                for (x = 0; x < arr[0].length; x++) {
+                    columns.push(x);
+                }
+            }
+
+            if (typeof order_by == 'undefined') {
+                order_by = []
+                for (x = 0; x < arr[0].length; x++) {
+                    order_by.push('ASC');
+                }
+            }
+
+            function multisort_recursive(a, b, columns, order_by, index) {
+                var direction = order_by[index] == 'DESC' ? 1 : 0;
+
+                var is_numeric = !isNaN(a[columns[index]] - b[columns[index]]);
+
+                var x = is_numeric ? a[columns[index]] : a[columns[index]].toLowerCase();
+                var y = is_numeric ? b[columns[index]] : b[columns[index]].toLowerCase();
+
+                if (!is_numeric) {
+
+                    let sum_x = 0;
+                    let sum_y = 0;
+
+                    x.split("").forEach(element => sum_x += element.charCodeAt())
+                    y.split("").forEach(element => sum_y += element.charCodeAt())
+
+                    x = sum_x;
+                    y = sum_y;
+                }
+
+                if (x < y) {
+                    return direction == 0 ? -1 : 1;
+                }
+
+                if (x == y) {
+                    return columns.length - 1 > index ? multisort_recursive(a, b, columns, order_by, index + 1) : 0;
+                }
+
+                return direction == 0 ? 1 : -1;
+            }
+
+            return arr.sort(function (a, b) {
+                return multisort_recursive(a, b, columns, order_by, 0);
+            });
+        },
     },
     mounted() {
         axios.get('rest/korisnici/dobaviKorisnikeBezAdmina').then(response => (this.korisnici = response.data));

@@ -729,6 +729,25 @@ td button{
 
 /* End style filter for ADMIN apartments */
 
+/* ADMIN - KORISNICI - FILTER */
+.filterZaKorisnikeAdmin{
+	width: 500px;
+    height: 90px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.filterZaKorisnikeAdmin select{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid white;
+    text-align: center;
+}
+
+/*  */
+
 /* Start style filter for reservations */
 .filterForReservationsStatus{
 	width: 500px;
@@ -769,6 +788,27 @@ td button{
 
 /* End of sort in app */
 
+/* SORTIRANJE */
+.sortiranje{
+	width: 500px;
+    height: 120px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #e1f7df;
+}
+
+.sortiranje button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+	border: 2px solid white;
+    background-color: #95ffaa;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* SORTIRANJE */
 
 .filledInput{
 	height: 30px;
