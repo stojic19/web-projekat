@@ -1,6 +1,7 @@
 package beans;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Korisnik {
@@ -18,8 +19,8 @@ public class Korisnik {
 	private String uloga;
 	
 	private List<Integer> idPorudzbina;			// sve porudzbine kupca / dostavljaca
-	private String idKorpe;								// korpa kupca
-	private String idRestorana;							// restoran menadzera
+	private Integer idKorpe;								// korpa kupca
+	private Integer idRestorana;							// restoran menadzera
 	private Integer brojSakupljenihBodova;
 	private TipKupca tip;
 	
@@ -40,11 +41,11 @@ public class Korisnik {
 		this.pol = pol;
 		this.datumRodjenja = datumRodjenja;
 		this.uloga = uloga;
-		// this.idPorudzbina = idPorudzbina;
-		this.idKorpe = "0";
-		this.idRestorana = "0";
+		this.idPorudzbina = new ArrayList<Integer>();
+		this.idKorpe = -1;
+		this.idRestorana = -1;
 		this.brojSakupljenihBodova = 0;
-		// this.tip = tip;
+		// this.tip = tip;	//TODO: RESITI OVO ZA TIPOVE KUPCA
 	}
 
 	public Integer getID() {
@@ -135,19 +136,19 @@ public class Korisnik {
 		this.idPorudzbina = idPorudzbina;
 	}
 
-	public String getIdKorpe() {
+	public Integer getIdKorpe() {
 		return idKorpe;
 	}
 
-	public void setIdKorpe(String idKorpe) {
+	public void setIdKorpe(Integer idKorpe) {
 		this.idKorpe = idKorpe;
 	}
 
-	public String getIdRestorana() {
+	public Integer getIdRestorana() {
 		return idRestorana;
 	}
 
-	public void setIdRestorana(String idRestorana) {
+	public void setIdRestorana(Integer idRestorana) {
 		this.idRestorana = idRestorana;
 	}
 

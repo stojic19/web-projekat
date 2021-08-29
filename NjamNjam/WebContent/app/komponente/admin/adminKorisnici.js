@@ -24,7 +24,7 @@ Vue.component("admin-korisnici", {
     },
 
     template: `
-    <div id = "styleForProfile">
+    <div id = "stilZaKorisnike">
 
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
@@ -87,13 +87,14 @@ Vue.component("admin-korisnici", {
 
                 <thead>
                     <tr>
-                        <th> Korisnicko ime </th>
+                        <th> Korisničko ime </th>
                         <th> Lozinka</th>
                         <th> Ime </th>
                         <th> Prezime </th>
 						<th> Pol </th>
 						<th> Datum rođenja </th>
                         <th> Uloga </th>
+                        <th> Broj bodova </th>
                         <th> Blokiranje </th>
                     </tr>
                 </thead>
@@ -107,6 +108,7 @@ Vue.component("admin-korisnici", {
 						<td> {{korisnik.pol}} </td>
 						<td> {{korisnik.datumRodjenja}} </td>
                         <td> {{korisnik.uloga }} </td>
+                        <td> {{korisnik.brojBodova}} </td>
                         <td align ="center" >
                             <button v-if="korisnik.blokiran == '1' && korisnik.uloga != 'ADMIN' " type="button" @click="odblokirajKorisnika(korisnik)" ><i class="fa fa-check" aria-hidden="true"></i> Odblokiraj </button>
                             <button v-if="korisnik.blokiran == '0' && korisnik.uloga != 'ADMIN' " type="button" @click="blokirajKorisnika(korisnik)" class="blockUser" ><i class="fa fa-ban" aria-hidden="true"></i> Blokiraj </button>
@@ -126,7 +128,7 @@ Vue.component("admin-korisnici", {
 
                 <form method='post'>
                     
-                    <input type="text" v-model="noviKorisnik.korisnickoIme" placeholder="Korisnicko ime" required>
+                    <input type="text" v-model="noviKorisnik.korisnickoIme" placeholder="Korisničko ime" required>
                     <input type="text" v-model="noviKorisnik.ime" placeholder="Ime" >
                     <input type="text" v-model="noviKorisnik.prezime" placeholder="Prezime">
 					<select v-model="noviKorisnik.pol" required>
@@ -330,7 +332,25 @@ Vue.component("admin-korisnici", {
             }
         },
         sortirajBrojBodova: function(){
-            //TODO: uraditi da profil sadrzi broj bodova
+            this.brojBodovaBrojac ++;
+            if(this.brojBodovaBrojac % 3 == 0)
+            {
+                axios
+                    .get('rest/korisnici/dobaviKorisnikeBezAdmina')
+                    .then(response => {
+                        this.korisnici = [];
+                        response.data.forEach(el => {
+                            if (el.uloga != "ADMIN")
+                                this.korisnici.push(el);
+                        });
+                        return this.korisnici;
+                    });
+            }else if(this.brojBodovaBrojac % 3 == 1)
+            {
+                this.multisort(this.korisnici, ['brojBodova', 'brojBodova'], ['ASC', 'DESC']);
+            }else{
+                this.multisort(this.korisnici, ['brojBodova', 'brojBodova'], ['DESC', 'ASC']);
+            }
         },
         multisort: function (arr, columns, order_by) {
             if (typeof columns == 'undefined') {

@@ -33,7 +33,7 @@ Vue.component("admin-profil", {
     },
     template: `
     <div id = "styleForProfile">
-        <h1> Pozdrav {{korisnik.userName}} ! </h1>
+        <h1> Pozdrav {{korisnik.korisnickoIme}} ! </h1>
         
         <table class="tableInProfil">
             <tr>
@@ -69,7 +69,7 @@ Vue.component("admin-profil", {
                 </td>
             </tr>
             <tr>
-                <td> Datum rodjenja </td>
+                <td> Datum rođenja </td>
                 <td> {{korisnik.datumRodjenja}} </td>
                 <td> <input type="date" v-model="korisnik.datumRodjenja"> </td>
             </tr>

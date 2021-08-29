@@ -30,7 +30,7 @@ public class SlikaServis {
 		
 		if(slike == null) {
 			slike = new SlikaDAO();
-			slike.ucitajSlikeJSON();
+			slike.ucitajSlike();
 			
 			ctx.setAttribute("slike", slike);
 		}

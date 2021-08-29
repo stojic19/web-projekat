@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
 import dto.KorisnikDTO;
+import dto.RestoranJSONDTO;
 
 public class KorisnikDAO {
 
@@ -149,7 +150,25 @@ public class KorisnikDAO {
 		
 		return ( dobaviKorisnikaPoKorisnickomImenu(korisnickoIme).getBlokiran() == 1 ) ? true : false;
 	}
-
+	
+	public void dodajRestoranMenadzeru(RestoranJSONDTO restoran){
+		if(nadjiKorisnikaPoID(restoran.menadzer.id) == null) {
+			dodajNovogKorisnika(restoran.menadzer);
+			Korisnik korisnik = nadjiKorisnikaPoID(restoran.menadzer.id);
+			korisnik.setIdRestorana(restoran.restoran.getID());
+		}else {
+			Korisnik korisnik = nadjiKorisnikaPoID(restoran.menadzer.id);
+			korisnik.setIdRestorana(restoran.restoran.getID());
+		}
+		sacuvajKorisnikeJSON();
+	}
+	public void obrisiRestoranMenadzeru(Integer idMenadzera) {
+		Korisnik korisnik = this.nadjiKorisnikaPoID(idMenadzera);
+		if(korisnik != null) {
+			korisnik.setIdRestorana(-1);
+			sacuvajKorisnikeJSON();
+		}
+	}
 	public LinkedHashMap<String, Korisnik> getKorisnici() {
 		return korisnici;
 	}

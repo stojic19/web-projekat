@@ -232,7 +232,16 @@ table{
     box-sizing: border-box;
     border-radius: 25px;
 }
-
+/* ADMIN - KORISNICI - OKVIR*/
+#stilZaKorisnike{
+	background-color: #b9bab8;
+	width: 80%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    border-radius: 30px;
+}
 /* Style for Profile */
 
 #styleForProfile{

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Restoran;
+import dto.RestoranJSONDTO;
 //import dto.RestoranDTO;
 
 public class RestoranDAO {
@@ -73,38 +74,46 @@ public class RestoranDAO {
 			e.printStackTrace();
 		}
 	}
-	/*
-	public void dodajNoviRestoran(KorisnikDTO korisnik) {
-		Korisnik noviKorisnik = new Korisnik(getValues().size() + 1, 0, 0, korisnik.korisnickoIme, korisnik.lozinka, korisnik.ime, korisnik.prezime, korisnik.pol, korisnik.datumRodjenja, korisnik.uloga);		
-		dodajKorisnika(noviKorisnik);
-		sacuvajKorisnikeJSON();
+	
+	public void dodajNoviRestoran(RestoranJSONDTO restoran) {
+		Restoran noviRestoran = new Restoran(getValues().size() + 1, 0, restoran.restoran.getNaziv(), restoran.restoran.getTip(), new ArrayList<Integer>() ,
+				restoran.restoran.getStatus(), restoran.restoran.getLokacija(),restoran.restoran.getPutanjaDoSlike(),restoran.restoran.getIdMenadzera());
+		dodajRestoran(noviRestoran);
+		sacuvajRestoraneJSON();
 	}
-
-	public void dodajRestoran(Korisnik korisnik) {
-		if (!korisnici.containsValue(korisnik)) {
-			System.out.println("DODAO SAM: " + korisnik.getKorisnickoIme());
-			korisnici.put(korisnik.getKorisnickoIme(), korisnik);
+	
+	public void dodajRestoran(Restoran restoran) {
+		if (!restorani.containsValue(restoran)) {
+			restorani.put(restoran.getID(),restoran);
 		}
 	}
 	
-	public Boolean promeniKorisnika(RestoranDTO azuriranKorisnik) {
+	public Boolean izmeniRestoran(RestoranJSONDTO azuriranRestoran) {
 
 		for (Restoran restoran: getValues()) {
-			if (restoran.getID() == azuriranRestoran.id)) {
-				/*
-				korisnik.setIme(azuriranKorisnik.ime);
-				korisnik.setPrezime(azuriranKorisnik.prezime);
-				korisnik.setLozinka(azuriranKorisnik.lozinka);
-				korisnik.setPol(azuriranKorisnik.pol);
-				korisnik.setDatumRodjenja(azuriranKorisnik.datumRodjenja);
+			if (restoran.getID() == azuriranRestoran.restoran.getID()) {
+				// TODO: Proveriti jel sve ovo treba menjati kad se uradi front
+				restoran.setLokacija(azuriranRestoran.restoran.getLokacija());
+				restoran.setNaziv(azuriranRestoran.restoran.getNaziv());
+				restoran.setPutanjaDoSlike(azuriranRestoran.restoran.getPutanjaDoSlike());
+				restoran.setTip(azuriranRestoran.restoran.getTip());
+				restoran.setStatus(azuriranRestoran.restoran.getStatus());
 				
-				sacuvajKorisnikeJSON();
+				sacuvajRestoraneJSON();
 
 				return true;
 			}
 		}
 		return false;
-	}*/
+	}
+	
+	public void obrisiRestoran(Integer id) {
+		Restoran restoran = nadjiRestoranPoID(id);
+		if(restoran != null) {
+			restoran.setLogickiObrisan(1);
+			sacuvajRestoraneJSON();
+		}
+	}
 	
 	public Restoran nadjiRestoranPoID(Integer id) {
 		for (Restoran restoran : getValues()) {

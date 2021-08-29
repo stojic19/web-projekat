@@ -29,7 +29,7 @@ public class SlikaDAO {
 
 	}
 
-	public void ucitajSlikeJSON() {
+	public void ucitajSlike() {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		File file = new File(this.imeFajla);
