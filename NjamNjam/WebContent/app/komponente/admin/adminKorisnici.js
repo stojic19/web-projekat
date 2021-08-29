@@ -43,7 +43,7 @@ Vue.component("admin-korisnici", {
             </form>
         </div>
         <!-- Kraj pretrage -->
-        <br><br>
+        
 
         <!-- Filtriranje korisnika -->
         <div class="filterZaKorisnikeAdmin" v-if="prostorZaFiltereVidljiv">
@@ -66,7 +66,7 @@ Vue.component("admin-korisnici", {
         </div>
         <!-- Kraj filtriranja korisnika -->
 
-        <br><br>
+        
         <!-- Sortiranje korisnika -->
         <div v-if="prostorZaSortiranjeVidljiv" class="sortiranje">
             <form method='post'>
@@ -141,8 +141,8 @@ Vue.component("admin-korisnici", {
                     <input type="password" v-model="noviKorisnik.lozinka" placeholder="Lozinka" required>
                     <input type="password" placeholder="Ponovljena lozinka" required>
 
-                    <button type="button" @click="potvrdiDodavanje">Potvrdi</button>
-                    <button type="button" @click="dijalogZaDodavanjeSakriven = !dijalogZaDodavanjeSakriven">Odustani</button>
+                    <button type="button" @click="potvrdiDodavanje" class="btn">Potvrdi</button>
+                    <button type="button" @click="dijalogZaDodavanjeSakriven = !dijalogZaDodavanjeSakriven" class="btn">Odustani</button>
 
                 </form>
 
