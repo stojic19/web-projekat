@@ -11,14 +11,22 @@ public class Artikal {
 	private Integer idRestoranaKomPripada;
 	private String kolicina;
 	private String opis;
-	// TO DO: slika artikla
+	private String putanjaDoSlike;
 	
+	public String getPutanjaDoSlike() {
+		return putanjaDoSlike;
+	}
+
+	public void setPutanjaDoSlike(String putanjaDoSlike) {
+		this.putanjaDoSlike = putanjaDoSlike;
+	}
+
 	public Artikal() {
 		
 	}
 
 	public Artikal(Integer iD, Integer logickiObrisan, String naziv, String cena, String tip,
-			Integer idRestoranaKomPripada, String kolicina, String opis) {
+			Integer idRestoranaKomPripada, String kolicina, String opis, String putanjaDoSlike) {
 		super();
 		ID = iD;
 		this.logickiObrisan = logickiObrisan;
@@ -28,6 +36,7 @@ public class Artikal {
 		this.idRestoranaKomPripada = idRestoranaKomPripada;
 		this.kolicina = kolicina;
 		this.opis = opis;
+		this.putanjaDoSlike = putanjaDoSlike;
 	}
 
 	public Integer getID() {

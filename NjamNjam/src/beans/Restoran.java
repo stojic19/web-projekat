@@ -12,7 +12,7 @@ public class Restoran {
 	private List<Integer> idArtiklaUPonudi;
 	private Integer status; 							// 1 - radi, 0 - ne radi
 	private Lokacija lokacija;
-	// TO DO: logo restorana
+	private String putanjaDoSlike;
 	private Integer idMenadzera;
 	
 	public Restoran() {
@@ -20,7 +20,7 @@ public class Restoran {
 	}
 
 	public Restoran(Integer iD, Integer logickiObrisan, String naziv, String tip, List<Integer> idArtiklaUPonudi,
-			Integer status, Lokacija lokacija, Integer idMenadzera) {
+			Integer status, Lokacija lokacija,String putanjaDoSlike, Integer idMenadzera) {
 		super();
 		ID = iD;
 		this.logickiObrisan = logickiObrisan;
@@ -29,7 +29,16 @@ public class Restoran {
 		this.idArtiklaUPonudi = idArtiklaUPonudi;
 		this.status = status;
 		this.lokacija = lokacija;
+		this.putanjaDoSlike = putanjaDoSlike;
 		this.idMenadzera = idMenadzera;
+	}
+
+	public String getPutanjaDoSlike() {
+		return putanjaDoSlike;
+	}
+
+	public void setPutanjaDoSlike(String putanjaDoSlike) {
+		this.putanjaDoSlike = putanjaDoSlike;
 	}
 
 	public Integer getID() {

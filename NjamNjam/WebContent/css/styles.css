@@ -185,7 +185,7 @@ table{
 /* ADMIN - KORISNICI - PRETRAGA */
 
 .pretragaKorisnikaAdmin{
-	width: 900px;
+	width: 90%;
     height: 88px;
     padding: 30px;
     border-radius: 10px;
@@ -638,6 +638,7 @@ td button{
 	font-weight: bold;
 	font-size: 16px;
 	padding:10px;
+	margin: 10px;
   }
 
 /* End of style for tables */

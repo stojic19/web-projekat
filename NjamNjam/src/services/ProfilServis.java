@@ -20,17 +20,15 @@ import dto.KorisnikDTO;
 public class ProfilServis {
 	
 	@Context
-	HttpServletRequest request;
-	@Context
 	ServletContext ctx;
 	
 	
 	@GET
 	@Path("/profilKorisnika")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response dobaviProfilKorisnika() {
+	public Response dobaviProfilKorisnika(@Context HttpServletRequest request) {
 		
-		if(korisnikJeKupac() || korisnikJeAdmin() || korisnikJeMenadzer() || korisnikJeDostavljac()) {
+		if(korisnikJeKupac(request) || korisnikJeAdmin(request) || korisnikJeMenadzer(request) || korisnikJeDostavljac(request)) {
 	
 			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");		
 
@@ -47,9 +45,9 @@ public class ProfilServis {
 	@Path("/sacuvajIzmeneKorisnika")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response sacuvajIzmeneKorisnika(KorisnikDTO izmenjenKorisnik) {
+	public Response sacuvajIzmeneKorisnika(KorisnikDTO izmenjenKorisnik,@Context HttpServletRequest request) {
 		
-		if(korisnikJeKupac() || korisnikJeAdmin() || korisnikJeMenadzer() || korisnikJeDostavljac()) {
+		if(korisnikJeKupac(request) || korisnikJeAdmin(request) || korisnikJeMenadzer(request) || korisnikJeDostavljac(request)) {
 			
 			KorisnikDAO korisnici = dobaviKorisnike();
 			korisnici.promeniKorisnika(izmenjenKorisnik);
@@ -78,7 +76,7 @@ public class ProfilServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeDostavljac() {
+	private boolean korisnikJeDostavljac(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -90,7 +88,7 @@ public class ProfilServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeMenadzer() {
+	private boolean korisnikJeMenadzer(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -102,7 +100,7 @@ public class ProfilServis {
 	}
 
 	@SuppressWarnings("unused")
-	private boolean korisnikJeAdmin() {
+	private boolean korisnikJeAdmin(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -114,7 +112,7 @@ public class ProfilServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeKupac() {
+	private boolean korisnikJeKupac(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {

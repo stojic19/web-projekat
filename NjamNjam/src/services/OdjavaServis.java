@@ -16,17 +16,15 @@ import beans.Korisnik;
 public class OdjavaServis {
 
 	@Context
-	HttpServletRequest request;
-	@Context
 	ServletContext ctx;
 	
 	
 	@GET
 	@Path("/korisnik")
 	@Produces(MediaType.TEXT_HTML)
-	public Response logoutUser() {
+	public Response logoutUser(@Context HttpServletRequest request) {
 		
-		if(korisnikJeKupac() || korisnikJeAdmin() || korisnikJeMenadzer() || korisnikJeDostavljac()) {
+		if(korisnikJeKupac(request) || korisnikJeAdmin(request) || korisnikJeMenadzer(request) || korisnikJeDostavljac(request)) {
 		
 			HttpSession session = request.getSession();
 			if(session != null && session.getAttribute("ulogovanKorisnik") != null) {
@@ -41,7 +39,7 @@ public class OdjavaServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeDostavljac() {
+	private boolean korisnikJeDostavljac(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -53,7 +51,7 @@ public class OdjavaServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeMenadzer() {
+	private boolean korisnikJeMenadzer(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -65,7 +63,7 @@ public class OdjavaServis {
 	}
 
 	@SuppressWarnings("unused")
-	private boolean korisnikJeAdmin() {
+	private boolean korisnikJeAdmin(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -77,7 +75,7 @@ public class OdjavaServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeKupac() {
+	private boolean korisnikJeKupac(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {

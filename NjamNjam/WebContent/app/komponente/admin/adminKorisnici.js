@@ -24,7 +24,7 @@ Vue.component("admin-korisnici", {
     },
 
     template: `
-    <div>
+    <div id = "styleForProfile">
 
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
@@ -82,8 +82,8 @@ Vue.component("admin-korisnici", {
 
 
         <!-- Tabela korisnika -->
-        <div class="styleForTable" style="width: 70%;" >
-            <table style="width:100%">
+        <div >
+            <table class="styleForTable" style="width:100%">
 
                 <thead>
                     <tr>

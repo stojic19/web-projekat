@@ -21,15 +21,13 @@ import dto.KorisnikPrijavaDTO;
 public class KorisnikServis {
 
 	@Context
-	HttpServletRequest request;
-	@Context
 	ServletContext ctx;
 
 	@POST
 	@Path("/prijava")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response prijava(KorisnikPrijavaDTO korisnikDTO) {
+	public Response prijava(KorisnikPrijavaDTO korisnikDTO,@Context HttpServletRequest request) {
 		KorisnikDAO korisnici = dobaviKorisnike();
 
 		Korisnik korisnik = korisnici.dobaviKorisnikaPoKorisnickomImenu(korisnikDTO.korisnickoIme);
@@ -100,9 +98,9 @@ public class KorisnikServis {
 	@GET
 	@Path("/dobaviKorisnikeBezAdmina")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response dobaviKorisnikeBezAdmina() {
+	public Response dobaviKorisnikeBezAdmina(@Context HttpServletRequest request) {
 		
-		if(korisnikJeAdmin()) {
+		if(korisnikJeAdmin(request)) {
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
 					.entity(dobaviKorisnike().getValues())
@@ -117,9 +115,9 @@ public class KorisnikServis {
 	@Path("/blokirajKorisnika")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response blokirajKorisnika(KorisnikJSONDTO korisnik){
+	public Response blokirajKorisnika(KorisnikJSONDTO korisnik,@Context HttpServletRequest request){
 		
-		if(korisnikJeAdmin()) {
+		if(korisnikJeAdmin(request)) {
 			KorisnikDAO sviKorisnici = dobaviKorisnike();
 			sviKorisnici.blokirajKorisnikaPoID(korisnik.korisnik.getKorisnickoIme());
 			
@@ -138,9 +136,9 @@ public class KorisnikServis {
 	@Path("/odblokirajKorisnika")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response odblokirajKorisnika(KorisnikJSONDTO korisnik){
+	public Response odblokirajKorisnika(KorisnikJSONDTO korisnik,@Context HttpServletRequest request){
 		
-		if(korisnikJeAdmin()) {
+		if(korisnikJeAdmin(request)) {
 		
 			KorisnikDAO sviKorisnici = dobaviKorisnike();
 			sviKorisnici.oblokirajKorisnikaPoID(korisnik.korisnik.getKorisnickoIme());
@@ -189,7 +187,7 @@ public class KorisnikServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeDostavljac() {
+	private boolean korisnikJeDostavljac(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -201,7 +199,7 @@ public class KorisnikServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeMenadzer() {
+	private boolean korisnikJeMenadzer(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -213,7 +211,7 @@ public class KorisnikServis {
 	}
 
 	@SuppressWarnings("unused")
-	private boolean korisnikJeAdmin() {
+	private boolean korisnikJeAdmin(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
@@ -225,7 +223,7 @@ public class KorisnikServis {
 	}
 	
 	@SuppressWarnings("unused")
-	private boolean korisnikJeKupac() {
+	private boolean korisnikJeKupac(@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		
 		if(korisnik!= null) {
