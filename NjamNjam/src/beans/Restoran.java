@@ -10,17 +10,18 @@ public class Restoran {
 	private String naziv;
 	private String tip;
 	private List<Integer> idArtiklaUPonudi;
-	private Integer status; 							// 1 - radi, 0 - ne radi
+	private String status; 							// 1 - radi, 0 - ne radi
 	private Lokacija lokacija;
 	private String putanjaDoSlike;
 	private Integer idMenadzera;
+	private Double prosecnaOcena;
 	
 	public Restoran() {
 		
 	}
 
 	public Restoran(Integer iD, Integer logickiObrisan, String naziv, String tip, List<Integer> idArtiklaUPonudi,
-			Integer status, Lokacija lokacija,String putanjaDoSlike, Integer idMenadzera) {
+			String status, Lokacija lokacija,String putanjaDoSlike, Integer idMenadzera) {
 		super();
 		ID = iD;
 		this.logickiObrisan = logickiObrisan;
@@ -31,6 +32,15 @@ public class Restoran {
 		this.lokacija = lokacija;
 		this.putanjaDoSlike = putanjaDoSlike;
 		this.idMenadzera = idMenadzera;
+		this.prosecnaOcena = 0.0;
+	}
+
+	public Double getProsecnaOcena() {
+		return prosecnaOcena;
+	}
+
+	public void setProsecnaOcena(Double prosecnaOcena) {
+		this.prosecnaOcena = prosecnaOcena;
 	}
 
 	public String getPutanjaDoSlike() {
@@ -81,11 +91,11 @@ public class Restoran {
 		this.idArtiklaUPonudi = idArtiklaUPonudi;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

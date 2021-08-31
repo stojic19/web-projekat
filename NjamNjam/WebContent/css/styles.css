@@ -578,16 +578,16 @@ button.endButtonStyle:hover{
 
 
 
-/* Style for images of apartments */
+/* logo */
 
-img.imagesOfApartment{
+img.logoRestorana{
 	border-radius: 10px;
 	border: 2px solid white;
 	height: 220px;
 	width: 350px;
 }
 
-/* End of images for apartments */
+/*  */
 
 
 /* Style for buttons */
