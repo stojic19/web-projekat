@@ -13,7 +13,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Adresa;
+import beans.Lokacija;
 import beans.Restoran;
+import dto.NoviRestoranDTO;
+import dto.RestoranIzmenaDTO;
 import dto.RestoranJSONDTO;
 //import dto.RestoranDTO;
 
@@ -82,22 +86,29 @@ public class RestoranDAO {
 		sacuvajRestoraneJSON();
 	}
 	
+	public void dodajNoviRestoran(NoviRestoranDTO restoran) {
+		Restoran noviRestoran = new Restoran(getValues().size() + 1, 0, restoran.naziv, restoran.tip, new ArrayList<Integer>() ,
+				restoran.status, new Lokacija(restoran.geografskaDuzina, restoran.geografskaSirina, new Adresa(restoran.ulica,restoran.broj,restoran.mesto,restoran.postanskiBroj)),restoran.putanjaDoSlike,restoran.idMenadzera);
+		dodajRestoran(noviRestoran);
+		sacuvajRestoraneJSON();
+	}
+	
 	public void dodajRestoran(Restoran restoran) {
 		if (!restorani.containsValue(restoran)) {
 			restorani.put(restoran.getID(),restoran);
 		}
 	}
 	
-	public Boolean izmeniRestoran(RestoranJSONDTO azuriranRestoran) {
+	public Boolean izmeniRestoran(RestoranIzmenaDTO azuriranRestoran) {
 
 		for (Restoran restoran: getValues()) {
-			if (restoran.getID() == azuriranRestoran.restoran.getID()) {
+			if (restoran.getID() == azuriranRestoran.ID) {
 				// TODO: Proveriti jel sve ovo treba menjati kad se uradi front
-				restoran.setLokacija(azuriranRestoran.restoran.getLokacija());
-				restoran.setNaziv(azuriranRestoran.restoran.getNaziv());
-				restoran.setPutanjaDoSlike(azuriranRestoran.restoran.getPutanjaDoSlike());
-				restoran.setTip(azuriranRestoran.restoran.getTip());
-				restoran.setStatus(azuriranRestoran.restoran.getStatus());
+				restoran.setLokacija(new Lokacija(azuriranRestoran.geografskaDuzina, azuriranRestoran.geografskaSirina, new Adresa(azuriranRestoran.ulica,azuriranRestoran.broj,azuriranRestoran.mesto,azuriranRestoran.postanskiBroj)));
+				restoran.setNaziv(azuriranRestoran.naziv);
+				restoran.setPutanjaDoSlike(azuriranRestoran.putanjaDoSlike);
+				restoran.setTip(azuriranRestoran.tip);
+				restoran.setStatus(azuriranRestoran.status);
 				
 				sacuvajRestoraneJSON();
 

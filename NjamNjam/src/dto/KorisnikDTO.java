@@ -1,7 +1,5 @@
 package dto;
 
-import java.sql.Date;
-
 public class KorisnikDTO {
 
 	public Integer id;
@@ -10,7 +8,8 @@ public class KorisnikDTO {
 	public String ime;
 	public String prezime;
 	public String pol;
-	public Date datumRodjenja;
+	public String datumRodjenja;
 	public String uloga;
 	public String tip;
+	public Integer idRestorana;
 }

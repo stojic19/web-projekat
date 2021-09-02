@@ -91,8 +91,6 @@ Vue.component("admin-korisnici", {
                         <th> Lozinka</th>
                         <th> Ime </th>
                         <th> Prezime </th>
-						<th> Pol </th>
-						<th> Datum rođenja </th>
                         <th> Uloga </th>
                         <th> Broj bodova </th>
                         <th> Blokiranje </th>
@@ -105,10 +103,8 @@ Vue.component("admin-korisnici", {
                         <td> {{korisnik.lozinka}}</td>
                         <td> {{korisnik.ime}} </td>
                         <td> {{korisnik.prezime }} </td>
-						<td> {{korisnik.pol}} </td>
-						<td> {{korisnik.datumRodjenja}} </td>
                         <td> {{korisnik.uloga }} </td>
-                        <td> {{korisnik.brojBodova}} </td>
+                        <td> {{korisnik.brojSakupljenihBodova}} </td>
                         <td align ="center" >
                             <button v-if="korisnik.blokiran == '1' && korisnik.uloga != 'ADMIN' " type="button" @click="odblokirajKorisnika(korisnik)" ><i class="fa fa-check" aria-hidden="true"></i> Odblokiraj </button>
                             <button v-if="korisnik.blokiran == '0' && korisnik.uloga != 'ADMIN' " type="button" @click="blokirajKorisnika(korisnik)" class="blockUser" ><i class="fa fa-ban" aria-hidden="true"></i> Blokiraj </button>
@@ -166,7 +162,7 @@ Vue.component("admin-korisnici", {
             }
             axios
                 .post('rest/korisnici/registracija', {
-                    "korisnickoIme": this.noviKorisnik.korisnickoIme,
+                    	"korisnickoIme": this.noviKorisnik.korisnickoIme,
                         "lozinka": this.noviKorisnik.lozinka,
                         "ime": this.noviKorisnik.ime,
                         "prezime": this.noviKorisnik.prezime,

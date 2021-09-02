@@ -7,7 +7,7 @@ Vue.component("admin-restorani", {
                 naziv: '',
                 tip: '',
                 lokacija: '',
-				prosecnaOcena:''
+				prosecnaOcena:0
             },
             podaciZaFiltriranjeRestorana: {
                 otvoreni: "",
@@ -18,25 +18,20 @@ Vue.component("admin-restorani", {
             ocenaBrojac : 0,
             dijalogZaIzmenuSakriven: true,
             restoranZaIzmenu: {
-				prosecnaOcena: 0.0,
-                status: "",
-                logickiObrisan: 0,
-                ID: 11111,
-				naziv: "naziv",
-				tip: "tip",
-                putanjaDoSlike: "empty",
-				idMenadzera : 11111,
-                idArtiklaUPonudi: [],
-                lokacija: {
-                    adresa: {
-                        broj: null,
-                        mesto: '',
-                        ulica: null,
-                        postanskiBroj: null
-                    },
-                    geografskaSirina: null,
-                    geografskaDuzina: null
-			}
+				ID: -1,
+				logickiObrisan: 0,
+				naziv: null,
+				tip: null,
+                status: null,
+                broj: null,
+                mesto: null,
+                ulica: null,
+                postanskiBroj: null,
+                geografskaSirina: null,
+                geografskaDuzina: null,
+                putanjaDoSlike: "",
+                idMenadzera: -1,
+                prosecnaOcena: 0.0,
 			},
             prostorZaPretraguVidljiv: false,
             prostorZaFiltereVidljiv: false,
@@ -51,11 +46,11 @@ Vue.component("admin-restorani", {
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
         <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
-        <button type="button" @click="dodajRestoran()" class="btn"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj restoran</button>
+        <button type="button" class="btn"><i class="fa fa-plus" aria-hidden="true"></i><router-link to="/dodavanjeRestorana" exact style="color:black">Dodaj restoran</router-link></button>
         <br><br>
 
         <!-- Pretraga -->
-        <div class="pretragaKorisnikaAdmin" v-if="prostorZaPretraguVidljiv" >
+        <div class="pretragaRestorana" v-if="prostorZaPretraguVidljiv" >
             <form method='post' >
 
                 <input type="text" v-model="pretraga.naziv" v-bind:class="{filledInput: pretraga.naziv != '' }" placeholder="Naziv" >
@@ -69,17 +64,19 @@ Vue.component("admin-restorani", {
         <!-- Kraj pretrage -->
         
 		<!-- Mapa za pronalazak grada -->
-        <div id="mapSearch" class="mapSearch" v-if="mapaZaPretraguVidljiva"></div>
-
+		<div class="okoMapeZaPretragu" v-if="mapaZaPretraguVidljiva && prostorZaPretraguVidljiv">
+        <div id="mapaPretraga" class="mapaPretraga" ></div>
+		</div>
+		
         <!-- Filtriranje restorana -->
-        <div class="filterZaKorisnikeAdmin" v-if="prostorZaFiltereVidljiv">
+        <div class="filterZaRestorane" v-if="prostorZaFiltereVidljiv">
             <form method='post' 
                 <select v-model="podaciZaFiltriranjeRestorana.otvoreni" @change="onchangeAktivnostRestorana()">
                     <option value="">Svi restorani</option>
                     <option>Samo otvoreni</option>
                 </select>
 
-                <select v-model="podaciZaFiltriranjeKorisnika.tip" @change="onchangeTipRestorana()">
+                <select v-model="podaciZaFiltriranjeRestorana.tip" @change="onchangeTipRestorana()">
                     <option value="">Bez filtera za tip</option>
                     <option>Brza hrana</option>
                     <option>Roštilj</option>
@@ -95,11 +92,11 @@ Vue.component("admin-restorani", {
 
         
         <!-- Sortiranje restorana -->
-        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranje">
+        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranjeRestorani">
             <form method='post'>
 
                 <button type="button" @click="sortirajNaziv"><i class="fa fa-sort" aria-hidden="true"></i> Naziv </button>
-                <button type="button" @click="sortirajLokaciju"><i class="fa fa-sort" aria-hidden="true"></i> Lokacija</button>
+                <button type="button" @click="sortirajLokacija"><i class="fa fa-sort" aria-hidden="true"></i> Lokacija </button>
                 <button type="button" @click="sortirajProsecnaOcena"><i class="fa fa-sort" aria-hidden="true"></i> Prosečna ocena </button>
 
             </form>
@@ -109,9 +106,10 @@ Vue.component("admin-restorani", {
 		<!-- Card za restoran -->
         <ul>
             <li v-for="restoran in filtriraniRestorani">
+            	<div class="cardsRestoranDiv">
                 <img class="logoRestorana" v-bind:src="dobaviPutanjuSlike(restoran)">
 
-                <table class="tableInCards">
+                <table class="cardsRestoran">
                     <tr>
                         <td> Naziv : </td>
                         <td> {{ restoran.naziv }} </td>
@@ -119,7 +117,7 @@ Vue.component("admin-restorani", {
 
                     <tr>
                         <td> Tip: </td>
-                        <td> {{ restoran.tip }} $ </td>
+                        <td> {{ restoran.tip }} </td>
                     </tr>
 
 					<tr>
@@ -128,23 +126,26 @@ Vue.component("admin-restorani", {
 					</tr>
                 </table>
 
-                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="izmeniRestoran(restoran)" class="changeButtonStyle" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
-                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="obrisiRestoran(restoran)" class="deleteButtonStyle" ><i class="fa fa-trash" aria-hidden="true"></i>  Obrisi </button> <br>
-            
+                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="izmeniRestoran(restoran)" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
+                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="obrisiRestoran(restoran)" class="brisanjeStyle button" ><i class="fa fa-trash" aria-hidden="true"></i>  Obrisi </button> <br>
+            	</div>
             </li>
         </ul>
         <!-- Kraj card za restorane -->
 
         <!-- Modalni dijalog za izmenu restorana -->
-        <div id = "dijalogZaDodavanjeKorisnika" v-bind:class="{bgModal: dijalogZaIzmenuSakriven, bgModalShow: !dijalogZaIzmenuSakriven}">
+        <div id = "dijalogZaIzmenuRestorana" v-bind:class="{bgModal: dijalogZaIzmenuSakriven, bgModalShow: !dijalogZaIzmenuSakriven}">
             <div class="modal-contents">
         
                 <div class="close" @click="dijalogZaIzmenuSakriven = !dijalogZaIzmenuSakriven">+</div>
 
                 <form method='post'>
                     
-                    <input type="text" v-model="restoranZaIzmenu.naziv" placeholder="Naziv" required>
-					<select v-model="restoranZaIzmenu.tip" required>
+					<label for="naziv">Naziv:</label>
+                    <input name="naziv" type="text" v-model="restoranZaIzmenu.naziv" placeholder="Naziv" required>
+					
+					<label for="tip">Tip:</label>
+					<select name="tip" v-model="restoranZaIzmenu.tip" required>
                         <option>Brza hrana</option>
                         <option>Roštilj</option>
 					    <option>Burgeri</option>
@@ -153,25 +154,29 @@ Vue.component("admin-restorani", {
                         <option>Kineski</option>
                         <option>Azijska kuhinja</option>
             		</select>
-					<select v-model="restoranZaIzmenu.uloga" required>      !!!Proveriti kako ovo da se resi
+					<label for="status">Naziv:</label>
+					<select name="status" v-model="restoranZaIzmenu.status" required>
                 		<option>Radi</option>
                 		<option>Ne radi</option>
             		</select>
                     <!-- Lokacija -->
                     <label for="mesto">Mesto:</label>
-                    <input name="mesto" type="text" v-model="restoranZaIzmenu.lokacija.adresa.mesto" placeholder="Mesto">
+                    <input name="mesto" type="text" v-model="restoranZaIzmenu.mesto" placeholder="Mesto">
                     
                     <label for="ulica">Ulica:</label>
-                    <input name="ulica" type="text" v-model="restoranZaIzmenu.lokacija.adresa.ulica" placeholder="Ulica">
+                    <input name="ulica" type="text" v-model="restoranZaIzmenu.ulica" placeholder="Ulica">
                     
                     <label for="broj">Broj:</label>
-                    <input  name="broj" type="text" v-model="restoranZaIzmenu.lokacija.adresa.broj" placeholder="Broj">
+                    <input  name="broj" type="text" v-model="restoranZaIzmenu.broj" placeholder="Broj">
+                    
+                    <label for="postanskiBroj">Poštanski broj:</label>
+                    <input  name="postanskiBroj" type="text" v-model="restoranZaIzmenu.postanskiBroj" placeholder="Poštanski broj">
 
                     <label for="geoDuzina"> Geografska dužina </label>
-                    <input  name="geoDuzina" type="text" v-model="restoranZaIzmenu.lokacija.geografskaDuzina" placeholder="Geografska dužina">
+                    <input  name="geoDuzina" type="text" v-model="restoranZaIzmenu.geografskaDuzina" placeholder="Geografska dužina">
 
                     <label for="geoSirina"> Geografska dužina </label>
-                    <input  name="geoSirina" type="text" v-model="restoranZaIzmenu.lokacija.geografskaSirina" placeholder="Geografska širina">
+                    <input  name="geoSirina" type="text" v-model="restoranZaIzmenu.geografskaSirina" placeholder="Geografska širina">
 
                     <!-- Kraj lokacije -->
 
@@ -179,7 +184,7 @@ Vue.component("admin-restorani", {
                     <input type="file" onchange="slikaUUrl(this)" />
 
                     <button type="button" @click="potvrdiIzmene" class="btn">Potvrdi</button>
-                    <button type="button" @click="dijalogZaDodavanjeSakriven = !dijalogZaDodavanjeSakriven" class="btn">Odustani</button>
+                    <button type="button" @click="dijalogZaIzmenuSakriven = !dijalogZaIzmenuSakriven" class="btn">Odustani</button>
 
                 </form>
 
@@ -197,18 +202,25 @@ Vue.component("admin-restorani", {
         },
         izmeniRestoran: function (restoran) {
             this.dijalogZaIzmenuSakriven = !this.dijalogZaIzmenuSakriven;
-
-            this.restoranZaIzmenu = restoran;
-
+            this.restoranZaIzmenu.ID = restoran.id;
+            this.restoranZaIzmenu.tip = restoran.tip;
+            this.restoranZaIzmenu.naziv = restoran.naziv;
+            this.restoranZaIzmenu.mesto = restoran.lokacija.adresa.mesto;
+            this.restoranZaIzmenu.ulica = restoran.lokacija.adresa.ulica;
+            this.restoranZaIzmenu.broj = restoran.lokacija.adresa.broj;
+            this.restoranZaIzmenu.postanskiBroj = restoran.lokacija.adresa.postanskiBroj;
+            this.restoranZaIzmenu.geografskaSirina = restoran.lokacija.geografskaSirina;
+            this.restoranZaIzmenu.geografskaDuzina = restoran.lokacija.geografskaDuzina;
+            this.restoranZaIzmenu.putanjaDoSlike = restoran.putanjaDoSlike;
+            this.restoranZaIzmenu.status = restoran.status;
+            console.log(this.restoranZaIzmenu);
         },
-        obrisisRestoran: function (restoran) {
+        obrisiRestoran: function (restoran) {
             axios
                 .delete('rest/restoran/obrisiRestoran', {
                     data: {
                         restoran : restoran
                     }
-
-
                 })
                 .then(response => {
                     this.restorani = [];
@@ -221,34 +233,26 @@ Vue.component("admin-restorani", {
                 });
         },
         potvrdiIzmene: function () {
-
-            if (!this.restoranZaIzmenu.naziv || !this.restoranZaIzmenu.lokacija.adresa.grad || !this.restoranZaIzmenu.lokacija.adresa.ulica
-                || !this.restoranZaIzmenu.lokacija.geografskaSirina || !this.restoranZaIzmenu.lokacija.geografskaDuzina
-                || !this.restoranZaIzmenu.lokacija.adresa.broj) {
-                toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
-                return;
-
+			
+            if (!this.restoranZaIzmenu.naziv || !this.restoranZaIzmenu.mesto || !this.restoranZaIzmenu.ulica
+                || !this.restoranZaIzmenu.geografskaSirina || !this.restoranZaIzmenu.geografskaDuzina
+                || !this.restoranZaIzmenu.broj || !this.restoranZaIzmenu.postanskiBroj)
+            {
+                	toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
+                	return;
             }
-
-
-            // Get Base64 format of image 
-            this.newApartment.imagesPath = document.getElementById("imgForChangeID").src;
-
+            this.restoranZaIzmenu.putanjaDoSlike = document.getElementById("slikaZaIzmenu").src;
+			console.log(this.restoranZaIzmenu)
             axios
-                .post('rest/apartments/changeMyApartment', {
-                    addedApartment: this.newApartment,
-                    "startDateForReservation": this.startDateForHost,
-                    "endDateForReservation": this.endDateForHost
-                })
+                .post('rest/restoran/izmeniRestoran', this.restoranZaIzmenu)
                 .then(response => {
-                    this.apartments = [];
+                    this.restorani = [];
                     response.data.forEach(el => {
-                        if (el.status == "ACTIVE")
-                            this.apartments.push(el);
+                            this.restorani.push(el);
                     });
-                    toastr["success"]("You make successful change !!", "Successful changes!");
+                    toastr["success"]("Uspešna izmena restorana!", "Uspešna izmena!");
                     location.reload();
-                    return this.apartments;
+                    return this.restorani;
                 });
         },
         poklapaSeSaPretragom: function (restoran) {
@@ -262,17 +266,17 @@ Vue.component("admin-restorani", {
                 return false;
 
             // Lokacija
-            if (!restoran.lokacija.adresa.grad.toLowerCase().match(this.pretraga.grad.toLowerCase()))
+            if (!restoran.lokacija.adresa.mesto.toLowerCase().match(this.pretraga.lokacija.toLowerCase()))
                 return false;
             
             //prosecna ocena
-            //if (!restoran.prosecnaOcena this.pretraga.prosecnaOcena))   //Konvertovati u double i uporediti
-            //    return false;
+            if (restoran.prosecnaOcena > parseFloat(this.pretraga.prosecnaOcena))
+                return false;
 
             return true;
         },
 		onchangeTipRestorana: function () {
-            if (this.podaciZaFiltriranjeRestorana.tip == "") {
+            if (this.podaciZaFiltriranjeRestorana.tip == "" || this.podaciZaFiltriranjeRestorana.tip == "Bez filtera za tip") {
                 axios
                     .get('rest/restoran/dobaviRestorane')
                     .then(response => {
@@ -284,12 +288,12 @@ Vue.component("admin-restorani", {
                     });
 
             } else {
-                let filterRestorana = (this.restorani).filter(restoran => restoran.tip == this.podaciZaFiltriranjeRestorana.tip);
+                let filterRestorana = (this.restorani).filter(restoran => restoran.tip == this.podaciZaFiltriranjeKorisnika.otvoreni);
                 this.restorani = filterRestorana;
             }
         },
         onchangeAktivnostRestorana: function () {
-            if (this.podaciZaFiltriranjeRestorana.otvoreni == "") {
+            if (this.podaciZaFiltriranjeRestorana.otvoreni == "" || this.podaciZaFiltriranjeRestorana.otvoreni == "Svi restorani") {
                 axios
                     .get('rest/restoran/dobaviRestorane')
                     .then(response => {
@@ -301,7 +305,7 @@ Vue.component("admin-restorani", {
                     });
 
             } else {
-                let filterRestorana = (this.restorani).filter(restoran => restoran.status == this.podaciZaFiltriranjeKorisnika.otvoreni);
+                let filterRestorana = (this.restorani).filter(restoran => restoran.status == "Radi");
                 this.restorani = filterRestorana;
             }
         },
@@ -340,9 +344,9 @@ Vue.component("admin-restorani", {
                     });
             }else if(this.lokacijaBrojac % 3 == 1)
             {
-                this.multisort(this.restorani, ['lokacija.adresa.grad', 'lokacija.adresa.grad'], ['ASC', 'DESC']);
+                this.multisort(this.restorani, ['lokacija.adresa.mesto', 'lokacija.adresa.mesto'], ['ASC', 'DESC']);
             }else{
-                this.multisort(this.restorani, ['lokacija.adresa.grad', 'lokacija.adresa.grad'], ['DESC', 'ASC']);
+                this.multisort(this.restorani, ['lokacija.adresa.mesto', 'lokacija.adresa.mesto'], ['DESC', 'ASC']);
             }
         },
         sortirajProsecnaOcena: function(){
@@ -442,15 +446,15 @@ Vue.component("admin-restorani", {
         initForMap: function () {
 
             const mapSearch = new ol.Map({
-                target: 'mapSearch',
+                target: 'mapaPretraga',
                 layers: [
                     new ol.layer.Tile({
                         source: new ol.source.OSM()
                     })
                 ],
                 view: new ol.View({
-                    center: [0, 0],
-                    zoom: 2
+                    center: [2278434.939124534, 5591521.493117212],
+                    zoom: 7
                 })
             })
 
@@ -461,13 +465,13 @@ Vue.component("admin-restorani", {
 
         },
         pregledMapeZaPretragu: function () {
-            this.mapaZaPretraguVidljiva = !this.previewmapaZaPretraguVidljivaMap;
+            this.mapaZaPretraguVidljiva = !this.mapaZaPretraguVidljiva;
             if (this.mapaZaPretraguVidljiva) {
                 this.$nextTick(function () {
                     this.initForMap();
                     let c = document.getElementById("mapSearch").childNodes;
                     c[0].style.borderRadius  = '10px';
-                    c[0].style.border = '4px solid lightgrey';
+                    c[0].style.border = '4px solid #04030f';
                 })
             }
         },
@@ -483,7 +487,7 @@ Vue.component("admin-restorani", {
             .get('rest/restoran/dobaviRestorane')
             .then(response => {
                 this.restorani = [];
-                response.data.forEach(el => his.restorani.push(el));
+                response.data.forEach(el => this.restorani.push(el));
                 return this.restorani;
             });
     },

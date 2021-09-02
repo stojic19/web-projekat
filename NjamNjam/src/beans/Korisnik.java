@@ -1,6 +1,5 @@
 package beans;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class Korisnik {
 	private String ime;
 	private String prezime;
 	private String pol;
-	private Date datumRodjenja;
+	private String datumRodjenja;
 	private String uloga;
 	
 	private List<Integer> idPorudzbina;			// sve porudzbine kupca / dostavljaca
@@ -23,13 +22,22 @@ public class Korisnik {
 	private Integer idRestorana;							// restoran menadzera
 	private Integer brojSakupljenihBodova;
 	private TipKupca tip;
+	private Integer brojOtkazanihPorudzbina;
 	
 	public Korisnik () {
 		
 	}
 
+	public Integer getBrojOtkazanihPorudzbina() {
+		return brojOtkazanihPorudzbina;
+	}
+
+	public void setBrojOtkazanihPorudzbina(Integer brojOtkazanihPorudzbina) {
+		this.brojOtkazanihPorudzbina = brojOtkazanihPorudzbina;
+	}
+
 	public Korisnik(Integer iD, Integer logickiObrisan, Integer blokiran, String korisnickoIme, String lozinka,
-			String ime, String prezime, String pol, Date datumRodjenja, String uloga) {
+			String ime, String prezime, String pol, String datumRodjenja, String uloga) {
 		super();
 		ID = iD;
 		this.logickiObrisan = logickiObrisan;
@@ -45,6 +53,7 @@ public class Korisnik {
 		this.idKorpe = -1;
 		this.idRestorana = -1;
 		this.brojSakupljenihBodova = 0;
+		this.brojOtkazanihPorudzbina = 0;
 		// this.tip = tip;	//TODO: RESITI OVO ZA TIPOVE KUPCA
 	}
 
@@ -112,11 +121,11 @@ public class Korisnik {
 		this.pol = pol;
 	}
 
-	public Date getDatumRodjenja() {
+	public String getDatumRodjenja() {
 		return datumRodjenja;
 	}
 
-	public void setDatumRodjenja(Date datumRodjenja) {
+	public void setDatumRodjenja(String datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 

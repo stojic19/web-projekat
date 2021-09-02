@@ -182,6 +182,55 @@ table{
 }
 /*  */
 
+/* ADMIN - RESTORANI - dijalogZaIzmenuKorisnika */
+
+#dijalogZaIzmenuRestorana .modal-contents {
+	z-index: 1;
+	height: 860px;
+	width: 600px;
+	background-color: #b9bab8;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#dijalogZaIzmenuRestorana input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+#dijalogZaIzmenuRestorana select {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+#dijalogZaIzmenuRestorana .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+#dijalogZaIzmenuRestorana button {
+	padding:10px;
+	width: 100px
+}
+#dijalogZaIzmenuRestorana label {
+	text-align: left;
+}
+/*  */
+
 /* ADMIN - KORISNICI - PRETRAGA */
 
 .pretragaKorisnikaAdmin{
@@ -214,6 +263,40 @@ table{
 }
 /*  */
 
+/* RESTORAN - PRETRAGA */
+
+.pretragaRestorana{
+	width: 90%;
+    height: 110px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+}
+
+.pretragaRestorana input{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    background-color:#b9bab8;
+    border: 2px solid black;
+    text-align: center;
+    margin:5px;
+}
+
+.pretragaRestorana button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid gray;
+    background-color: #edfdfb;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    margin:5px;
+}
+/*  */
+
 /* Style for button at navbar in guest mode */
 #divHeaderGuest nav ul li button {
     border: none;
@@ -226,8 +309,8 @@ table{
 #stilZaKorisnike{
 	background-color: #b9bab8;
 	width: 80%;
-    max-width: 1000px;
-    margin: 20px auto;
+    max-width: 1100px;
+    margin: 20px 20px;
     padding: 20px 100px;
     box-sizing: border-box;
     border-radius: 25px;
@@ -312,6 +395,25 @@ table{
     border-radius: 10px;
 }
 
+.cardsRestoran{
+	border-collapse: separate !important;
+    background-color: #edfdfb;
+    color: black;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 90%;
+    border-radius: 10px;
+	margin: auto;
+}
+.cardsRestoranDiv{
+	border-collapse: separate !important;
+    background-color: #f8e9f2;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 100%;
+    border-radius: 10px;
+	align-items: center;
+}
 .tableInProfil{
 	border-collapse: separate !important;
     background-color: #edfdfb;
@@ -369,22 +471,45 @@ button.saveChanges:hover{
 .tableInCards td{
 	border:none !important;
 }
-.deleteButtonStyle{
-	background-color: #f6825b !important;
+
+.cardsRestoran td{
+	border:none !important;
 }
-.changeButtonStyle{
+
+.brisanjeStyle{
+	background-color: #f6825b !important;
+	border: 1px solid #222;
+	border-radius: 7px;
+	font-weight: bold;
+	color: black;
+	padding: 12px 16px;
+	font-size: 12px;
+	cursor: pointer;
+	width: 150px;
+    margin: 3px;
+}
+.izmenaStyle{
 	background-color: rgb(255, 201, 100) !important;
+	border: 1px solid #222;
+	border-radius: 7px;
+	font-weight: bold;
+	color: black;
+	padding: 12px 16px;
+	font-size: 12px;
+	cursor: pointer;
+	width: 150px;
+    margin: 3px;
 }
 
 .endButtonStyle{
 	background-color: #81d8f3 !important;
 }
 
-button.changeButtonStyle:hover{
+button.izmenaStyle:hover{
 	background-color: rgb(255, 225, 168) !important;
 }
 
-button.deleteButtonStyle:hover{
+button.brisanjeStyle:hover{
 	background-color: #fd9a79 !important;
 }
 
@@ -575,7 +700,23 @@ button.endButtonStyle:hover{
 
 /* End of style for map chosing location */
 
+/* MAPA - PRETRAGA */
 
+.mapaPretraga{
+	height: 400px;
+	width: 700px;
+	margin: 10px 10px;
+}
+
+.okoMapeZaPretragu{
+	background-color: #edfdfb;
+	height: 450px;
+	width: 800px;
+	border-radius: 10px;
+	padding: 10px 10px;
+	margin-bottom: 20px;
+}
+/* 	*/
 
 
 /* logo */
@@ -621,7 +762,7 @@ table, th, td {
 }
 
 th, td {
-	padding: 15px;
+	padding: 10px;
 	text-align: left;
 }
 
@@ -779,6 +920,29 @@ td button{
 
 /*  */
 
+/* ADMIN - KORISNICI - FILTER */
+.filterZaRestorane{
+	width: 600px;
+    height: 80px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+	align-content: center;
+}
+
+.filterZaRestorane select{
+	height: 30px;
+    border-radius: 10px;
+    background-color: #b9bab8;
+    width: 200px;
+    border: 2px solid black;
+    text-align: center;
+	margin: 10px 10px;
+}
+
+/*  */
+
 /* Start style filter for reservations */
 .filterForReservationsStatus{
 	width: 500px;
@@ -841,6 +1005,31 @@ td button{
 }
 
 /* SORTIRANJE */
+
+/* RESTORANI - SORTIRANJE */
+.sortiranjeRestorani{
+	width: 800px;
+    height: 100px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+	align-items: center;
+}
+
+.sortiranjeRestorani button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+	border: 2px solid black;
+    background-color: #b9bab8;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+	margin:10px 10px;
+}
+
+/* RESTORANI - SORTIRANJE */
 
 .filledInput{
 	height: 30px;

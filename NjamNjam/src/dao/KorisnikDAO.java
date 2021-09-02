@@ -14,8 +14,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
+import beans.Restoran;
 import dto.KorisnikDTO;
-import dto.RestoranJSONDTO;
+import dto.NoviRestoranDTO;
 
 public class KorisnikDAO {
 
@@ -83,7 +84,18 @@ public class KorisnikDAO {
 		dodajKorisnika(noviKorisnik);
 		sacuvajKorisnikeJSON();
 	}
-
+	public void dodajMenadzera(KorisnikDTO korisnik) {
+		Korisnik noviKorisnik = new Korisnik(getValues().size() + 1, 0, 0, korisnik.korisnickoIme, korisnik.lozinka, korisnik.ime, korisnik.prezime, korisnik.pol, korisnik.datumRodjenja, "MENADZER");		
+		noviKorisnik.setIdRestorana(korisnik.idRestorana);
+		dodajKorisnika(noviKorisnik);
+		sacuvajKorisnikeJSON();
+	}
+	public void dodajMenadzera(NoviRestoranDTO korisnik) {
+		Korisnik noviKorisnik = new Korisnik(getValues().size() + 1, 0, 0, korisnik.korisnickoIme, korisnik.lozinka, korisnik.ime, korisnik.prezime, korisnik.pol, korisnik.datumRodjenja, "MENADZER");		
+		noviKorisnik.setIdRestorana(korisnik.idRestorana);
+		dodajKorisnika(noviKorisnik);
+		sacuvajKorisnikeJSON();
+	}
 	public void dodajKorisnika(Korisnik korisnik) {
 		if (!korisnici.containsValue(korisnik)) {
 			System.out.println("DODAO SAM: " + korisnik.getKorisnickoIme());
@@ -151,14 +163,10 @@ public class KorisnikDAO {
 		return ( dobaviKorisnikaPoKorisnickomImenu(korisnickoIme).getBlokiran() == 1 ) ? true : false;
 	}
 	
-	public void dodajRestoranMenadzeru(RestoranJSONDTO restoran){
-		if(nadjiKorisnikaPoID(restoran.menadzer.id) == null) {
-			dodajNovogKorisnika(restoran.menadzer);
-			Korisnik korisnik = nadjiKorisnikaPoID(restoran.menadzer.id);
-			korisnik.setIdRestorana(restoran.restoran.getID());
-		}else {
-			Korisnik korisnik = nadjiKorisnikaPoID(restoran.menadzer.id);
-			korisnik.setIdRestorana(restoran.restoran.getID());
+	public void dodajRestoranMenadzeru(NoviRestoranDTO restoran){
+		if(nadjiKorisnikaPoID(restoran.idMenadzera) != null)  {
+			Korisnik korisnik = nadjiKorisnikaPoID(restoran.idMenadzera);
+			korisnik.setIdRestorana(restoran.ID);
 		}
 		sacuvajKorisnikeJSON();
 	}

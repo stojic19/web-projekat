@@ -110,6 +110,20 @@ public class KorisnikServis {
 				.entity("Nedozvoljen pristup!").build();
 	}
 	
+	@GET
+	@Path("/dobaviSveKorisnike")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviSveKorisnike(@Context HttpServletRequest request) {
+		
+		if(korisnikJeAdmin(request)) {
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+					.entity(dobaviKorisnike().getValues())
+					.build();
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
 	
 	@POST
 	@Path("/blokirajKorisnika")
