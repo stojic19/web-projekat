@@ -41,7 +41,7 @@ Vue.component("admin-restorani", {
     },
 
     template: `
-    <div id = "stilZaKorisnike">
+    <div id = "stilZaPregledRestorana">
 
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
@@ -460,7 +460,7 @@ Vue.component("admin-restorani", {
 
             mapSearch.on('click', function (evt) {
                 var coord = ol.proj.toLonLat(evt.coordinate);
-                reverseGeocode(coord);
+                reverseGeocodeSearch(coord);
             })
 
         },
@@ -469,7 +469,7 @@ Vue.component("admin-restorani", {
             if (this.mapaZaPretraguVidljiva) {
                 this.$nextTick(function () {
                     this.initForMap();
-                    let c = document.getElementById("mapSearch").childNodes;
+                    let c = document.getElementById("mapaPretraga").childNodes;
                     c[0].style.borderRadius  = '10px';
                     c[0].style.border = '4px solid #04030f';
                 })
@@ -499,7 +499,7 @@ Vue.component("admin-restorani", {
         }
     },
 });
- function reverseGeocode(coords) {
+ function reverseGeocodeSearch(coords) {
     fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + coords[0] + '&lat=' + coords[1])
         .then(function (response) {
             return response.json();

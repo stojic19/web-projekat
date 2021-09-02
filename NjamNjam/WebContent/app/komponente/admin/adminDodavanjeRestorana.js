@@ -5,8 +5,8 @@ Vue.component("admin-dodavanje-restorana", {
         		ID: -1,
 				logickiObrisan: 0,
 				naziv: null,
-				tip: null,
-                status: null,
+				tip: "Burgeri",
+                status: "Radi",
                 broj: null,
                 mesto: null,
                 ulica: null,
@@ -20,9 +20,9 @@ Vue.component("admin-dodavanje-restorana", {
 				lozinka: null,
 				ime: null,
 				prezime: null,
-				pol: null,
+				pol: "Ženski",
 				datumRodjenja: "",
-				uloga: null,
+				uloga: "MENADZER",
 				tip: null,
 				idRestorana: null,
         	},
@@ -36,11 +36,11 @@ Vue.component("admin-dodavanje-restorana", {
     },
     template: `
     <div>
-        <div class="addingNewApartment">
+        <div class="dodavanjeRestorana">
             <h1 style="color:black;"> Dodavanje restorana </h1>
             <form method='post'>
 
-                <table class="tableForAddingNewApartment">
+                <table class="tabelaZaDodavanjeRestorana">
 
                     <tr>
                         <td> Naziv </td>
@@ -106,20 +106,18 @@ Vue.component("admin-dodavanje-restorana", {
                         </td>
                     </tr>
 					
-					<tr v-show="izborZaMenadzera">
-						<td v-show="!dodajMenadzera">
-							<button v-show="!dodajMenadzera" type="button" class="btn" @click="dodajOpcija()" >Dodaj menadžera</button>
-						</td>
-						<td v-show="!izaberiPostojeceg">
-							<button v-show="!izaberiPostojeceg" type="button" class="btn" @click="izaberiOpcija()" >Izaberi postojećeg</button>
+					<tr style="align:center" v-show="izborZaMenadzera">
+						<td colspan="2">
+							<button v-show="!dodajMenadzera" type="button"  class="btn" @click="dodajOpcija()" >Dodaj menadžera</button>
+							<button v-show="!izaberiPostojeceg" type="button"  class="btn" @click="izaberiOpcija()" >Izaberi postojećeg</button>
 						</td>
 					</tr>
 					<tr v-show="izaberiPostojeceg">
                         <td> Slobodni menadžeri </td>
                         <td> 
-                            <select v-model="v-model="DTO.idMenadzera">
+                            <select v-model="DTO.idMenadzera">
                                 <option v-for="menadzer in menadzeri" v-bind:value="menadzer.id">
-                                    {{ menadzer.korisnickoIme }}, {{ menadzer.ime }} {{ menadzer.prezime }} 
+                                    {{ menadzer.korisnickoIme }}, {{ menadzer.ime }}, {{ menadzer.prezime }} 
                                 </option>
                             </select>
                         </td>
@@ -130,7 +128,7 @@ Vue.component("admin-dodavanje-restorana", {
                 </table>
 			
 				
-                <div v-show="dodajMenadzera" id = "dijalogZaDodavanjeKorisnika">
+                <div v-show="dodajMenadzera" id = "dodavanjeMenadzera">
                     <input type="text" v-model="DTO.korisnickoIme" placeholder="Korisničko ime" required>
                     <input type="text" v-model="DTO.ime" placeholder="Ime" >
                     <input type="text" v-model="DTO.prezime" placeholder="Prezime">
@@ -261,18 +259,19 @@ Vue.component("admin-dodavanje-restorana", {
             .then(response => {
                 this.menadzeri = [];
                 response.data.forEach(el => {
-					if(el.uloga == "MENADZER" && el.idRestorana == -1)
+					if(el.uloga == "MENADZER" && el.idRestorana == -1 && el.blokiran == 0 && el.logickiObrisan == 0)
                     this.menadzeri.push(el);
                 });
-                return this.menadzeri;
-            });
-		 console.log(this.menadzeri.length);
+                console.log(this.menadzeri.length);
 		if(this.menadzeri.length == 0)
 		{
 			this.izborZaMenadzera = false;
 			this.dodajMenadzera = true;
 		}
-    }
+                return this.menadzeri;
+            });
+		
+    },
 });
 
 function reverseGeocode(coords) {

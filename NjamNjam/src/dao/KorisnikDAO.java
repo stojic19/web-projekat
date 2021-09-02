@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
-import beans.Restoran;
 import dto.KorisnikDTO;
 import dto.NoviRestoranDTO;
 
