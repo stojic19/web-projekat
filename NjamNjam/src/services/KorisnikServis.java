@@ -2,6 +2,7 @@ package services;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,6 +24,25 @@ public class KorisnikServis {
 	@Context
 	ServletContext ctx;
 
+	@GET
+	@Path("/odjava")
+	@Produces(MediaType.TEXT_HTML)
+	public Response logoutUser(@Context HttpServletRequest request) {
+		
+		if(korisnikJeKupac(request) || korisnikJeAdmin(request) || korisnikJeMenadzer(request) || korisnikJeDostavljac(request)) {
+		
+			HttpSession session = request.getSession();
+			if(session != null && session.getAttribute("ulogovanKorisnik") != null) {
+				session.invalidate();
+			}
+			return Response
+					.status(Response.Status.ACCEPTED).entity("Uspešna odjava")
+					.build();
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nemate dozvolu da pritupite!").build();
+	}
+	
 	@POST
 	@Path("/prijava")
 	@Produces(MediaType.TEXT_HTML)

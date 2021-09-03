@@ -26,7 +26,7 @@ Vue.component("admin-zaglavlje",{
         odjava: function(event){
             event.preventDefault
             axios
-            .get('rest/odjava/korisnik')
+            .get('rest/korisnici/odjava')
             .then(response => {
                 location.href = "/NjamNjam/#/prijava";
             })

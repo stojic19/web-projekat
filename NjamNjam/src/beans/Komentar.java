@@ -6,6 +6,7 @@ public class Komentar {
 	
 	private Integer idKupca;
 	private Integer idRestorana;
+	private Integer idPorudzbine;
 	private String tekst;
 	private Integer ocena;
 	private String status;
@@ -14,14 +15,23 @@ public class Komentar {
 		
 	}
 
-	public Komentar(Integer iD, Integer idKupca, Integer idRestorana, String tekst, Integer ocena, String status) {
+	public Komentar(Integer iD, Integer idKupca, Integer idRestorana, Integer idPorudzbine, String tekst, Integer ocena, String status) {
 		super();
 		ID = iD;
 		this.idKupca = idKupca;
 		this.idRestorana = idRestorana;
+		this.idPorudzbine = idPorudzbine;
 		this.tekst = tekst;
 		this.ocena = ocena;
 		this.status = status;
+	}
+
+	public Integer getIdPorudzbine() {
+		return idPorudzbine;
+	}
+
+	public void setIdPorudzbine(Integer idPorudzbine) {
+		this.idPorudzbine = idPorudzbine;
 	}
 
 	public Integer getID() {
