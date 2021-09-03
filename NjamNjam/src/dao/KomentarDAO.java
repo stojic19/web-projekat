@@ -26,8 +26,13 @@ public class KomentarDAO {
 		}
 		this.imeFajla += File.separator + "komentari.json";
 		this.komentari = new ArrayList<Komentar>();
+		// fejkKomentari();
 	}
-
+	public void fejkKomentari() {
+		komentari.add(new Komentar(1, 1, 1, 1, "Tekst", 5, "CEKANJE"));
+		komentari.add(new Komentar(2, 2, 2, 2, "Tekst", 4, "Odobren"));
+		komentari.add(new Komentar(3, 3, 3, 3, "Tekst", 3, "Odbijen"));
+	}
 	public void ucitajKomentare() {
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -51,16 +56,36 @@ public class KomentarDAO {
 	}
 
 	public void sacuvajKomentareJSON() {
-
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			objectMapper.writeValue(new FileOutputStream(this.imeFajla), komentari);
+			objectMapper.writeValue(new FileOutputStream(this.imeFajla), this.komentari);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void prihvatiKomentar(Integer id) {
+		Komentar komentar = nadjiKomentarPoId(id);
+		if( komentar != null) {
+			komentar.setStatus("Odobren");
+			sacuvajKomentareJSON();
+		}
+	}
+	public void odbijKomentar(Integer id) {
+		Komentar komentar = nadjiKomentarPoId(id);
+		if( komentar != null) {
+			komentar.setStatus("Odbijen");
+			sacuvajKomentareJSON();
+		}
+	}
+	private Komentar nadjiKomentarPoId(Integer id) {
+		for (Komentar komentar : getKomentari()) {
+			if(komentar.getID() == id)
+				return komentar;
+		}
+		return null;
+	}
 	public ArrayList<Komentar> getKomentari() {
 		return komentari;
 	}
