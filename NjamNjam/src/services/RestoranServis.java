@@ -20,7 +20,6 @@ import beans.Slika;
 import dao.KorisnikDAO;
 import dao.RestoranDAO;
 import dao.SlikaDAO;
-import dto.KorisnikDTO;
 import dto.NoviRestoranDTO;
 import dto.RestoranIzmenaDTO;
 import dto.RestoranJSONDTO;
@@ -30,27 +29,6 @@ public class RestoranServis {
 
 	@Context
 	ServletContext ctx;
-
-	@GET
-	@Path("/dobaviNoviRestoranIMenadzera")
-	@Produces(MediaType.APPLICATION_JSON)
-	public RestoranJSONDTO dobaviNoviRestoran() {
-		RestoranJSONDTO restoran= new RestoranJSONDTO();
-		restoran.restoran = new Restoran();
-		restoran.menadzer = new KorisnikDTO();
-		
-		RestoranDAO restorani = dobaviRestoraneDAO();
-		KorisnikDAO korisnici = dobaviKorisnike();
-		
-		Integer idRestorana = restorani.getValues().size() + 1;
-		restoran.restoran.setID(idRestorana);
-		Integer idMenadzera = korisnici.getValues().size() + 1;
-		restoran.menadzer.id = idMenadzera;
-		restoran.restoran.setIdMenadzera(idMenadzera);
-		restoran.menadzer.idRestorana = idRestorana;
-		return restoran;
-
-	}
 	
 	@POST
 	@Path("/dodajNoviRestoran")
