@@ -99,6 +99,29 @@ public class RestoranServis {
 		return dobaviRestoraneDAO().getValues();
 	}
 	
+	@GET
+	@Path("/dobaviRestoranMenadzera")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviRestoranMenadzera(@Context HttpServletRequest request) {	
+		if(korisnikJeMenadzer(request)) {
+			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+			if(korisnik.getIdRestorana() == -1 || korisnik.getIdRestorana() == 0)
+			{
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(null)
+						.build();
+			}else {
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(dobaviRestoraneDAO().nadjiRestoranPoID(korisnik.getIdRestorana()))
+						.build();	
+			}
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
 	@POST
 	@Path("/izmeniRestoran")
 	@Consumes(MediaType.APPLICATION_JSON)

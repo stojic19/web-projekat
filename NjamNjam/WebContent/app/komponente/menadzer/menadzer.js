@@ -1,6 +1,7 @@
 RestoraniKomponenta 				= { template: '<restorani></restorani>'}
 const ProfilKomponenta 				= { template: '<admin-profil></admin-profil>'}
-const KupciKomponenta 			= { template: '<menadzer-kupci></menadzer-kupci>'}
+const KupciKomponenta 				= { template: '<menadzer-kupci></menadzer-kupci>'}
+const MenadzerRestoranKomponenta 	= {template: '<menadzer-restoran></menadzer-restoran>'}
 //const DodavanjeRestoranaKomponenta 	= { template: '<admin-dodavanje-restorana></admin-dodavanje-restorana>'}
 const KomentariKomponenta 			= { template: '<admin-komentari></admin-komentari>'}
 
@@ -11,7 +12,7 @@ const router = new VueRouter({
         	{path : '/home', component: RestoraniKomponenta},
         	{path : '/profil', component: ProfilKomponenta},
         	{path : '/kupci', component: KupciKomponenta},
-			//{path: '/restoran', component: RestoranKomponenta},
+			{path: '/restoran', component: MenadzerRestoranKomponenta},
         	//{path : '/artikli', component: ArtikliKomponenta},
 			//{path: '/dodavanjeArtikla', component: DodavanjeArtiklaKomponenta},
 			{path: '/komentari', component: KomentariKomponenta},
