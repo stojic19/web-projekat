@@ -80,14 +80,14 @@ public class RestoranDAO {
 	}
 	
 	public void dodajNoviRestoran(RestoranJSONDTO restoran) {
-		Restoran noviRestoran = new Restoran(getValues().size() + 1, 0, restoran.restoran.getNaziv(), restoran.restoran.getTip(), new ArrayList<Integer>() ,
+		Restoran noviRestoran = new Restoran(getValues().size() + 1, 0, restoran.restoran.getNaziv(), restoran.restoran.getTip() ,
 				restoran.restoran.getStatus(), restoran.restoran.getLokacija(),restoran.restoran.getPutanjaDoSlike(),restoran.restoran.getIdMenadzera());
 		dodajRestoran(noviRestoran);
 		sacuvajRestoraneJSON();
 	}
 	
 	public void dodajNoviRestoran(NoviRestoranDTO restoran) {
-		Restoran noviRestoran = new Restoran(getValues().size() + 1, 0, restoran.naziv, restoran.tip, new ArrayList<Integer>() ,
+		Restoran noviRestoran = new Restoran(getValues().size() + 1, 0, restoran.naziv, restoran.tip,
 				restoran.status, new Lokacija(restoran.geografskaDuzina, restoran.geografskaSirina, new Adresa(restoran.ulica,restoran.broj,restoran.mesto,restoran.postanskiBroj)),restoran.putanjaDoSlike,restoran.idMenadzera);
 		dodajRestoran(noviRestoran);
 		sacuvajRestoraneJSON();
@@ -136,5 +136,14 @@ public class RestoranDAO {
 	}
 	public Collection<Restoran> getValues() {
 		return restorani.values();
+	}
+	public List<Integer> dobaviKupcePoIdRestorana(Integer id)
+	{
+		for(Restoran restoran : getValues())
+		{
+			if(restoran.getID() == id)
+				return restoran.getIdKupaca();
+		}
+		return null;
 	}
 }

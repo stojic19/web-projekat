@@ -1,5 +1,7 @@
 package services;
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
 import dao.KorisnikDAO;
+import dao.RestoranDAO;
 import dto.KorisnikDTO;
 import dto.KorisnikJSONDTO;
 import dto.KorisnikPrijavaDTO;
@@ -145,6 +148,29 @@ public class KorisnikServis {
 				.entity("Nedozvoljen pristup!").build();
 	}
 	
+	@GET
+	@Path("/dobaviSveKupceRestorana")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviSveKupceRestorana(@Context HttpServletRequest request) {
+		
+		if(korisnikJeMenadzer(request)) {
+			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+			if(korisnik.getIdRestorana()==-1)	// Vraca praznu listu ako nema restoran
+			{
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+						.entity(new ArrayList<Korisnik>())
+						.build();
+			}else {	// Vraca listu kupaca iz restorana
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+					.entity(dobaviKorisnike().dobaviKupceIzListe(dobaviRestoraneDAO().dobaviKupcePoIdRestorana(korisnik.getIdRestorana())))
+					.build();}
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
 	@POST
 	@Path("/blokirajKorisnika")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -218,6 +244,16 @@ public class KorisnikServis {
 		}
 
 		return korisnici;
+	}
+	
+	private RestoranDAO dobaviRestoraneDAO() {
+		RestoranDAO restorani = (RestoranDAO) ctx.getAttribute("restorani");
+		if (restorani == null) {
+			restorani = new RestoranDAO();
+			restorani.ucitajRestorane();
+			ctx.setAttribute("restorani", restorani);
+		}
+		return restorani;
 	}
 	
 	@SuppressWarnings("unused")

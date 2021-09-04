@@ -199,4 +199,18 @@ public class KorisnikDAO {
 
 		return null;
 	}
+	public ArrayList<Korisnik> dobaviKupceIzListe(List<Integer> kupci)
+	{
+		if(kupci==null)
+			return new ArrayList<Korisnik>();
+		ArrayList<Korisnik> kupciRestorana = new ArrayList<Korisnik>();
+		for(Korisnik korisnik : getValues())
+		{
+			if(kupci.contains(korisnik.getID()))
+			{
+				kupciRestorana.add(korisnik);
+			}
+		}
+		return kupciRestorana;
+	}
 }

@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Restoran {
@@ -16,23 +17,26 @@ public class Restoran {
 	private Integer idMenadzera;
 	private Double prosecnaOcena;
 	
+	private List<Integer> idKupaca;			// Za prikaz kupaca kod menadzera
+	
 	public Restoran() {
 		
 	}
 
-	public Restoran(Integer iD, Integer logickiObrisan, String naziv, String tip, List<Integer> idArtiklaUPonudi,
+	public Restoran(Integer iD, Integer logickiObrisan, String naziv, String tip,
 			String status, Lokacija lokacija,String putanjaDoSlike, Integer idMenadzera) {
 		super();
 		ID = iD;
 		this.logickiObrisan = logickiObrisan;
 		this.naziv = naziv;
 		this.tip = tip;
-		this.idArtiklaUPonudi = idArtiklaUPonudi;
+		this.idArtiklaUPonudi = new ArrayList<Integer>();
 		this.status = status;
 		this.lokacija = lokacija;
 		this.putanjaDoSlike = putanjaDoSlike;
 		this.idMenadzera = idMenadzera;
 		this.prosecnaOcena = 0.0;
+		this.idKupaca = new ArrayList<Integer>();
 	}
 
 	public Double getProsecnaOcena() {
@@ -113,6 +117,14 @@ public class Restoran {
 
 	public void setIdMenadzera(Integer idMenadzera) {
 		this.idMenadzera = idMenadzera;
+	}
+
+	public List<Integer> getIdKupaca() {
+		return idKupaca;
+	}
+
+	public void setIdKupaca(List<Integer> idKupaca) {
+		this.idKupaca = idKupaca;
 	}
 	
 }

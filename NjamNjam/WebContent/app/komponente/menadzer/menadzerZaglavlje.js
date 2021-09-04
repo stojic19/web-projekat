@@ -11,7 +11,7 @@ Vue.component("menadzer-zaglavlje",{
             <ul>
                 <li><router-link to="/home" exact>Početna stranica</router-link></li>
                 <li><router-link to="/profil" exact>Profil</router-link></li>
-                <li><router-link to="/korisnici" exact>Korisnici</router-link></li>
+                <li><router-link to="/kupci" exact>Kupci</router-link></li>
                 <li><router-link to="/restoran" exact>Restoran</router-link></li>
 				<li><router-link to="/artikli" exact>Artikli</router-link></li>
 				<li><router-link to="/svePorudzbine" exact>Sve porudžbine</router-link></li>
