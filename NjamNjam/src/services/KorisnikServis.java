@@ -82,10 +82,10 @@ public class KorisnikServis {
 			return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/kupac.html").build();
 
 		} else if (korisnik.getUloga().equals("MENADZER")) {
-			// return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/").build();
+			return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/menadzer.html").build();
 		}
 		else if (korisnik.getUloga().equals("DOSTAVLJAC")) {
-			// return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/").build();
+			return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/dostavljac.html").build();
 		}
 
 		return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/#/loginaaa").build(); // redirect to login

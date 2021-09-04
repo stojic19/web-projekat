@@ -89,5 +89,13 @@ public class KomentarDAO {
 	public ArrayList<Komentar> getKomentari() {
 		return komentari;
 	}
-	
+	public ArrayList<Komentar> dobaviKomentareZaRestoran(Integer idRestorana){
+		ArrayList<Komentar> komentariRestorana = new ArrayList<Komentar>();
+		for(Komentar komentar : komentari)
+		{
+			if(komentar.getIdRestorana() == idRestorana)
+				komentariRestorana.add(komentar);
+		}
+		return komentariRestorana;	
+	}
 }

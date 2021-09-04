@@ -32,7 +32,15 @@ public class KomentarServis {
 					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
 					.entity(dobaviKomentareDAO().getKomentari())
 					.build();
-			}else{
+			}
+		else if(korisnikJeMenadzer(request)) {
+			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+					.entity(dobaviKomentareDAO().dobaviKomentareZaRestoran(korisnik.getIdRestorana()))
+					.build();
+		}
+		else{
 				return Response.status(403).type("text/plain")
 					.entity("Nedozvoljen pristup!").build();
 				}
