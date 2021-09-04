@@ -1,4 +1,4 @@
-// const RestoraniKomponenta = { template: '<></>'}
+const RestoraniKomponenta = { template: '<restorani></restorani>'}
 const RegistracijaKomponenta = { template: '<registracija></registracija>'}
 const PrijavaKomponenta = { template: '<prijava></prijava>'}
 
@@ -6,8 +6,7 @@ const PrijavaKomponenta = { template: '<prijava></prijava>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
-		  { path: '/', component: RegistracijaKomponenta},
-	//	  { path: '/restorani', component: RestoraniKomponenta},
+		  { path: '/', component: RestoraniKomponenta},
 		  { path: '/registracija', component: RegistracijaKomponenta},
 		  { path: '/prijava', component: PrijavaKomponenta}
 		  
