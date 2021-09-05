@@ -1,20 +1,14 @@
-//const PocetnaStranaKomponenta		= { template: '<admin-pocetna-strana></admin-pocetna-strana>'}
-//RestoraniKomponenta 				= { template: '<admin-restorani></admin-restorani>'}
-//const ProfilKomponenta 				= { template: '<admin-profil></admin-profil>'}
-//const KorisniciKomponenta 			= { template: '<admin-korisnici></admin-korisnici>'}
-//const DodavanjeRestoranaKomponenta 	= { template: '<admin-dodavanje-restorana></admin-dodavanje-restorana>'}
-//const KomentariKomponenta 			= { template: '<admin-komentari></admin-komentari>'}
+DostupnePorudzbineKomponenta 		= { template: '<dostupne-porudzbine-dostavljac></dostupne-porudzbine-dostavljac>'}
+const MojePorudzbineKomponenta		= { template: '<moje-porudzbine-dostavljac></moje-porudzbine-dostavljac>'}
+const ProfilKomponenta 				= { template: '<dostavljac-profil></dostavljac-profil>'}
 
 const router = new VueRouter({
     mode: 'hash',
     routes:[
-  //      	{path : '/', component: PocetnaStranaKomponenta},
-    //    	{path : '/restorani', component: RestoraniKomponenta},
-      //  	{path : '/home', component: PocetnaStranaKomponenta},
-        //	{path : '/profil', component: ProfilKomponenta},
-        	//{path : '/korisnici', component: KorisniciKomponenta},
-        	//{path : '/dodavanjeRestorana', component: DodavanjeRestoranaKomponenta},
-        	//{path : '/komentari', component: KomentariKomponenta}
+      	    {path : '/', component: DostupnePorudzbineKomponenta},
+      	    {path : '/dostupnePorudzbine', component: DostupnePorudzbineKomponenta},
+        	{path : '/mojePorudzbine', component: MojePorudzbineKomponenta},
+        	{path : '/profil', component: ProfilKomponenta}
     ]
 })
 
