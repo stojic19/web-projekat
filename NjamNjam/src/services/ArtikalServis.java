@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -132,6 +133,25 @@ public class ArtikalServis {
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
 					.entity(artikli.dobaviArtiklePoIdRestorana(korisnik.getIdRestorana()))
 					.build();
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@DELETE
+	@Path("/obrisiArtikal")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response obrisiArtikal(ArtikalJSONDTO artikal,@Context HttpServletRequest request) {
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+		if(korisnik.getUloga().contains("MENADZER")) {
+				ArtikalDAO artikli = dobaviArtikleDAO();
+				artikli.obrisiArtikal(artikal.artikal.getID());
+						
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(artikli.dobaviArtiklePoIdRestorana(korisnik.getIdRestorana()))
+						.build();
 		}
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();

@@ -100,4 +100,20 @@ public class ArtikalDAO {
 		}
 		return false;
 	}
+	public void obrisiArtikal(Integer id) {
+		Artikal artikal = nadjiArtikalPoID(id);
+		if(artikal != null) {
+			artikal.setLogickiObrisan(1);
+			sacuvajArtikleJSON();
+		}
+	}
+	
+	public Artikal nadjiArtikalPoID(Integer id) {
+		for (Artikal artikal : artikli) {
+			if(artikal.getID() == id)
+				return artikal;
+		}
+		
+		return null;
+	}
 }
