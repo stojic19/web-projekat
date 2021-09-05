@@ -49,13 +49,13 @@ public class ArtikalDAO {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 		for (Artikal a : ucitaniArtikli) {
-			ucitaniArtikli.add(a);
+			artikli.add(a);
 		}
 	}
 
-	public void sacuvajKomentareJSON() {
+	public void sacuvajArtikleJSON() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			objectMapper.writeValue(new FileOutputStream(this.imeFajla), this.artikli);
@@ -74,5 +74,11 @@ public class ArtikalDAO {
 				artikliRestorana.add(a);
 		}
 		return artikliRestorana;
+	}
+	public void dodajNoviArtikal(Artikal artikal) {
+		Artikal noviArtikal= new Artikal(artikli.size() + 1, 0, artikal.getNaziv(), artikal.getCena(),
+				artikal.getTip(), artikal.getIdRestoranaKomPripada(),artikal.getKolicina(),artikal.getOpis(),artikal.getPutanjaDoSlike());
+		artikli.add(noviArtikal);
+		sacuvajArtikleJSON();
 	}
 }

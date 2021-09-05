@@ -1,5 +1,7 @@
 package services;
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -11,8 +13,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.Artikal;
 import beans.Korisnik;
 import dao.ArtikalDAO;
+import dto.ArtikalJSONDTO;
 import dto.RestoranJSONDTO;
 
 @Path("/artikal")
@@ -33,12 +37,37 @@ public class ArtikalServis {
 			
 	}
 	
+	@POST
+	@Path("/dodajArtikal")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response dodajArtikal(ArtikalJSONDTO artikal,@Context HttpServletRequest request){
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+		ArrayList<Artikal> artikliRestorana = dobaviArtikleDAO().dobaviArtiklePoIdRestorana(korisnik.getIdRestorana());
+		for(Artikal artikalZaProveru : artikliRestorana)
+		{
+			if(artikalZaProveru.getNaziv().toLowerCase().equals(artikal.artikal.getOpis().toLowerCase()))
+				return Response
+						.status(Response.Status.BAD_REQUEST)
+						.entity("Već postoji artikal sa istim imenom.")
+						.build();
+		}
+		artikal.artikal.setIdRestoranaKomPripada(korisnik.getIdRestorana());
+		dobaviArtikleDAO().dodajNoviArtikal(artikal.artikal);
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+					.entity("Uspešno dodat artikal.")
+					.build();
+			
+	}
+	
 	@GET
 	@Path("/dobaviArtikleMenadzera")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dobaviArtikleMenadzera(@Context HttpServletRequest request) {	
 		
 			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+			ArtikalDAO artikli = dobaviArtikleDAO();
 			if(korisnik != null)
 			if(korisnik.getUloga().equals("MENADZER")) {
 			if(korisnik.getIdRestorana() == -1 || korisnik.getIdRestorana() == 0)
@@ -50,7 +79,7 @@ public class ArtikalServis {
 			}else {
 				return Response
 						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
-						.entity(dobaviArtikleDAO().dobaviArtiklePoIdRestorana(korisnik.getIdRestorana()))
+						.entity(artikli.dobaviArtiklePoIdRestorana(korisnik.getIdRestorana()))
 						.build();	
 			}
 		}
@@ -64,21 +93,26 @@ public class ArtikalServis {
 	public Response daLiMenadzerImaRestoran(@Context HttpServletRequest request) {	
 		
 			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-			if(korisnik != null)
-			if(korisnik.getUloga().equals("MENADZER")) {
-			if(korisnik.getIdRestorana() == -1 || korisnik.getIdRestorana() == 0)
+			
+			System.out.println(korisnik.getKorisnickoIme() + " " + korisnik.getIdRestorana() + " " + korisnik.getUloga());
+			
+			if(korisnik.getUloga().contains("MENADZER")) 
 			{
-				return Response
+				System.out.println("Menadzer je");
+				if(korisnik.getIdRestorana() == -1 || korisnik.getIdRestorana() == 0)
+				{
+					System.out.println("NEMA RESTORAN");
+					return Response
 						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
 						.entity(false)
 						.build();
-			}else {
-				return Response
+				}else {
+					return Response
 						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
 						.entity(true)
 						.build();	
+				}
 			}
-		}
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();
 	}

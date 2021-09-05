@@ -3,7 +3,7 @@ const ProfilKomponenta 				= { template: '<admin-profil></admin-profil>'}
 const KupciKomponenta 				= { template: '<menadzer-kupci></menadzer-kupci>'}
 const MenadzerRestoranKomponenta 	= { template: '<menadzer-restoran></menadzer-restoran>'}
 const MenadzerArtikliKomponenta 	= { template: '<menadzer-artikli></menadzer-artikli>'}
-//const DodavanjeRestoranaKomponenta 	= { template: '<admin-dodavanje-restorana></admin-dodavanje-restorana>'}
+const DodavanjeArtiklaKomponenta 	= { template: '<menadzer-dodavanje-artikla></menadzer-dodavanje-artikla>'}
 const KomentariKomponenta 			= { template: '<admin-komentari></admin-komentari>'}
 
 const router = new VueRouter({
@@ -15,7 +15,7 @@ const router = new VueRouter({
         	{path : '/kupci', component: KupciKomponenta},
 			{path: '/restoran', component: MenadzerRestoranKomponenta},
         	{path : '/artikli', component: MenadzerArtikliKomponenta},
-			//{path: '/dodavanjeArtikla', component: DodavanjeArtiklaKomponenta},
+			{path: '/dodavanjeArtikla', component: DodavanjeArtiklaKomponenta},
 			{path: '/komentari', component: KomentariKomponenta},
         	//{path : '/svePorudzbine', component: SvePorudzbineKomponenta}
 			//{path: '/aktivnePorudzbine', component: AktivnePorudzbineKomponenta},

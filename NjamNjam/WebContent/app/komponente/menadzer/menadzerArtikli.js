@@ -157,7 +157,7 @@ Vue.component("menadzer-artikli", {
     `,
     methods: {
         dodajArtikal: function () {
-            window.location.href = "http://localhost:8080/NjamNJam/menadzer.html#/dodavanjeArtikla";
+            window.location.href = "http://localhost:8080/NjamNjam/menadzer.html#/dodavanjeArtikla";
         },
         izmeniArtikal: function (artikal) {
             this.dijalogZaIzmenuSakriven = !this.dijalogZaIzmenuSakriven;
@@ -214,8 +214,8 @@ Vue.component("menadzer-artikli", {
                 return false;
             
             //prosecna ocena
-            if (artikal.cena > parseFloat(this.pretraga.cena))
-                return false;
+            //if (artikal.cena > parseFloat(this.pretraga.cena))
+            //    return false;
 
             return true;
         },
@@ -354,23 +354,22 @@ Vue.component("menadzer-artikli", {
     mounted() {
 
         axios.get('rest/slike/dobaviSlike').then(response => (this.slike = response.data));
-		
-		axios
-            .get('rest/artikal/daLiMenadzerImaRestoran')
-            .then(response => {
-				this.imaRestoran = response.data;
-				this.imaRestoran;
-            });
-		if(this.imaRestoran)
-        {
+
         axios
             .get('rest/artikal/dobaviArtikleMenadzera')
             .then(response => {
                 this.artikli = [];
-				response.data.forEach(el => this.artikli.push(el));
+                if(response.data == "")
+        		{
+        			this.imaRestoran = false;
+        		}
+        		else if(Object.prototype.toString.call(response.data) === '[object Array]')
+        		{
+					response.data.forEach(el => this.artikli.push(el));
+					this.imaRestoran = true;
+				}
                 return this.artikli;
             });
-        }
     },
     computed: {
         filtriraniArtikli: function () {
