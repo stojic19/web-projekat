@@ -4,14 +4,15 @@ Vue.component("menadzer-restoran", {
 			slike: [],
             restoran : {},
 			dijalogZaIzmenuSakriven: true,
-			restoranZaIzmenu:{}
+			restoranZaIzmenu:{},
+			imaRestoran: false
         }
     },
 
     template: `
     <div id = "stilZaPregledRestorana">
 
-            	<div class="cardsRestoranDiv" v-show="restoran != ''">
+            	<div class="cardsRestoranDiv" v-show="imaRestoran">
                 <img class="logoRestorana" v-bind:src="dobaviPutanjuSlike(restoran)">
 
                 <table class="cardsRestoran">
@@ -42,7 +43,7 @@ Vue.component("menadzer-restoran", {
                 <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="izmeniRestoran(restoran)" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
             	</div>
         <!-- Kraj card za restoran -->
-				<div v-show="restoran == ''">
+				<div v-show="!imaRestoran">
 				<h2>Trenutno nemate dodeljen restoran.</h2>
 				</div>
         <!-- Modalni dijalog za izmenu restorana -->
@@ -215,7 +216,15 @@ Vue.component("menadzer-restoran", {
             .get('rest/restoran/dobaviRestoranMenadzera')
             .then(response => {
                 this.restoran = response.data;
-                return this.restoran;
+                if(response.data == "")
+               	{
+                		this.imaRestoran = false;
+                }
+                else
+                {
+                	this.imaRestoran = true;
+                }
+                return this.restoran,this.imaRestoran;
             });
     },
     computed: {

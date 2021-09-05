@@ -127,7 +127,7 @@ Vue.component("admin-restorani", {
                 </table>
 
                 <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="izmeniRestoran(restoran)" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
-                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="obrisiRestoran(restoran)" class="brisanjeStyle button" ><i class="fa fa-trash" aria-hidden="true"></i>  Obrisi </button> <br>
+                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="obrisiRestoran(restoran)" class="brisanjeStyle button" ><i class="fa fa-trash" aria-hidden="true"></i>  Obriši </button> <br>
             	</div>
             </li>
         </ul>
@@ -154,7 +154,7 @@ Vue.component("admin-restorani", {
                         <option>Kineski</option>
                         <option>Azijska kuhinja</option>
             		</select>
-					<label for="status">Naziv:</label>
+					<label for="status">Status:</label>
 					<select name="status" v-model="restoranZaIzmenu.status" required>
                 		<option>Radi</option>
                 		<option>Ne radi</option>
