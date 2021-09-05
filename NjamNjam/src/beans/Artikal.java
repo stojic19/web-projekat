@@ -6,7 +6,7 @@ public class Artikal {
 	private Integer logickiObrisan;						// 1 - obrisan, 0 - nije obrisan
 	
 	private String naziv;
-	private String cena;
+	private Double cena;
 	private String tip;
 	private Integer idRestoranaKomPripada;
 	private String kolicina;
@@ -25,7 +25,7 @@ public class Artikal {
 		
 	}
 
-	public Artikal(Integer iD, Integer logickiObrisan, String naziv, String cena, String tip,
+	public Artikal(Integer iD, Integer logickiObrisan, String naziv, Double cena, String tip,
 			Integer idRestoranaKomPripada, String kolicina, String opis, String putanjaDoSlike) {
 		super();
 		ID = iD;
@@ -63,11 +63,11 @@ public class Artikal {
 		this.naziv = naziv;
 	}
 
-	public String getCena() {
+	public Double getCena() {
 		return cena;
 	}
 
-	public void setCena(String cena) {
+	public void setCena(Double cena) {
 		this.cena = cena;
 	}
 

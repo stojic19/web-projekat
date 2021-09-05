@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import beans.Artikal;
 import beans.Korisnik;
 import dao.ArtikalDAO;
+import dto.ArtikalIzmenaDTO;
 import dto.ArtikalJSONDTO;
 import dto.RestoranJSONDTO;
 
@@ -113,6 +114,25 @@ public class ArtikalServis {
 						.build();	
 				}
 			}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@POST
+	@Path("/izmeniArtikal")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response izmeniArtikal(ArtikalIzmenaDTO artikal,@Context HttpServletRequest request) {
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+		if(korisnik.getUloga().contains("MENADZER")) {
+			ArtikalDAO artikli = dobaviArtikleDAO();
+			artikli.izmenaArtikla(artikal);
+	
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+					.entity(artikli.dobaviArtiklePoIdRestorana(korisnik.getIdRestorana()))
+					.build();
+		}
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();
 	}

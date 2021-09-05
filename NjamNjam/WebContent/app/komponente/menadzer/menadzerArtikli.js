@@ -188,10 +188,9 @@ Vue.component("menadzer-artikli", {
         },
         potvrdiIzmene: function () {
 			
-            if (!this.artikalZaIzmenu.naziv || !this.artikalZaIzmenu.cena || !this.artikalZaIzmenu.kolicina
-                || !this.artikalZaIzmenu.opis)
+            if (!this.artikalZaIzmenu.naziv || !this.artikalZaIzmenu.cena)
             {
-                	toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
+                	toastr["warning"]("Polja naziv i cena su obavezna!", "Proverite unos!");
                 	return;
             }
             this.artikalZaIzmenu.putanjaDoSlike = document.getElementById("slikaZaIzmenu").src;

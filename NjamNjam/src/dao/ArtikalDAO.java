@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Artikal;
+import dto.ArtikalIzmenaDTO;
 
 public class ArtikalDAO {
 	private ArrayList<Artikal> artikli;
@@ -80,5 +81,23 @@ public class ArtikalDAO {
 				artikal.getTip(), artikal.getIdRestoranaKomPripada(),artikal.getKolicina(),artikal.getOpis(),artikal.getPutanjaDoSlike());
 		artikli.add(noviArtikal);
 		sacuvajArtikleJSON();
+	}
+	public Boolean izmenaArtikla(ArtikalIzmenaDTO artikal)
+	{
+		for(Artikal a : artikli)
+		{
+			if(a.getID() == artikal.ID)
+			{
+				a.setNaziv(artikal.naziv);
+				a.setCena(artikal.cena);
+				a.setKolicina(artikal.kolicina);
+				a.setOpis(artikal.opis);
+				a.setPutanjaDoSlike(artikal.putanjaDoSlike);
+				
+				sacuvajArtikleJSON();
+				return true;
+			}
+		}
+		return false;
 	}
 }
