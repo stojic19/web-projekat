@@ -288,7 +288,7 @@ Vue.component("admin-restorani", {
                     });
 
             } else {
-                let filterRestorana = (this.restorani).filter(restoran => restoran.tip == this.podaciZaFiltriranjeKorisnika.otvoreni);
+                let filterRestorana = (this.restorani).filter(restoran => restoran.tip == this.podaciZaFiltriranjeKorisnika.tip);
                 this.restorani = filterRestorana;
             }
         },
@@ -428,7 +428,7 @@ Vue.component("admin-restorani", {
 
             let slika;
 
-            slika = this.dobaviBase64odIdja(parseInt(restoran.dobaviPutanjuSlike, 10));
+            slika = this.dobaviBase64odIdja(parseInt(restoran.putanjaDoSlike, 10));
 
             return slika;
         },

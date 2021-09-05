@@ -1,4 +1,4 @@
-Vue.component("admin-korisnici", {
+Vue.component("admin-sumnjivi-korisnici", {
     data() {
         return {
             korisnici: [],
@@ -8,15 +8,12 @@ Vue.component("admin-korisnici", {
                 prezime: ''
             },
             podaciZaFiltriranjeKorisnika: {
-                uloga: "",
                 tip: ""
             },
             imeBrojac : 0,
             prezimeBrojac : 0,
             korisnickoImeBrojac : 0,
             brojBodovaBrojac : 0,
-            dijalogZaDodavanjeSakriven: true,
-            noviKorisnik: {},
             prostorZaPretraguVidljiv: false,
             prostorZaFiltereVidljiv: false,
             prostorZaSortiranjeVidljiv: false
@@ -29,7 +26,6 @@ Vue.component("admin-korisnici", {
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
         <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
-        <button type="button" @click="dodajNovogKorisnika()" class="btn"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj korisnika</button>
         <br><br>
 
         <!-- Pretraga -->
@@ -48,12 +44,6 @@ Vue.component("admin-korisnici", {
         <!-- Filtriranje korisnika -->
         <div class="filterZaKorisnikeAdmin" v-if="prostorZaFiltereVidljiv">
             <form method='post' 
-                <select v-model="podaciZaFiltriranjeKorisnika.uloga" @change="onchangeUlogaKorisnika()">
-                    <option value="">Bez filtera za ulogu</option>
-                    <option>KUPAC</option>
-                    <option>MENADZER</option>
-                    <option>DOSTAVLJAC</option>
-                </select>
 
                 <select v-model="podaciZaFiltriranjeKorisnika.tip" @change="onchangeTipKorisnika()">
                     <option value="">Bez filtera za tip</option>
@@ -91,7 +81,6 @@ Vue.component("admin-korisnici", {
                         <th> Lozinka</th>
                         <th> Ime </th>
                         <th> Prezime </th>
-                        <th> Uloga </th>
                         <th> Broj bodova </th>
                         <th> Blokiranje </th>
                     </tr>
@@ -103,7 +92,6 @@ Vue.component("admin-korisnici", {
                         <td> {{korisnik.lozinka}}</td>
                         <td> {{korisnik.ime}} </td>
                         <td> {{korisnik.prezime }} </td>
-                        <td> {{korisnik.uloga }} </td>
                         <td> {{korisnik.brojSakupljenihBodova}} </td>
                         <td align ="center" >
                             <button v-if="korisnik.blokiran == '1' && korisnik.uloga != 'ADMIN' " type="button" @click="odblokirajKorisnika(korisnik)" ><i class="fa fa-check" aria-hidden="true"></i> Odblokiraj </button>
@@ -116,82 +104,20 @@ Vue.component("admin-korisnici", {
         </div>
         <!-- kraj tabele svih korisnika -->
 
-        <!-- Modalni dijalog za dodavanje korisnika -->
-        <div id = "dijalogZaDodavanjeKorisnika" v-bind:class="{bgModal: dijalogZaDodavanjeSakriven, bgModalShow: !dijalogZaDodavanjeSakriven}">
-            <div class="modal-contents">
-        
-                <div class="close" @click="dijalogZaDodavanjeSakriven = !dijalogZaDodavanjeSakriven">+</div>
-
-                <form method='post'>
-                    
-                    <input type="text" v-model="noviKorisnik.korisnickoIme" placeholder="Korisničko ime" required>
-                    <input type="text" v-model="noviKorisnik.ime" placeholder="Ime" >
-                    <input type="text" v-model="noviKorisnik.prezime" placeholder="Prezime">
-					<select v-model="noviKorisnik.pol" required>
-                		<option>Ženski</option>
-                		<option>Muški</option>
-            		</select>
-            		<input type="date" v-model="noviKorisnik.datum" required>
-					<select v-model="noviKorisnik.uloga" required>
-                		<option>MENADZER</option>
-                		<option>DOSTAVLJAC</option>
-            		</select>
-                    <input type="password" v-model="noviKorisnik.lozinka" placeholder="Lozinka" required>
-                    <input type="password" placeholder="Ponovljena lozinka" required>
-
-                    <button type="button" @click="potvrdiDodavanje" class="btn">Potvrdi</button>
-                    <button type="button" @click="dijalogZaDodavanjeSakriven = !dijalogZaDodavanjeSakriven" class="btn">Odustani</button>
-
-                </form>
-
-            </div>
-        </div> <!-- Kraj modalnog dijaloga -->
-
-
     </div>
     `,
     methods: {
-        dodajNovogKorisnika: function () {
-            this.dijalogZaDodavanjeSakriven = !this.dijalogZaDodavanjeSakriven;
-        },
-        potvrdiDodavanje: function () {
-            if (!this.noviKorisnik.korisnickoIme || !this.noviKorisnik.lozinka || !this.noviKorisnik.ime || !this.noviKorisnik.prezime) {
-                toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
-                return;
-
-            }
-            axios
-                .post('rest/korisnici/registracija', {
-                    	"korisnickoIme": this.noviKorisnik.korisnickoIme,
-                        "lozinka": this.noviKorisnik.lozinka,
-                        "ime": this.noviKorisnik.ime,
-                        "prezime": this.noviKorisnik.prezime,
-                        "uloga": this.noviKorisnik.uloga,
-                        "pol" : this.noviKorisnik.pol,
-                        "datumRodjenja": this.noviKorisnik.datum
-                })
-                .then(response => {
-                    location.reload();
-                    toastr["success"]("Uspešno dodat novi korisnik!", "Uspešna registracija");
-                })
-                .catch(err => {
-                    console.log("\n\n ------- ERROR -------\n");
-                    console.log(err);
-                    toastr["error"]("Već imamo korisnika sa istim korisničkim imenom, isprobajte drugo", "Greška");
-                    console.log("\n\n ----------------------\n\n");
-                })
-
-        },
         blokirajKorisnika: function (korisnikParam) {
             axios
                 .post('rest/korisnici/blokirajKorisnika', {
                     korisnik: korisnikParam
                 })
                 .then(response => {
-                    this.korisnici = [];
-                    response.data.forEach(el => {
-                        this.korisnici.push(el);
-                    });
+						this.korisnici = [];
+                        response.data.forEach(el => {
+                            if (el.uloga == "KUPAC" && el.brojOtkazanihPorudzbina >=5)
+                                this.korisnici.push(el);
+                        });
                     toastr["success"]("Uspešno ste blokirali korisnika!", "Uspeh!");
                     return this.korisnici;
                 });
@@ -228,36 +154,18 @@ Vue.component("admin-korisnici", {
 
             return true;
         },
-		onchangeUlogaKorisnika: function () {
-            if (this.podaciZaFiltriranjeKorisnika.uloga == "") {
-                axios
-                    .get('rest/korisnici/dobaviKorisnikeBezAdmina')
-                    .then(response => {
-                        this.korisnici = [];
-                        response.data.forEach(el => {
-                            if (el.uloga != "ADMIN")
-                                this.korisnici.push(el);
-                        });
-                        return this.korisnici;
-                    });
-
-            } else {
-                let filterKorisnici = (this.korisnici).filter(korisnik => korisnik.uloga == this.podaciZaFiltriranjeKorisnika.uloga);
-                this.korisnici = filterKorisnici;
-            }
-        },
         onchangeTipKorisnika: function () {
             if (this.podaciZaFiltriranjeKorisnika.status == "") {
                 axios
                     .get('rest/apartments/dobaviKorisnikeBezAdmina')
                     .then(response => {
-                        this.korisnici = [];
+						this.korisnici = [];
                         response.data.forEach(el => {
-                            if (el.tip != null)
+                            if (el.uloga == "KUPAC" && el.brojOtkazanihPorudzbina >=5)
                                 this.korisnici.push(el);
                         });
                         return this.korisnici;
-                    });
+				});
 
             } else {
                 let filterKorisnici = (this.korisnici).filter(korisnik => korisnik.tip == this.podaciZaFiltriranjeKorisnika.tip);
@@ -271,13 +179,13 @@ Vue.component("admin-korisnici", {
                 axios
                     .get('rest/korisnici/dobaviKorisnikeBezAdmina')
                     .then(response => {
-                        this.korisnici = [];
+						this.korisnici = [];
                         response.data.forEach(el => {
-                            if (el.uloga != "ADMIN")
+                            if (el.uloga == "KUPAC" && el.brojOtkazanihPorudzbina >=5)
                                 this.korisnici.push(el);
                         });
                         return this.korisnici;
-                    });
+				});
             }else if(this.imeBrojac % 3 == 1)
             {
                 this.multisort(this.korisnici, ['ime', 'ime'], ['ASC', 'DESC']);
@@ -292,13 +200,13 @@ Vue.component("admin-korisnici", {
                 axios
                     .get('rest/korisnici/dobaviKorisnikeBezAdmina')
                     .then(response => {
-                        this.korisnici = [];
+						this.korisnici = [];
                         response.data.forEach(el => {
-                            if (el.uloga != "ADMIN")
+                            if (el.uloga == "KUPAC" && el.brojOtkazanihPorudzbina >=5)
                                 this.korisnici.push(el);
                         });
                         return this.korisnici;
-                    });
+				});
             }else if(this.prezimeBrojac % 3 == 1)
             {
                 this.multisort(this.korisnici, ['prezime', 'prezime'], ['ASC', 'DESC']);
@@ -313,13 +221,13 @@ Vue.component("admin-korisnici", {
                 axios
                     .get('rest/korisnici/dobaviKorisnikeBezAdmina')
                     .then(response => {
-                        this.korisnici = [];
+					this.korisnici = [];
                         response.data.forEach(el => {
-                            if (el.uloga != "ADMIN")
+                            if (el.uloga == "KUPAC" && el.brojOtkazanihPorudzbina >=5)
                                 this.korisnici.push(el);
                         });
                         return this.korisnici;
-                    });
+				});
             }else if(this.korisnickoImeBrojac % 3 == 1)
             {
                 this.multisort(this.korisnici, ['korisnickoIme', 'korisnickoIme'], ['ASC', 'DESC']);
@@ -334,13 +242,13 @@ Vue.component("admin-korisnici", {
                 axios
                     .get('rest/korisnici/dobaviKorisnikeBezAdmina')
                     .then(response => {
-                        this.korisnici = [];
+					this.korisnici = [];
                         response.data.forEach(el => {
-                            if (el.uloga != "ADMIN")
+                            if (el.uloga == "KUPAC" && el.brojOtkazanihPorudzbina >=5)
                                 this.korisnici.push(el);
                         });
                         return this.korisnici;
-                    });
+				});
             }else if(this.brojBodovaBrojac % 3 == 1)
             {
                 this.multisort(this.korisnici, ['brojBodova', 'brojBodova'], ['ASC', 'DESC']);
@@ -400,16 +308,14 @@ Vue.component("admin-korisnici", {
         },
     },
     mounted() {
-        axios.get('rest/korisnici/dobaviKorisnikeBezAdmina')
-        		.then(response => {
-                        this.korisnici = [];
+        axios.get('rest/korisnici/dobaviKorisnikeBezAdmina').then(response => {
+				this.korisnici = [];
                         response.data.forEach(el => {
-                            if (el.uloga != "ADMIN")
+                            if (el.uloga == "KUPAC" && el.brojOtkazanihPorudzbina >=5)
                                 this.korisnici.push(el);
                         });
                         return this.korisnici;
-                    });
-        axios.get('rest/korisnici/dobaviNovogKorisnika').then(response => (this.noviKorisnik = response.data));
+				});
     },
     computed: {
         filtriraniKorisnici: function () {

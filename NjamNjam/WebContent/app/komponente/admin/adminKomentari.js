@@ -8,7 +8,7 @@ Vue.component("admin-komentari", {
     },
     template: `
     <div id = "stilZaPregledRestorana" >
-		<div v-show="komentariCekanje.length>0 && komentariOstali.length>0">
+		<div v-show="komentariCekanje.length>0 || komentariOstali.length>0">
         <!-- Komentari koji cekaju na odobrenje -->
         <div v-show="komentariCekanje.length > 0">
             <table class="styleForTable">
