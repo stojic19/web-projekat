@@ -74,8 +74,7 @@ public class KorisnikServis {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Blokirani ste!")
 					.build();
 		}
-		System.out.println("korime:" + korisnik.getKorisnickoIme());
-		System.out.println("uloga:" + korisnik.getUloga());
+
 		request.getSession().setAttribute("ulogovanKorisnik", korisnik); // we give him a session
 
 

@@ -150,7 +150,7 @@ Vue.component("menadzer-artikli", {
             </div>
         </div> <!-- Kraj modalnog dijaloga -->
 	</div>
-	<div>
+	<div v-show="!imaRestoran">
 		<h2>Trenutno nemate dodeljen restoran.</h2>
 	</div>
     </div>
@@ -354,20 +354,23 @@ Vue.component("menadzer-artikli", {
     mounted() {
 
         axios.get('rest/slike/dobaviSlike').then(response => (this.slike = response.data));
-
+		
+		axios
+            .get('rest/artikal/daLiMenadzerImaRestoran')
+            .then(response => {
+				this.imaRestoran = response.data;
+				this.imaRestoran;
+            });
+		if(this.imaRestoran)
+        {
         axios
             .get('rest/artikal/dobaviArtikleMenadzera')
             .then(response => {
                 this.artikli = [];
-				if(response.data == "")
-					this.imaRestoran = false;
-				else
-				{
-					this.imaRestoran = true;
-					response.data.forEach(el => this.artikli.push(el));
-				}
-                return this.artikli,this.imaRestoran;
+				response.data.forEach(el => this.artikli.push(el));
+                return this.artikli;
             });
+        }
     },
     computed: {
         filtriraniArtikli: function () {
