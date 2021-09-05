@@ -70,7 +70,6 @@ Vue.component("menadzer-dodavanje-artikla", {
                 toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
                 return;
             }
-			console.log(this.DTO);
             axios
                 .post('rest/artikal/dodajArtikal', {
 					artikal:this.DTO

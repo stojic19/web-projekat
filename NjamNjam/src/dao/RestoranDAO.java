@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Adresa;
+import beans.Artikal;
 import beans.Lokacija;
 import beans.Restoran;
 import dto.NoviRestoranDTO;
@@ -145,5 +146,18 @@ public class RestoranDAO {
 				return restoran.getIdKupaca();
 		}
 		return null;
+	}
+	public void dodajArtikalRestoranu(Artikal artikal) {
+		for(Restoran restoran : getValues())
+		{
+			if(restoran.getID()==artikal.getIdRestoranaKomPripada())
+			{
+				List<Integer> listaArtikala = restoran.getIdArtiklaUPonudi();
+				listaArtikala.add(artikal.getID());
+				restoran.setIdArtiklaUPonudi(listaArtikala);
+				sacuvajRestoraneJSON();
+				return;
+			}
+		}
 	}
 }

@@ -291,11 +291,11 @@ Vue.component("restorani", {
 
             let slika;
 
-            slika = this.dobaviBase64odIdja(parseInt(restoran.dobaviPutanjuSlike, 10));
+            slika = this.dobaviBase64odId(parseInt(restoran.putanjaDoSlike, 10));
 
             return slika;
         },
-        dobaviBase64odIdja: function (idSlike) {
+        dobaviBase64odId: function (idSlike) {
             let base64Slike;
 
             for (let el of this.slike) {

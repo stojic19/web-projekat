@@ -16,7 +16,10 @@ import javax.ws.rs.core.Response;
 
 import beans.Artikal;
 import beans.Korisnik;
+import beans.Slika;
 import dao.ArtikalDAO;
+import dao.RestoranDAO;
+import dao.SlikaDAO;
 import dto.ArtikalIzmenaDTO;
 import dto.ArtikalJSONDTO;
 import dto.RestoranJSONDTO;
@@ -48,13 +51,17 @@ public class ArtikalServis {
 		ArrayList<Artikal> artikliRestorana = dobaviArtikleDAO().dobaviArtiklePoIdRestorana(korisnik.getIdRestorana());
 		for(Artikal artikalZaProveru : artikliRestorana)
 		{
-			if(artikalZaProveru.getNaziv().toLowerCase().equals(artikal.artikal.getOpis().toLowerCase()))
+			if(artikalZaProveru.getNaziv().toLowerCase().equals(artikal.artikal.getNaziv().toLowerCase()))
 				return Response
 						.status(Response.Status.BAD_REQUEST)
 						.entity("Već postoji artikal sa istim imenom.")
 						.build();
 		}
+		SlikaDAO slike = dobaviSlike();
+		Slika slika = slike.dodajNovuSliku(artikal.artikal.getPutanjaDoSlike());
+		artikal.artikal.setPutanjaDoSlike(Integer.toString(slika.getID())); 	
 		artikal.artikal.setIdRestoranaKomPripada(korisnik.getIdRestorana());
+		dobaviRestoraneDAO().dodajArtikalRestoranu(artikal.artikal);
 		dobaviArtikleDAO().dodajNoviArtikal(artikal.artikal);
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
@@ -165,5 +172,25 @@ public class ArtikalServis {
 			ctx.setAttribute("artikli", artikli);
 		}
 		return artikli;		
+	}
+	
+	private SlikaDAO dobaviSlike() {
+		SlikaDAO slike = (SlikaDAO) ctx.getAttribute("slike");
+		if(slike == null) {
+			slike = new SlikaDAO();
+			slike.ucitajSlike();
+			ctx.setAttribute("slike", slike);
+		}
+		return slike;		
+	}
+	
+	private RestoranDAO dobaviRestoraneDAO() {
+		RestoranDAO restorani = (RestoranDAO) ctx.getAttribute("restorani");
+		if (restorani == null) {
+			restorani = new RestoranDAO();
+			restorani.ucitajRestorane();
+			ctx.setAttribute("restorani", restorani);
+		}
+		return restorani;
 	}
 }
