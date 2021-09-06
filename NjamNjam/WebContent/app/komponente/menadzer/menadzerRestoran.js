@@ -25,7 +25,11 @@ Vue.component("menadzer-restoran", {
                         <td> Tip: </td>
                         <td> {{ restoran.tip }} </td>
                     </tr>
-
+					<tr>
+						<td colspan="2">
+							<div id="map" class="map">  </div> 
+						</td>
+					</tr>
 					<tr>
 						<td> Lokacija </td>
 						<td> {{ restoran.lokacija && restoran.lokacija.adresa.mesto }}, {{ restoran.lokacija && restoran.lokacija.adresa.ulica }}, {{ restoran.lokacija && restoran.lokacija.adresa.broj }}</td>
@@ -36,7 +40,7 @@ Vue.component("menadzer-restoran", {
 					</tr>
 					<tr>
 						<td> Ocena	</td>
-						<td> {{restoran.ocena}}	</td>
+						<td> {{ restoran.prosecnaOcena }}	</td>
 					</tr>
                 </table>
 
@@ -110,6 +114,34 @@ Vue.component("menadzer-restoran", {
     </div>
     `,
     methods: {
+        initForMap: function (lon,lat) {
+        	var place = [parseFloat(lon),parseFloat(lat)];
+        	var center = ol.proj.fromLonLat(place);
+        	var point = new ol.geom.Point(center);
+            const map = new ol.Map({
+                target: 'map',
+                view: new ol.View({
+                    center: center,
+                    zoom: 16
+                }),
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    }),
+                    new ol.layer.Vector({
+      					source: new ol.source.Vector({
+        				features: [new ol.Feature(point)],
+      				}),
+      					style: new ol.style.Style({
+        					image: new ol.style.Circle({
+          						radius: 8,
+          						fill: new ol.style.Fill({color: 'red'}),
+        					}),
+      					}),
+    				}),
+                ],
+            })
+        },
         izmeniRestoran: function (restoran) {
             this.dijalogZaIzmenuSakriven = !this.dijalogZaIzmenuSakriven;
             this.restoranZaIzmenu.ID = restoran.id;
@@ -157,7 +189,7 @@ Vue.component("menadzer-restoran", {
 
             let slika;
 
-            slika = this.dobaviBase64odIdja(parseInt(restoran.dobaviPutanjuSlike, 10));
+            slika = this.dobaviBase64odIdja(parseInt(restoran.putanjaDoSlike, 10));
 
             return slika;
         },
@@ -172,44 +204,8 @@ Vue.component("menadzer-restoran", {
             }
             return base64Slike;
         },
-        initForMap: function () {
-
-            const mapSearch = new ol.Map({
-                target: 'mapaPretraga',
-                layers: [
-                    new ol.layer.Tile({
-                        source: new ol.source.OSM()
-                    })
-                ],
-                view: new ol.View({
-                    center: [2278434.939124534, 5591521.493117212],
-                    zoom: 7
-                })
-            })
-
-            mapSearch.on('click', function (evt) {
-                var coord = ol.proj.toLonLat(evt.coordinate);
-                reverseGeocodeSearch(coord);
-            })
-
-        },
-        pregledMapeZaPretragu: function () {
-            this.mapaZaPretraguVidljiva = !this.mapaZaPretraguVidljiva;
-            if (this.mapaZaPretraguVidljiva) {
-                this.$nextTick(function () {
-                    this.initForMap();
-                    let c = document.getElementById("mapaPretraga").childNodes;
-                    c[0].style.borderRadius  = '10px';
-                    c[0].style.border = '4px solid #04030f';
-                })
-            }
-        },
     },
     mounted() {
-        this.$nextTick(function () {
-            this.initForMap();
-        })
-
         axios.get('rest/slike/dobaviSlike').then(response => (this.slike = response.data));
 
         axios
@@ -223,6 +219,9 @@ Vue.component("menadzer-restoran", {
                 else
                 {
                 	this.imaRestoran = true;
+                	this.$nextTick(function () {
+            			this.initForMap(this.restoran.lokacija.geografskaDuzina,this.restoran.lokacija.geografskaSirina);
+        				})
                 }
                 return this.restoran,this.imaRestoran;
             });
@@ -235,24 +234,6 @@ Vue.component("menadzer-restoran", {
         }
     },
 });
- function reverseGeocodeSearch(coords) {
-    fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + coords[0] + '&lat=' + coords[1])
-        .then(function (response) {
-            return response.json();
-        }).then(function (json) {
- 
-            console.log(json.address);
-            if (json.address.city) {
-                let el = document.getElementById("gradZaPretragu");
-                el.value = json.address.city;
-                el.dispatchEvent(new Event('input'));
-            } else if (json.address.city_district) {
-                let el = document.getElementById("gradZaPretragu");
-                el.value = json.address.city_district;
-                el.dispatchEvent(new Event('input'));
-            }
-        });    
-}
 function slikaUUrl(element) {
     var file = element.files[0];
     var reader = new FileReader();

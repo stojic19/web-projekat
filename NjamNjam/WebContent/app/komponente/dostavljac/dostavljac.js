@@ -1,4 +1,4 @@
-ProfilKomponenta 						= { template: '<dostavljac-profil></dostavljac-profil>'}
+const ProfilKomponenta 						= { template: '<dostavljac-profil></dostavljac-profil>'}
 const DostupnePorudzbineKomponenta 		= { template: '<dostupne-porudzbine-dostavljac></dostupne-porudzbine-dostavljac>'}
 const MojePorudzbineKomponenta			= { template: '<moje-porudzbine-dostavljac></moje-porudzbine-dostavljac>'}
 

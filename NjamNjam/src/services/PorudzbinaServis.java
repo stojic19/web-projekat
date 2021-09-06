@@ -5,7 +5,6 @@ import java.util.Collection;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -213,6 +212,7 @@ public class PorudzbinaServis {
 		return false;
 	}
 	
+	@SuppressWarnings("unused")
 	private KorisnikDAO dobaviKorisnike() {
 		KorisnikDAO korisnici = (KorisnikDAO) ctx.getAttribute("korisnici");
 		
