@@ -441,7 +441,9 @@ table{
     width: 90%;
     border-radius: 10px;
 	margin: 10px auto;
+	padding: 5px;
 }
+
 .cardsRestoranDiv{
 	border-collapse: separate !important;
     background-color: #f8e9f2;
@@ -450,7 +452,42 @@ table{
     width: 100%;
     border-radius: 10px;
 	align-items: center;
+	
 }
+
+.cardsRestoranDiv h1{
+	color: #04030f;
+}
+
+.cardsRestoranPregled{
+	border-collapse: separate !important;
+    background-color: #edfdfb;
+    color: black;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 90%;
+    border-radius: 10px;
+	margin: 10px auto;
+	max-width: 1000px;
+}
+.cardsRestoranPregledDiv{
+	border-collapse: separate !important;
+    background-color: #f8e9f2;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 100%;
+    border-radius: 10px;
+	align-items: center;
+}
+
+.cardsRestoranPregledDiv h1{
+	color: #04030f;
+}
+
+.cardsRestoranPregledDiv td{
+	border: 1px solid #f8e9f2;
+}
+
 .tableInProfil{
 	border-collapse: separate !important;
     background-color: #edfdfb;
@@ -755,11 +792,19 @@ button.endButtonStyle:hover{
 }
 /* 	*/
 
+/* MAPA PRIKAZ LOKACIJE RESTORANA	*/
 
+.mapaLokacija {
+	height: 350px;
+	width: 650px;
+}
+
+/*	*/
 /* logo */
 
 img.logoRestorana{
 	border-radius: 10px;
+	margin: 10px auto;
 	border: 2px solid white;
 	height: 220px;
 	width: 350px;

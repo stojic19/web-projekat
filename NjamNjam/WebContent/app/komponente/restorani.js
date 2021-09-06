@@ -89,27 +89,26 @@ Vue.component("restorani", {
         <ul>
             <li v-for="restoran in filtriraniRestorani">
             	<div class="cardsRestoranDiv">
+            	<h1> {{ restoran.naziv }} </h1>
                 <img class="logoRestorana" v-bind:src="dobaviPutanjuSlike(restoran)">
 
                 <table class="cardsRestoran">
-                    <tr>
-                        <td> Naziv : </td>
-                        <td> {{ restoran.naziv }} </td>
+	                <tr>
+                        <td> Prosečna ocena: </td>
+                        <td> {{ restoran.prosecnaOcena }} </td>
                     </tr>
-
                     <tr>
                         <td> Tip: </td>
                         <td> {{ restoran.tip }} </td>
                     </tr>
 
 					<tr>
-						<td> Lokacija </td>
+						<td> Lokacija: </td>
 						<td> {{ restoran.lokacija && restoran.lokacija.adresa.mesto }}, {{ restoran.lokacija && restoran.lokacija.adresa.ulica }}, {{ restoran.lokacija && restoran.lokacija.adresa.broj }}</td>
 					</tr>
                 </table>
 
-                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
-                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="" class="brisanjeStyle button" ><i class="fa fa-trash" aria-hidden="true"></i>  Obrisi </button> <br>
+                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="" style="margin-bottom:10px" class="button">Pregled ponude</button> <br>
             	</div>
             </li>
         </ul>
@@ -133,7 +132,7 @@ Vue.component("restorani", {
                 return false;
             
             //prosecna ocena
-            if (restoran.prosecnaOcena > parseFloat(this.pretraga.prosecnaOcena))
+            if (parseFloat(restoran.prosecnaOcena) > parseFloat(this.pretraga.prosecnaOcena))
                 return false;
 
             return true;

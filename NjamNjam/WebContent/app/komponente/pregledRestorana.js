@@ -1,46 +1,49 @@
-Vue.component("menadzer-restoran", {
+Vue.component("pregled-restorana", {
     data() {
         return {
 			slike: [],
             restoran : {},
-			dijalogZaIzmenuSakriven: true,
-			restoranZaIzmenu:{},
-			imaRestoran: false
+			artikli:{},
+			komentari:{},
         }
     },
 
     template: `
     <div id = "stilZaPregledRestorana">
 
-            	<div class="cardsRestoranPregledDiv" v-show="imaRestoran">
-            	<h1> {{ restoran.naziv }}</h1>
+            	<div class="cardsRestoranDiv" v-show="imaRestoran">
                 <img class="logoRestorana" v-bind:src="dobaviPutanjuSlike(restoran)">
 
-                <table class="cardsRestoranPregled">
+                <table class="cardsRestoran">
+                    <tr>
+                        <td> Naziv : </td>
+                        <td> {{ restoran.naziv }} </td>
+                    </tr>
+
                     <tr>
                         <td> Tip: </td>
                         <td> {{ restoran.tip }} </td>
                     </tr>
-                    <tr>
-						<td> Status: </td>
-						<td> {{restoran.status}}	</td>
+					<tr>
+						<td colspan="2">
+							<div id="map" class="map">  </div> 
+						</td>
 					</tr>
 					<tr>
-						<td> Ocena:	</td>
-						<td> {{ restoran.prosecnaOcena }}	</td>
-					</tr>
-					<tr>
-						<td> Lokacija: </td>
+						<td> Lokacija </td>
 						<td> {{ restoran.lokacija && restoran.lokacija.adresa.mesto }}, {{ restoran.lokacija && restoran.lokacija.adresa.ulica }}, {{ restoran.lokacija && restoran.lokacija.adresa.broj }}</td>
 					</tr>
 					<tr>
-						<td colspan="2">
-							<div id="map" class="mapaLokacija" style="margin:5px auto">  </div> 
-						</td>
+						<td> Status	</td>
+						<td> {{restoran.status}}	</td>
+					</tr>
+					<tr>
+						<td> Ocena	</td>
+						<td> {{ restoran.prosecnaOcena }}	</td>
 					</tr>
                 </table>
 
-                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="izmeniRestoran(restoran)" style="height:30px" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
+                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="izmeniRestoran(restoran)" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
             	</div>
         <!-- Kraj card za restoran -->
 				<div v-show="!imaRestoran">
