@@ -59,7 +59,6 @@ public class KorisnikDAO {
 			korisnici.put(k.getKorisnickoIme(), k);
 		}
 		System.out.println("\n\n");
-
 	}
 
 	public void sacuvajKorisnikeJSON() {

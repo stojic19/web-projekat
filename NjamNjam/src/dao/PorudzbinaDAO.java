@@ -135,4 +135,24 @@ public class PorudzbinaDAO {
 			porudzbine.put(porudzbina.getID(),porudzbina);
 		}
 	}
+	
+	public ArrayList<Porudzbina> dobaviPorudzbineZaDostavu(){
+		ArrayList<Porudzbina> zaDostavu = new ArrayList<Porudzbina>();
+		for(Porudzbina p: getValues()) {
+			if(p.getStatus().equals("CEKA DOSTAVLJACA")) {
+				zaDostavu.add(p);
+			}
+		}
+		return zaDostavu;
+	}
+	
+	public ArrayList<Porudzbina> dobaviNedostavljenePorudzbine(){
+		ArrayList<Porudzbina> nedostavljene = new ArrayList<Porudzbina>();
+		for(Porudzbina p: getValues()) {
+			if(p.getStatus().equals("U TRANSPORTU")) {
+				nedostavljene.add(p);
+			}
+		}
+		return nedostavljene;
+	}
 }

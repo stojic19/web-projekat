@@ -149,15 +149,26 @@ public class PorudzbinaServis {
 				.entity("Nedozvoljen pristup!").build();
 	}
 	
-	/*
-	@GET
-	@Path("/dobaviPorudzbineZaDostavljaca")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Porudzbina> dobaviPorudzbineZaDostavljaca() {	
-		return dobaviPorudzbineZaDostavljacaDAO().getValues();
-	}
-	*/
 	
+	@GET
+	@Path("/dobaviPorudzbineZaDostavu")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviPorudzbineZaDostavu() {	
+		return Response
+				.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+				.entity(dobaviPorudzbineDAO().dobaviPorudzbineZaDostavu())
+				.build();
+	}
+	
+	@GET
+	@Path("/dobaviNedostavljenePorudzbine")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviNedostavljenePorudzbine() {	
+		return Response
+				.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+				.entity(dobaviPorudzbineDAO().dobaviNedostavljenePorudzbine())
+				.build();
+	}	
 
 	private PorudzbinaDAO dobaviPorudzbineDAO() {
 		PorudzbinaDAO porudzbine = (PorudzbinaDAO) ctx.getAttribute("porudzbine");
