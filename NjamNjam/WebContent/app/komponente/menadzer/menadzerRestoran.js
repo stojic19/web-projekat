@@ -105,8 +105,6 @@ Vue.component("menadzer-restoran", {
 
             </div>
         </div> <!-- Kraj modalnog dijaloga -->
-
-
     </div>
     `,
     methods: {
@@ -221,13 +219,6 @@ Vue.component("menadzer-restoran", {
                 }
                 return this.restoran,this.imaRestoran;
             });
-    },
-    computed: {
-        filtriraniRestorani: function () {
-            return this.restorani.filter((restoran) => {
-                return this.poklapaSeSaPretragom(restoran);
-            });
-        }
     },
 });
 function slikaUUrl(element) {

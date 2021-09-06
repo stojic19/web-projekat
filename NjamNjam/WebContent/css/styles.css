@@ -332,6 +332,40 @@ table{
 }
 /*  */
 
+/* ARTIKLI - PRETRAGA */
+
+.pretragaArtikala{
+	width: 60%;
+    height: 80px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+}
+
+.pretragaArtikala input{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    background-color:#b9bab8;
+    border: 2px solid black;
+    text-align: center;
+    margin:10px auto;
+}
+
+.pretragaArtikala button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid gray;
+    background-color: #edfdfb;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    margin:5px;
+}
+/*  */
+
 /* Style for button at navbar in guest mode */
 #divHeaderGuest nav ul li button {
     border: none;
@@ -458,7 +492,7 @@ table{
 .cardsRestoranDiv h1{
 	color: #04030f;
 }
-
+/* CARD - PREGLED JEDNOG RESTORANA	*/
 .cardsRestoranPregled{
 	border-collapse: separate !important;
     background-color: #edfdfb;
@@ -475,7 +509,7 @@ table{
     background-color: #f8e9f2;
     font-weight: bold;
     border: 3px solid white;
-    width: 100%;
+    width: 70%;
     border-radius: 10px;
 	align-items: center;
 }
@@ -487,7 +521,40 @@ table{
 .cardsRestoranPregledDiv td{
 	border: 1px solid #f8e9f2;
 }
+/* CARD - PREGLED JEDNOG RESTORANA	*/
+/* CARD - ARTIKLI	*/
 
+.cardsArtikli{
+	border-collapse: separate !important;
+    background-color: #edfdfb;
+    color: black;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 90%;
+    border-radius: 10px;
+	margin: 10px auto;
+	padding: 5px;
+}
+
+.cardsArtikliDiv{
+	border-collapse: separate !important;
+    background-color: #f8e9f2;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 100%;
+    border-radius: 10px;
+	align-items: center;
+	
+}
+
+.cardsArtikliDiv h1{
+	color: #04030f;
+}
+
+.cardsArtikliDiv td{
+	border: 3px solid #f8e9f2;
+}
+/* CARD - ARTIKLI	*/
 .tableInProfil{
 	border-collapse: separate !important;
     background-color: #edfdfb;
@@ -1002,7 +1069,7 @@ td button{
 
 /*  */
 
-/* ADMIN - KORISNICI - FILTER */
+/* RESTORAN - FILTER */
 .filterZaRestorane{
 	width: 600px;
     height: 80px;
@@ -1014,6 +1081,29 @@ td button{
 }
 
 .filterZaRestorane select{
+	height: 30px;
+    border-radius: 10px;
+    background-color: #b9bab8;
+    width: 200px;
+    border: 2px solid black;
+    text-align: center;
+	margin: 10px 10px;
+}
+
+/*  */
+
+/* RESTORAN - FILTER */
+.filterZaArtikle{
+	width: 60%;
+    height: 80px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+	align-content: center;
+}
+
+.filterZaArtikle select{
 	height: 30px;
     border-radius: 10px;
     background-color: #b9bab8;
@@ -1112,6 +1202,31 @@ td button{
 }
 
 /* RESTORANI - SORTIRANJE */
+
+/* ARTIKLI - SORTIRANJE */
+.sortiranjeArtikli{
+	width: 60%;
+    height: 80px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+	align-items: center;
+}
+
+.sortiranjeArtikli button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+	border: 2px solid black;
+    background-color: #b9bab8;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+	margin:10px 10px;
+}
+
+/* ARTIKLI - SORTIRANJE */
 
 .filledInput{
 	height: 30px;

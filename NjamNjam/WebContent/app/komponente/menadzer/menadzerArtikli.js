@@ -40,7 +40,7 @@ Vue.component("menadzer-artikli", {
         <br><br>
 
         <!-- Pretraga -->
-        <div class="pretragaRestorana" v-if="prostorZaPretraguVidljiv" >
+        <div class="pretragaArtikala" v-if="prostorZaPretraguVidljiv" >
             <form method='post' >
 
                 <input type="text" v-model="pretraga.naziv" v-bind:class="{filledInput: pretraga.naziv != '' }" placeholder="Naziv" >
@@ -52,7 +52,7 @@ Vue.component("menadzer-artikli", {
         
 		
         <!-- Filtriranje artikala -->
-        <div class="filterZaRestorane" v-if="prostorZaFiltereVidljiv">
+        <div class="filterZaArtikle" v-if="prostorZaFiltereVidljiv">
             <form method='post' 
                 <select v-model="podaciZaFiltriranjeArtikala.tip" @change="onchangeTipArtikla()">
                     <option value="">Bez filtera za tip</option>
@@ -65,7 +65,7 @@ Vue.component("menadzer-artikli", {
 
         
         <!-- Sortiranje artikala -->
-        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranjeRestorani">
+        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranjeArtikli">
             <form method='post'>
 
                 <button type="button" @click="sortirajNaziv"><i class="fa fa-sort" aria-hidden="true"></i> Naziv </button>
@@ -78,10 +78,10 @@ Vue.component("menadzer-artikli", {
 		<!-- Card za restoran -->
         <ul>
             <li v-for="artikal in filtriraniArtikli">
-            	<div class="cardsRestoranDiv">
+            	<div class="cardsArtikliDiv">
                 <img class="logoRestorana" v-bind:src="dobaviPutanjuSlike(artikal)">
 
-                <table class="cardsRestoran">
+                <table class="cardsArtikli">
                     <tr>
                         <td> Naziv : </td>
                         <td> {{ artikal.naziv }} </td>
@@ -212,10 +212,10 @@ Vue.component("menadzer-artikli", {
             if (!artikal.naziv.toLowerCase().match(this.pretraga.naziv.toLowerCase()))
                 return false;
             
-            //prosecna ocena
-            //if (artikal.cena > parseFloat(this.pretraga.cena))
-            //    return false;
-
+            //cena
+            if (parseFloat(artikal.cena) < parseFloat(this.pretraga.cena))
+                return false;
+			
             return true;
         },
 		onchangeTipArtikla: function () {
