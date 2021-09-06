@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import beans.Artikal;
 import beans.Korisnik;
+import beans.Restoran;
 import beans.Slika;
 import dao.ArtikalDAO;
 import dao.RestoranDAO;
@@ -94,6 +95,24 @@ public class ArtikalServis {
 		}
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@GET
+	@Path("/dobaviArtikleRestorana")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviArtikleRestorana(@Context HttpServletRequest request) {	
+		
+			Restoran restoran = (Restoran) request.getSession().getAttribute("restoranZaPregled");
+			ArtikalDAO artikli = dobaviArtikleDAO();
+			if(restoran != null)
+			{
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(artikli.dobaviArtiklePoIdRestorana(restoran.getID()))
+						.build();	
+			}
+		return Response.status(403).type("text/plain")
+				.entity("Greška!").build();
 	}
 	
 	@GET

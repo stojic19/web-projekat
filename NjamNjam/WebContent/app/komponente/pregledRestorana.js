@@ -18,7 +18,7 @@ Vue.component("pregled-restorana", {
             prostorZaPretraguVidljiv: false,
             prostorZaFiltereVidljiv: false,
             prostorZaSortiranjeVidljiv: false,
-			imaArtikle: true
+			imaArtikle: false
         }
     },
 
@@ -61,7 +61,6 @@ Vue.component("pregled-restorana", {
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
         <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
-        <button type="button" class="btn"><i class="fa fa-plus" aria-hidden="true"></i><router-link to="/dodavanjeArtikla" exact style="color:black">Dodaj artikal</router-link></button>
         <br><br>
 
         <!-- Pretraga -->
@@ -331,8 +330,8 @@ Vue.component("pregled-restorana", {
         			})
                 return this.restoran;
             });
-		/*axios
-            .get('rest/artikal/dobaviArtikleZaPrikaz')
+		axios
+            .get('rest/artikal/dobaviArtikleRestorana')
             .then(response => {
                 this.artikli = response.data;
                 if(response.data == "")
@@ -344,7 +343,7 @@ Vue.component("pregled-restorana", {
                 	this.imaArtikle = true;
                 }
                 return this.artikli,this.imaArtikle;
-            });*/
+            });
     },
     computed: {
 		filtriraniArtikli: function () {
