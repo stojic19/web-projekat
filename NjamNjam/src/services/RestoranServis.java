@@ -30,6 +30,30 @@ public class RestoranServis {
 	@Context
 	ServletContext ctx;
 	
+	@GET
+	@Path("/dobaviRestoranZaPrikaz")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviRestoranZaPrikaz(@Context HttpServletRequest request) {	
+		Restoran restoran = (Restoran) request.getSession().getAttribute("restoranZaPregled");
+		return Response
+				.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGE")
+				.entity(dobaviRestoraneDAO().nadjiRestoranPoID(restoran.getID()))
+				.build();
+	}
+	
+	@POST
+	@Path("/restoranZaPregled")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response restoranZaPregled(RestoranJSONDTO restoran,@Context HttpServletRequest request) {
+			request.getSession().setAttribute("restoranZaPregled", this.dobaviRestoraneDAO().nadjiRestoranPoID(restoran.restoran.getID()));
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGE")
+					.entity(dobaviRestoraneDAO())
+					.build();
+		
+	}
+	
 	@POST
 	@Path("/dodajNoviRestoran")
 	@Consumes(MediaType.APPLICATION_JSON)

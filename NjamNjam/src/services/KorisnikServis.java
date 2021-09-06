@@ -75,8 +75,7 @@ public class KorisnikServis {
 					.build();
 		}
 
-		request.getSession().setAttribute("ulogovanKorisnik", korisnik); // we give him a session
-
+		request.getSession().setAttribute("ulogovanKorisnik", korisnik);
 
 		if (korisnik.getUloga().equals("ADMIN")) {
 			return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/admin.html").build();

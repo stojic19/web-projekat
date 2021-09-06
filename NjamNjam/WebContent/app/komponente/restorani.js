@@ -108,7 +108,7 @@ Vue.component("restorani", {
 					</tr>
                 </table>
 
-                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="" style="margin-bottom:10px" class="button">Pregled ponude</button> <br>
+                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="pregledRestorana(restoran)" style="margin-bottom:10px" class="button">Pregled ponude</button> <br>
             	</div>
             </li>
         </ul>
@@ -117,6 +117,11 @@ Vue.component("restorani", {
     </div>
     `,
     methods: {
+    	pregledRestorana: function(restoran){
+    		axios
+                .post('rest/restoran/restoranZaPregled', {restoran})
+         		.then(response => {router.push("/pregledPonude")});
+    	},
         poklapaSeSaPretragom: function (restoran) {
 
             // Naziv
@@ -132,7 +137,7 @@ Vue.component("restorani", {
                 return false;
             
             //prosecna ocena
-            if (parseFloat(restoran.prosecnaOcena) > parseFloat(this.pretraga.prosecnaOcena))
+            if (parseFloat(restoran.prosecnaOcena) < parseFloat(this.pretraga.prosecnaOcena))
                 return false;
 
             return true;

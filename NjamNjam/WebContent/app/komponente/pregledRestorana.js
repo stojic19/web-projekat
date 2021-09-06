@@ -18,12 +18,12 @@ Vue.component("pregled-restorana", {
             prostorZaPretraguVidljiv: false,
             prostorZaFiltereVidljiv: false,
             prostorZaSortiranjeVidljiv: false,
+			imaArtikle: true
         }
     },
 
     template: `
     <div id = "stilZaPregledRestorana">
-
             	<div class="cardsRestoranPregledDiv">
             	<h1> {{ restoran.naziv }}</h1>
                 <img class="logoRestorana" v-bind:src="dobaviPutanjuSlike(restoran)">
@@ -51,12 +51,94 @@ Vue.component("pregled-restorana", {
 						</td>
 					</tr>
                 </table>
-
-                <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="izmeniRestoran(restoran)" style="height:30px" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
-            	</div>
+			</div>
         <!-- Kraj card za restoran -->
+
+
+
         <!-- Pocetak prikaza artikala -->
+		<div v-show="imaArtikle" style="margin: 10px auto">
+        <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
+        <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
+        <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
+        <button type="button" class="btn"><i class="fa fa-plus" aria-hidden="true"></i><router-link to="/dodavanjeArtikla" exact style="color:black">Dodaj artikal</router-link></button>
+        <br><br>
+
+        <!-- Pretraga -->
+        <div class="pretragaArtikala" v-if="prostorZaPretraguVidljiv" >
+            <form method='post' >
+
+                <input type="text" v-model="pretraga.naziv" v-bind:class="{filledInput: pretraga.naziv != '' }" placeholder="Naziv" >
+                <input type="number" v-model="pretraga.cena" v-bind:class="{filledInput: pretraga.cena != '' }" placeholder="Cena" >
+
+            </form>
+        </div>
+        <!-- Kraj pretrage -->
+        
 		
+        <!-- Filtriranje artikala -->
+        <div class="filterZaArtikle" v-if="prostorZaFiltereVidljiv">
+            <form method='post' 
+                <select v-model="podaciZaFiltriranjeArtikala.tip" @change="onchangeTipArtikla()">
+                    <option value="">Bez filtera za tip</option>
+                    <option>Jelo</option>
+                    <option>Piće</option>
+                </select>
+            </form>
+        </div>
+        <!-- Kraj filtriranja artikala -->
+
+        
+        <!-- Sortiranje artikala -->
+        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranjeArtikli">
+            <form method='post'>
+
+                <button type="button" @click="sortirajNaziv"><i class="fa fa-sort" aria-hidden="true"></i> Naziv </button>
+                <button type="button" @click="sortirajCena"><i class="fa fa-sort" aria-hidden="true"></i> Cena </button>
+
+            </form>
+        </div>
+        <!-- Kraj sortiranja restorana -->
+
+		<!-- Card za restoran -->
+        <ul>
+            <li v-for="artikal in filtriraniArtikli">
+            	<div class="cardsArtikliDiv">
+                <img class="logoRestorana" v-bind:src="dobaviPutanjuSlike(artikal)">
+
+                <table class="cardsArtikli">
+                    <tr>
+                        <td> Naziv : </td>
+                        <td> {{ artikal.naziv }} </td>
+                    </tr>
+                    <tr>
+                        <td> Tip: </td>
+                        <td> {{ artikal.tip }} </td>
+                    </tr>
+					<tr>
+						<td> Cena: </td>
+						<td> {{ artikal.cena }} </td>
+					</tr>
+					<tr>
+						<td> Količina: </td>
+						<td> {{ artikal.kolicina }}</td>
+					</tr>
+					<tr>
+						<td> Opis: </td>
+						<td> {{ artikal.opis }} </td>
+					</tr>
+                </table>
+
+                <button type="button" v-if=" artikal.logickiObrisan == '0' " @click="izmeniArtikal(artikal)" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
+                <button type="button" v-if=" artikal.logickiObrisan == '0' " @click="obrisiArtikal(artikal)" class="brisanjeStyle button" ><i class="fa fa-trash" aria-hidden="true"></i>  Obriši </button> <br>
+            	</div>
+            </li>
+        </ul>
+        <!-- Kraj card za artikle -->
+		</div>
+		<div v-show="!imaArtikle">
+		<h2>Restoran trenutno nema proizvode u ponudi.</h2>
+		</div>
 		<!-- Kraj prikaza artikala -->		
 		<!-- Pocetak prikaza komentara -->
 
@@ -116,30 +198,160 @@ Vue.component("pregled-restorana", {
             }
             return base64Slike;
         },
+		// METODE ZA ARTIKLE
+		poklapaSeSaPretragom: function (artikal) {
+
+            // Naziv
+            if (!artikal.naziv.toLowerCase().match(this.pretraga.naziv.toLowerCase()))
+                return false;
+            
+            //cena
+            if (parseFloat(artikal.cena) < parseFloat(this.pretraga.cena))
+                return false;
+			
+            return true;
+        },
+		onchangeTipArtikla: function () {
+            if (this.podaciZaFiltriranjeArtikala.tip == "" || this.podaciZaFiltriranjeArtikala.tip == "Bez filtera za tip") {
+                axios
+                    .get('rest/artikal/dobaviArtikleMenadzera')
+                    .then(response => {
+                        this.artikli = [];
+                        response.data.forEach(el => {
+                                this.artikli.push(el);
+                        });
+                        return this.artikli;
+                    });
+
+            } else {
+                let filterArtikala= (this.artikli).filter(artikal => artikal.tip == this.podaciZaFiltriranjeArtikala.tip);
+                this.artikli = filterArtikala;
+            }
+        },
+        sortirajNaziv: function () {
+            this.nazivBrojac ++;
+            if(this.nazivBrojac % 3 == 0)
+            {
+                axios
+                    .get('rest/artikal/dobaviArtikleMenadzera')
+                    .then(response => {
+                        this.artikli = [];
+                        response.data.forEach(el => {
+                                this.artikli.push(el);
+                        });
+                        return this.artikli;
+                    });
+            }else if(this.nazivBrojac % 3 == 1)
+            {
+                this.multisort(this.artikli, ['naziv', 'naziv'], ['ASC', 'DESC']);
+            }else{
+                this.multisort(this.artikli, ['naziv', 'naziv'], ['DESC', 'ASC']);
+            }  
+        },
+        sortirajCena: function () {
+            this.cenaBrojac ++;
+            if(this.cenaBrojac % 3 == 0)
+            {
+                axios
+                    .get('rest/artikal/dobaviArtikleMenadzera')
+                    .then(response => {
+                        this.artikli = [];
+                        response.data.forEach(el => {
+                                this.artikli.push(el);
+                        });
+                        return this.artikli;
+                    });
+            }else if(this.cenaBrojac % 3 == 1)
+            {
+                this.multisort(this.artikli, ['cena', 'cena'], ['ASC', 'DESC']);
+            }else{
+                this.multisort(this.artikli, ['cena', 'cena'], ['DESC', 'ASC']);
+            }
+        },
+        multisort: function (arr, columns, order_by) {
+            if (typeof columns == 'undefined') {
+                columns = []
+                for (x = 0; x < arr[0].length; x++) {
+                    columns.push(x);
+                }
+            }
+
+            if (typeof order_by == 'undefined') {
+                order_by = []
+                for (x = 0; x < arr[0].length; x++) {
+                    order_by.push('ASC');
+                }
+            }
+
+            function multisort_recursive(a, b, columns, order_by, index) {
+                var direction = order_by[index] == 'DESC' ? 1 : 0;
+
+                var is_numeric = !isNaN(a[columns[index]] - b[columns[index]]);
+
+                var x = is_numeric ? a[columns[index]] : a[columns[index]].toLowerCase();
+                var y = is_numeric ? b[columns[index]] : b[columns[index]].toLowerCase();
+
+                if (!is_numeric) {
+
+                    let sum_x = 0;
+                    let sum_y = 0;
+
+                    x.split("").forEach(element => sum_x += element.charCodeAt())
+                    y.split("").forEach(element => sum_y += element.charCodeAt())
+
+                    x = sum_x;
+                    y = sum_y;
+                }
+
+                if (x < y) {
+                    return direction == 0 ? -1 : 1;
+                }
+
+                if (x == y) {
+                    return columns.length - 1 > index ? multisort_recursive(a, b, columns, order_by, index + 1) : 0;
+                }
+
+                return direction == 0 ? 1 : -1;
+            }
+
+            return arr.sort(function (a, b) {
+                return multisort_recursive(a, b, columns, order_by, 0);
+            });
+        },
     },
     mounted() {
         axios.get('rest/slike/dobaviSlike').then(response => (this.slike = response.data));
 
         axios
-            .get('rest/restoran/dobaviRestoranMenadzera')
+            .get('rest/restoran/dobaviRestoranZaPrikaz')
             .then(response => {
                 this.restoran = response.data;
+                this.$nextTick(function () {
+            		this.initForMap(this.restoran.lokacija.geografskaDuzina,this.restoran.lokacija.geografskaSirina);
+        			})
+                return this.restoran;
+            });
+		/*axios
+            .get('rest/artikal/dobaviArtikleZaPrikaz')
+            .then(response => {
+                this.artikli = response.data;
                 if(response.data == "")
                	{
-                		this.imaRestoran = false;
+                		this.imaArtikle = false;
                 }
                 else
                 {
-                	this.imaRestoran = true;
-                	this.$nextTick(function () {
-            			this.initForMap(this.restoran.lokacija.geografskaDuzina,this.restoran.lokacija.geografskaSirina);
-        				})
+                	this.imaArtikle = true;
                 }
-                return this.restoran,this.imaRestoran;
-            });
+                return this.artikli,this.imaArtikle;
+            });*/
     },
     computed: {
-
+		filtriraniArtikli: function () {
+            return this.artikli.filter((artikal) => {
+                return this.poklapaSeSaPretragom(artikal);
+            });
+        }
     },
 });
 function slikaUUrl(element) {
