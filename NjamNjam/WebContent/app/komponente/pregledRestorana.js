@@ -58,6 +58,9 @@ Vue.component("pregled-restorana", {
 
         <!-- Pocetak prikaza artikala -->
 		<div v-show="imaArtikle" style="margin: 10px auto">
+		<br>
+		<h2>Artikli</h2>
+		<br>
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
         <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
@@ -138,9 +141,30 @@ Vue.component("pregled-restorana", {
 		<div v-show="!imaArtikle">
 		<h2>Restoran trenutno nema proizvode u ponudi.</h2>
 		</div>
-		<!-- Kraj prikaza artikala -->		
+		<!-- Kraj prikaza artikala -->	
+		
+		
+			
 		<!-- Pocetak prikaza komentara -->
-
+		<div v-show="komentari.length>0">
+            <table class="styleForTable">
+                <thead>
+                    <tr>
+                        <th> Tekst </th>
+                        <th> Ocena </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="komentar in komentari">
+                        <td> {{ komentar.tekst }} </td>
+                        <td> {{ komentar.ocena }} </td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+		<div v-show="komentari.length==0">
+		<h2>Restoran trenutno nema komentara za prikazivanje.</h2>
+		</div>
 		<!-- Kraj prikaza komentara -->
     </div>
     `,
@@ -343,6 +367,15 @@ Vue.component("pregled-restorana", {
                 	this.imaArtikle = true;
                 }
                 return this.artikli,this.imaArtikle;
+            });
+		axios
+            .get('rest/komentar/dobaviKomentareRestorana')
+            .then(response => {
+                response.data.forEach(el => {
+					if(el.status == "Odobren")
+                    	this.komentari.push(el);
+                });
+                return this.komentari;
             });
     },
     computed: {

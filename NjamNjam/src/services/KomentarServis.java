@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
+import beans.Restoran;
 import dao.KomentarDAO;
 import dto.KomentarJSONDTO;
 
@@ -22,6 +23,24 @@ import dto.KomentarJSONDTO;
 public class KomentarServis {
 	@Context
 	ServletContext ctx;
+	
+	@GET
+	@Path("/dobaviKomentareRestorana")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviKomentareRestorana(@Context HttpServletRequest request) {	
+		
+			Restoran restoran = (Restoran) request.getSession().getAttribute("restoranZaPregled");
+			KomentarDAO komentari = dobaviKomentareDAO();
+			if(restoran != null)
+			{
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(komentari.dobaviKomentareZaRestoran(restoran.getID()))
+						.build();	
+			}
+		return Response.status(403).type("text/plain")
+				.entity("Greška!").build();
+	}
 	
 	@GET
 	@Path("/dobaviKomentare")
