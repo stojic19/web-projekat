@@ -13,7 +13,10 @@ public class Porudzbina {
 	private String imePrezimeKupca;
 	private String status;
 	
-	public Porudzbina(String iD, List<Integer> idArtikala, Integer idRestorana, String vremePorudzbine, String cena,
+	private String imeRestorana;
+	private String tipRestorana;
+	
+	public Porudzbina(String iD, List<Integer> idArtikala, Integer idRestorana, String imeRestorana, String tipRestorana, String vremePorudzbine, String cena,
 			String imePrezimeKupca, String status) {
 		super();
 		ID = iD;
@@ -23,6 +26,9 @@ public class Porudzbina {
 		this.cena = cena;
 		this.imePrezimeKupca = imePrezimeKupca;
 		this.status = status;
+		
+		this.setImeRestorana(imeRestorana);
+		this.idRestorana = idRestorana;
 	}
 
 	public String getID() {
@@ -79,6 +85,22 @@ public class Porudzbina {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getTipRestorana() {
+		return tipRestorana;
+	}
+
+	public void setTipRestorana(String tipRestorana) {
+		this.tipRestorana = tipRestorana;
+	}
+
+	public String getImeRestorana() {
+		return imeRestorana;
+	}
+
+	public void setImeRestorana(String imeRestorana) {
+		this.imeRestorana = imeRestorana;
 	}
 	
 	

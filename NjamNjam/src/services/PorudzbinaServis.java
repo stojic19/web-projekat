@@ -86,7 +86,6 @@ public class PorudzbinaServis {
 				.entity("Nedozvoljen pristup!").build();
 	}
 	
-	
 	@POST
 	@Path("/transportujPorudzbinu")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -223,18 +222,5 @@ public class PorudzbinaServis {
 		}
 		return korisnici;
 	}
-	
-	
-	/*
-	private PorudzbinaDAO dobaviPorudzbineZaDostavljacaDAO() {
-		PorudzbinaDAO porudzbine = (PorudzbinaDAO) ctx.getAttribute("porudzbine");
-		if(porudzbine == null) {
-			porudzbine = new PorudzbinaDAO();
-			porudzbine.UcitajPorudzbineZaDostavljaca();
-			ctx.setAttribute("porudzbine", porudzbine);
-		}
-		return porudzbine;
-	}
-	*/
 	
 }
