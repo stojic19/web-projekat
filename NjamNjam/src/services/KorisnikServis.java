@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
 import dao.KorisnikDAO;
+import dao.KorpaDAO;
 import dao.RestoranDAO;
 import dto.KorisnikDTO;
 import dto.KorisnikJSONDTO;
@@ -113,7 +114,8 @@ public class KorisnikServis {
 		}
 
 		sviKorisnici.dodajNovogKorisnika(korisnik);
-
+		KorpaDAO korpe = dobaviKorpeDAO();
+		sviKorisnici.dodajKorpuKorisniku(sviKorisnici.getValues().size(), korpe.dodajKorpu());
 		return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/#/prijava").build();																						// accepted
 	}
 
@@ -268,6 +270,16 @@ public class KorisnikServis {
 			ctx.setAttribute("restorani", restorani);
 		}
 		return restorani;
+	}
+	
+	private KorpaDAO dobaviKorpeDAO() {
+		KorpaDAO korpe = (KorpaDAO) ctx.getAttribute("korpe");
+		if (korpe == null) {
+			korpe = new KorpaDAO();
+			korpe.ucitajKorpe();
+			ctx.setAttribute("korpe", korpe);
+		}
+		return korpe;
 	}
 	
 	@SuppressWarnings("unused")

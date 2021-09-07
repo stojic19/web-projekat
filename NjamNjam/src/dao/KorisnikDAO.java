@@ -212,4 +212,17 @@ public class KorisnikDAO {
 		}
 		return kupciRestorana;
 	}
+	public void dodajKorpuKorisniku(Integer idKorisnika,Integer idKorpe)
+	{
+		for (Korisnik korisnik : korisnici.values()) {
+			if (korisnik.getID() == idKorisnika) {
+
+				korisnik.setIdKorpe(idKorpe);
+				sacuvajKorisnikeJSON();
+
+				return;
+			}
+		}
+		return;
+	}
 }
