@@ -14,6 +14,7 @@ import beans.Korisnik;
 import beans.Korpa;
 import dao.KorisnikDAO;
 import dao.KorpaDAO;
+import dto.ArtikalUKorpiDTO;
 import dto.ArtikalZaKorpuDTO;
 
 
@@ -46,7 +47,29 @@ public class KorpaServis {
 			
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
-					.entity("Uspe�no dodat artikal u korpu.")
+					.entity("Uspešno dodat artikal u korpu.")
+					.build();
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@POST
+	@Path("/izmeniKolicinuArtikla")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izmeniKolicinuArtikla(ArtikalUKorpiDTO artikal,@Context HttpServletRequest request){
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+		if(korisnik != null)
+		if(korisnik.getUloga().contains("KUPAC")) {
+			KorpaDAO korpe = dobaviKorpeDAO();
+			Korpa korpa = korpe.nadjiKorpuPoId(korisnik.getIdKorpe());
+			korpa.azurirajArtikal(artikal.id, artikal.kolicinaZaKupovinu, artikal.cena);
+			korpe.azurirajKorpu(korpa);
+			
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+					.entity("Uspešno izmenjena količina artikla " + artikal.naziv + ".")
 					.build();
 		}
 		return Response.status(403).type("text/plain")

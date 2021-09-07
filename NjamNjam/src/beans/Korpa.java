@@ -69,4 +69,14 @@ public class Korpa {
 	{
 		cena += suma;
 	}
+
+	public void azurirajArtikal(Integer id, Integer kolicinaZaKupovinu, Double cenaArtikla) {
+		Integer staraKolicina = artikli.get(id);
+		artikli.put(id, kolicinaZaKupovinu);
+		cena -= (staraKolicina - kolicinaZaKupovinu) * cenaArtikla;
+		if(kolicinaZaKupovinu == 0)
+		{
+			artikli.remove(id);
+		}
+	}
 }
