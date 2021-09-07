@@ -1,6 +1,5 @@
 package beans;
 
-import java.sql.Date;
 import java.util.List;
 
 public class Porudzbina {
@@ -9,12 +8,12 @@ public class Porudzbina {
 	
 	private List<Integer> idArtikala;
 	private Integer idRestorana;
-	private Date vremePorudzbine;
+	private String vremePorudzbine;
 	private String cena;
 	private String imePrezimeKupca;
 	private String status;
 	
-	public Porudzbina(String iD, List<Integer> idArtikala, Integer idRestorana, Date vremePorudzbine, String cena,
+	public Porudzbina(String iD, List<Integer> idArtikala, Integer idRestorana, String vremePorudzbine, String cena,
 			String imePrezimeKupca, String status) {
 		super();
 		ID = iD;
@@ -50,11 +49,11 @@ public class Porudzbina {
 		this.idRestorana = idRestorana;
 	}
 
-	public Date getVremePorudzbine() {
+	public String getVremePorudzbine() {
 		return vremePorudzbine;
 	}
 
-	public void setVremePorudzbine(Date vremePorudzbine) {
+	public void setVremePorudzbine(String vremePorudzbine) {
 		this.vremePorudzbine = vremePorudzbine;
 	}
 

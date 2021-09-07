@@ -366,6 +366,40 @@ table{
 }
 /*  */
 
+/* PORUDZBINE - PRETRAGA */
+.pretragaPorudzbina{
+	width: 60%;
+    height: 80px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+}
+
+.pretragaPorudzbina input{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    background-color:#b9bab8;
+    border: 2px solid black;
+    text-align: center;
+    margin:10px auto;
+}
+
+.pretragaPorudzbina button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+    border: 2px solid gray;
+    background-color: #edfdfb;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    margin:5px;
+}
+
+/*  */
+
 /* Style for button at navbar in guest mode */
 #divHeaderGuest nav ul li button {
     border: none;
@@ -1120,6 +1154,28 @@ td button{
 	margin: 10px 10px;
 }
 
+/*  */
+
+/* PORUDZBINE - FILTER */
+.filterZaPorudzbine{
+	width: 60%;
+    height: 80px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+	align-content: center;
+}
+
+.filterZaPorudzbine select{
+	height: 30px;
+    border-radius: 10px;
+    background-color: #b9bab8;
+    width: 200px;
+    border: 2px solid black;
+    text-align: center;
+	margin: 10px 10px;
+}
 /*  */
 
 /* Start style filter for reservations */

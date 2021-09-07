@@ -7,7 +7,7 @@ const PregledRestoranaKomponenta 	= { template: '<pregled-restorana></pregled-re
 const router = new VueRouter({
     mode: 'hash',
     routes:[
-      	    {path : '/', component: RestoraniKomponenta},
+      	    {path : '/', component: DostupnePorudzbineKomponenta},
       	    { path: '/pregledPonude', component: PregledRestoranaKomponenta},
       	    {path : '/dostupnePorudzbine', component: DostupnePorudzbineKomponenta},
         	{path : '/mojePorudzbine', component: MojePorudzbineKomponenta},
