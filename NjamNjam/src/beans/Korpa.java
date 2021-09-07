@@ -1,5 +1,6 @@
 package beans;
 
+
 import java.util.HashMap;
 
 public class Korpa {
@@ -78,5 +79,10 @@ public class Korpa {
 		{
 			artikli.remove(id);
 		}
+	}
+
+	public void ukloniSveIzKorpe() {
+		artikli = new HashMap<Integer,Integer>();
+		cena = 0.0;
 	}
 }

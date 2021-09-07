@@ -1,4 +1,3 @@
-const PocetnaStranaKomponenta = { template: '<kupac-pocetna-strana></kupac-pocetna-strana>'}
 const RestoraniKomponenta 				= { template: '<restorani></restorani>'}
 const ProfilKomponenta = 		{ template: '<kupac-profil></kupac-profil>'}
 const PregledRestoranaKomponenta 	= { template: '<pregled-restorana></pregled-restorana>'}

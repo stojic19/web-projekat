@@ -45,6 +45,11 @@ Vue.component("korpa", {
 		<br>
 		<h2>Artikli</h2>
 		<br>
+		<div>
+		<button type="button" @click="ukloniSve()" class="brisanjeStyle btn" ><i class="fa fa-trash" aria-hidden="true"></i>  Ukloni sve </button>
+		<button type="button" class="btn"><i class="fa fa-plus" aria-hidden="true"></i> Poruči </button>
+		</div>
+		<br>
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
         <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
@@ -84,9 +89,9 @@ Vue.component("korpa", {
 
             </form>
         </div>
-        <!-- Kraj sortiranja restorana -->
+        <!-- Kraj sortiranja artikala -->
 
-		<!-- Card za restoran -->
+		<!-- Card za artikal -->
         <ul>
             <li v-for="artikal in filtriraniArtikli">
             	<div class="cardsArtikliDiv">
@@ -130,6 +135,48 @@ Vue.component("korpa", {
     </div>
     `,
     methods: {
+    	ukloniSve: function(){
+    		axios
+                    .get('rest/korpa/ukloniSveIzKorpe')
+                    .then(response => {
+                        toastr["success"]("Uspešno uklonjeni svi artikli. " , "Uspešno ažuriranje!");
+                		if(response.data == "")
+               			{
+                			this.imaArtikle = false;
+                		}
+                		else
+                		{
+                			this.artikli = response.data;
+                			this.imaArtikle = true;
+                		}
+                    })
+                    .catch(err =>{ 
+                    console.log(err);
+                    toastr["error"]("Neuspešno ažuriranje!", "Greška");
+                })
+    	},
+    	ukloniArtikal: function (artikal){
+    		axios
+                    .post('rest/korpa/ukloniArtikalIzKorpe', 
+                        artikal
+                    )
+                    .then(response => {
+                        toastr["success"]("Uspešno uklonjen artikal " + artikal.naziv + "." , "Uspešno ažuriranje!");
+                        this.artikli = response.data;
+                		if(response.data == "")
+               			{
+                			this.imaArtikle = false;
+                		}
+                		else
+                		{
+                			this.imaArtikle = true;
+                		}
+                    })
+                    .catch(err =>{ 
+                    console.log(err);
+                    toastr["error"]("Neuspešno ažuriranje!", "Greška");
+                })
+    	},
 		azuriranaKolicina: function (artikal){
 			axios
                     .post('rest/korpa/izmeniKolicinuArtikla', 
