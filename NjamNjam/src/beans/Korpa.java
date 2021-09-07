@@ -7,7 +7,7 @@ public class Korpa {
 	private Integer ID;
 	
 	private  HashMap<Integer, Integer> artikli;	// Id artikla kljuc, vrednost kolicina
-	private Integer cena;
+	private Double cena;
 	private Integer popust;					// Azurira se kada korisnik predje na novi tip
 	
 	public Korpa() {}
@@ -16,7 +16,7 @@ public class Korpa {
 		super();
 		ID = iD;
 		this.artikli = new HashMap<Integer, Integer>();
-		this.cena = 0;
+		this.cena = 0.0;
 		this.popust = 0;
 	}
 
@@ -36,11 +36,11 @@ public class Korpa {
 		this.artikli = artikli;
 	}
 
-	public Integer getCena() {
+	public Double getCena() {
 		return cena;
 	}
 
-	public void setCena(Integer cena) {
+	public void setCena(Double cena) {
 		this.cena = cena;
 	}
 	
@@ -59,5 +59,14 @@ public class Korpa {
 			Integer staraKolicina = artikli.get(idArtikla);
 			artikli.put(idArtikla, staraKolicina + kolicina);
 		}
+		else
+		{
+			artikli.put(idArtikla, kolicina);
+		}
+	}
+	
+	public void dodajNaCenu(Double suma)
+	{
+		cena += suma;
 	}
 }

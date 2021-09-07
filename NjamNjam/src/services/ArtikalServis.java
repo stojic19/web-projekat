@@ -85,15 +85,18 @@ public class ArtikalServis {
 			if(korisnik.getUloga().equals("KUPAC")) {
 			{
 				KorpaDAO korpe = dobaviKorpeDAO();
-				if(korisnik.getIdKorpe()==null)
+				if(korisnik.getIdKorpe() == null)
 				{
 					KorisnikDAO korisnikDAO = dobaviKorisnike();
 					korisnikDAO.dodajKorpuKorisniku(korisnik.getID(), korpe.dodajKorpu());
+					korisnik = korisnikDAO.dobaviKorisnikaPoKorisnickomImenu(korisnik.getKorisnickoIme());
+					request.getSession().setAttribute("ulogovanKorisnik", korisnik);
 				}
 				Korpa korpa = korpe.nadjiKorpuPoId(korisnik.getIdKorpe());
+				
 				return Response
 						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
-						.entity(artikli.dobaviArtiklePoId(korpa.getArtikli().keySet()))
+						.entity(artikli.dobaviArtikleZaKorpu(korpa.getArtikli()))
 						.build();	
 			}
 		}

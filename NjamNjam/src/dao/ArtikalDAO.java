@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Artikal;
 import dto.ArtikalIzmenaDTO;
+import dto.ArtikalUKorpiDTO;
 
 public class ArtikalDAO {
 	private ArrayList<Artikal> artikli;
@@ -130,5 +132,30 @@ public class ArtikalDAO {
 			}
 		}
 		return artikliIzKorpe;
+	}
+	public ArrayList<ArtikalUKorpiDTO> dobaviArtikleZaKorpu(HashMap<Integer, Integer> artikliIzKorpe) {
+		ArrayList<ArtikalUKorpiDTO> artikliZaKorpu = new ArrayList<ArtikalUKorpiDTO>();
+		for (Artikal a : artikli) {
+			for(Integer id : artikliIzKorpe.keySet())
+			{
+				if(a.getID() == id)
+				{
+					ArtikalUKorpiDTO artikalUKorpi = new ArtikalUKorpiDTO();
+					artikalUKorpi.id = a.getID();
+					artikalUKorpi.cena = a.getCena();
+					artikalUKorpi.idRestoranaKomPripada = a.getIdRestoranaKomPripada();
+					artikalUKorpi.kolicina = a.getKolicina();
+					artikalUKorpi.kolicinaZaKupovinu = artikliIzKorpe.get(id);
+					artikalUKorpi.logickiObrisan = a.getLogickiObrisan();
+					artikalUKorpi.naziv = a.getNaziv();
+					artikalUKorpi.opis = a.getOpis();
+					artikalUKorpi.tip = a.getTip();
+					artikalUKorpi.putanjaDoSlike = a.getPutanjaDoSlike();
+					artikliZaKorpu.add(artikalUKorpi);
+					break;
+				}
+			}
+		}
+		return artikliZaKorpu;
 	}
 }

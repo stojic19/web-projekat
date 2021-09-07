@@ -97,12 +97,10 @@ Vue.component("korpa", {
 						<td> {{ artikal.opis }} </td>
 					</tr>
                 </table>
-				<div class="kolicina" v-show="kupacPregleda">
+				<div class="kolicina">
       				<input type="number" min="1" v-model="artikal.kolicinaZaKupovinu" value="1">
     			</div>
-                <button v-show="kupacPregleda" class="dodajUKorpu" type="button" v-if=" artikal.logickiObrisan == '0' " @click="dodajUKorpu(artikal)"  >  Dodaj u korpu </button> <br>
-            	</div>
-				<div v-show="!kupacPregleda">Prijavite se kao kupac da biste nastavili kupovinu.</div>
+                </div>
             </li>
         </ul>
         <!-- Kraj card za artikle -->

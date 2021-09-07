@@ -1,3 +1,20 @@
+toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
 Vue.component("pregled-restorana", {
     data() {
         return {
@@ -173,7 +190,19 @@ Vue.component("pregled-restorana", {
     `,
     methods: {
 		dodajUKorpu: function (artikal){
-			
+			axios
+                    .post('rest/korpa/dodajArtikalUKorpu', {
+                        "idArtikla": artikal.id,
+                        "kolicina": artikal.kolicinaZaKupovinu,
+                       	"cena" : artikal.cena
+                    })
+                    .then(response => {
+                        toastr["success"]("Artikal uspešno dodat u korpu!", "Uspešno dodavanje!");
+                    })
+                    .catch(err =>{ 
+                    console.log(err);
+                    toastr["error"]("Neuspešno dodavanje!", "Greška");
+                })
 		},
         initForMap: function (lon,lat) {
         	var place = [parseFloat(lon),parseFloat(lat)];
@@ -363,13 +392,16 @@ Vue.component("pregled-restorana", {
 		axios
             .get('rest/artikal/dobaviArtikleRestorana')
             .then(response => {
-                this.artikli = response.data;
                 if(response.data == "")
                	{
                 		this.imaArtikle = false;
                 }
                 else
                 {
+                	response.data.forEach(el => {
+                	el.kolicinaZaKupovinu = 1;
+                	this.artikli.push(el);
+                	});
                 	this.imaArtikle = true;
                 }
                 return this.artikli,this.imaArtikle;
