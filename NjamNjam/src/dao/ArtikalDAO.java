@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -115,5 +116,19 @@ public class ArtikalDAO {
 		}
 		
 		return null;
+	}
+	public ArrayList<Artikal> dobaviArtiklePoId(Set<Integer> keySet) {
+		ArrayList<Artikal> artikliIzKorpe = new ArrayList<Artikal>();
+		for (Artikal a : artikli) {
+			for(Integer id : keySet)
+			{
+				if(a.getID() == id)
+				{
+					artikliIzKorpe.add(a);
+					break;
+				}
+			}
+		}
+		return artikliIzKorpe;
 	}
 }

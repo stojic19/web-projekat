@@ -10,6 +10,8 @@ public class Korpa {
 	private Integer cena;
 	private Integer popust;					// Azurira se kada korisnik predje na novi tip
 	
+	public Korpa() {}
+	
 	public Korpa(Integer iD) {
 		super();
 		ID = iD;

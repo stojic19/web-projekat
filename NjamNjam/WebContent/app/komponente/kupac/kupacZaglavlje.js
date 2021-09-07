@@ -11,6 +11,7 @@ Vue.component("kupac-zaglavlje",{
             <ul>
             	<li><router-link to="/home" exact>Početna stranica</router-link></li>
                 <li><router-link to="/profil" exact>Profil</router-link></li>
+                <li><router-link to="/korpa" exact>Korpa</router-link></li>
                 <li><button @click="odjava" > Odjava </button></li>
             </ul>
         </nav>

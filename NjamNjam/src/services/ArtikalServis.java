@@ -16,9 +16,12 @@ import javax.ws.rs.core.Response;
 
 import beans.Artikal;
 import beans.Korisnik;
+import beans.Korpa;
 import beans.Restoran;
 import beans.Slika;
 import dao.ArtikalDAO;
+import dao.KorisnikDAO;
+import dao.KorpaDAO;
 import dao.RestoranDAO;
 import dao.SlikaDAO;
 import dto.ArtikalIzmenaDTO;
@@ -69,6 +72,33 @@ public class ArtikalServis {
 					.entity("Uspešno dodat artikal.")
 					.build();
 			
+	}
+	
+	@GET
+	@Path("/dobaviArtikleIzKorpe")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviArtikleIzKorpe(@Context HttpServletRequest request) {	
+		
+			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+			ArtikalDAO artikli = dobaviArtikleDAO();
+			if(korisnik != null)
+			if(korisnik.getUloga().equals("KUPAC")) {
+			{
+				KorpaDAO korpe = dobaviKorpeDAO();
+				if(korisnik.getIdKorpe()==null)
+				{
+					KorisnikDAO korisnikDAO = dobaviKorisnike();
+					korisnikDAO.dodajKorpuKorisniku(korisnik.getID(), korpe.dodajKorpu());
+				}
+				Korpa korpa = korpe.nadjiKorpuPoId(korisnik.getIdKorpe());
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(artikli.dobaviArtiklePoId(korpa.getArtikli().keySet()))
+						.build();	
+			}
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
 	}
 	
 	@GET
@@ -211,5 +241,30 @@ public class ArtikalServis {
 			ctx.setAttribute("restorani", restorani);
 		}
 		return restorani;
+	}
+	
+	private KorpaDAO dobaviKorpeDAO() {
+		KorpaDAO korpe = (KorpaDAO) ctx.getAttribute("korpe");
+		if (korpe == null) {
+			korpe = new KorpaDAO();
+			korpe.ucitajKorpe();
+			ctx.setAttribute("korpe", korpe);
+		}
+		return korpe;
+	}
+	
+	private KorisnikDAO dobaviKorisnike() {
+		
+		KorisnikDAO korisnici = (KorisnikDAO) ctx.getAttribute("korisnici");
+		
+		if (korisnici == null) {
+
+			korisnici = new KorisnikDAO();
+			korisnici.ucitajKorisnike();
+			ctx.setAttribute("korisnici", korisnici);
+
+		}
+
+		return korisnici;
 	}
 }

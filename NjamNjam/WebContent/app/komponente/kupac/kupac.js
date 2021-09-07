@@ -2,7 +2,7 @@ const PocetnaStranaKomponenta = { template: '<kupac-pocetna-strana></kupac-pocet
 const RestoraniKomponenta 				= { template: '<restorani></restorani>'}
 const ProfilKomponenta = 		{ template: '<kupac-profil></kupac-profil>'}
 const PregledRestoranaKomponenta 	= { template: '<pregled-restorana></pregled-restorana>'}
-// const KorisniciKomponenta = 	{ template: '<admin-korisnici></admin-korisnici>'}
+const KorpaKomponenta = 	{ template: '<korpa></korpa>'}
 // const KomentariKomponenta = 	{ template: '<admin-komentari></admin-komentari>'}
 
 const router = new VueRouter({
@@ -12,7 +12,7 @@ const router = new VueRouter({
         	{path : '/home', component: RestoraniKomponenta},
         	{ path: '/pregledPonude', component: PregledRestoranaKomponenta},
         	{path : '/profil', component: ProfilKomponenta},
-    //    	{path : '/korisnici', component: KorisniciKomponenta},
+        	{path : '/korpa', component: KorpaKomponenta},
     //    	{path : '/komentari', component: KomentariKomponenta}
     ]
 })
