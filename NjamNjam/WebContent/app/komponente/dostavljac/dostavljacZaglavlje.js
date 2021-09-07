@@ -9,6 +9,7 @@ Vue.component("dostavljac-zaglavlje",{
     <div id="divZaglavlje">
         <nav>
             <ul>
+            	<li><router-link to="/home" exact>Početna stranica</router-link></li>
             	<li><router-link to="/dostupnePorudzbine" exact>Dostupne porudžbine</router-link></li>
 				<li><router-link to="/mojePorudzbine" exact>Moje porudžbine</router-link></li>
 				<li><router-link to="/profil" exact>Profil</router-link></li>

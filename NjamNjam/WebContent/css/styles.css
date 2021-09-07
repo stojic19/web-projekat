@@ -659,6 +659,12 @@ button.endButtonStyle:hover{
 	background-color: #b1edff;
 }
 
+button.dodajUKorpu{
+	background-color: #ff0022;
+}
+button.dodajUKorpu:hover{
+	background-color: #b1edff;
+}
 /* Style for apartments view */
 
 /* Style for dialog part */
@@ -1283,3 +1289,25 @@ td button{
 }
 
 /*  */
+
+/* KOLICINA	*/
+.kolicina {
+    width: 150px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.kolicina input {
+    width: 150px;
+    border: 0;
+    line-height: 30px;
+    font-size: 20px;
+    text-align: center;
+    background: #edfdfb;
+    color: #04030f;
+    appearance: none;
+    outline: 0;
+}
+
+/*	KOLICINA */

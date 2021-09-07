@@ -1,10 +1,11 @@
-RestoraniKomponenta 				= { template: '<restorani></restorani>'}
+const RestoraniKomponenta 				= { template: '<restorani></restorani>'}
 const ProfilKomponenta 				= { template: '<admin-profil></admin-profil>'}
 const KupciKomponenta 				= { template: '<menadzer-kupci></menadzer-kupci>'}
 const MenadzerRestoranKomponenta 	= { template: '<menadzer-restoran></menadzer-restoran>'}
 const MenadzerArtikliKomponenta 	= { template: '<menadzer-artikli></menadzer-artikli>'}
 const DodavanjeArtiklaKomponenta 	= { template: '<menadzer-dodavanje-artikla></menadzer-dodavanje-artikla>'}
 const KomentariKomponenta 			= { template: '<admin-komentari></admin-komentari>'}
+const PregledRestoranaKomponenta 	= { template: '<pregled-restorana></pregled-restorana>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -17,6 +18,7 @@ const router = new VueRouter({
         	{path : '/artikli', component: MenadzerArtikliKomponenta},
 			{path: '/dodavanjeArtikla', component: DodavanjeArtiklaKomponenta},
 			{path: '/komentari', component: KomentariKomponenta},
+			{ path: '/pregledPonude', component: PregledRestoranaKomponenta}
         	//{path : '/svePorudzbine', component: SvePorudzbineKomponenta}
 			//{path: '/aktivnePorudzbine', component: AktivnePorudzbineKomponenta},
     ]

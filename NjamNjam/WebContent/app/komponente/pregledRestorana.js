@@ -18,7 +18,8 @@ Vue.component("pregled-restorana", {
             prostorZaPretraguVidljiv: false,
             prostorZaFiltereVidljiv: false,
             prostorZaSortiranjeVidljiv: false,
-			imaArtikle: false
+			imaArtikle: false,
+			kupacPregleda: false
         }
     },
 
@@ -130,10 +131,12 @@ Vue.component("pregled-restorana", {
 						<td> {{ artikal.opis }} </td>
 					</tr>
                 </table>
-
-                <button type="button" v-if=" artikal.logickiObrisan == '0' " @click="izmeniArtikal(artikal)" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
-                <button type="button" v-if=" artikal.logickiObrisan == '0' " @click="obrisiArtikal(artikal)" class="brisanjeStyle button" ><i class="fa fa-trash" aria-hidden="true"></i>  Obriši </button> <br>
+				<div class="kolicina" v-show="kupacPregleda">
+      				<input type="number" min="1" v-model="artikal.kolicinaZaKupovinu" value="1">
+    			</div>
+                <button v-show="kupacPregleda" class="dodajUKorpu" type="button" v-if=" artikal.logickiObrisan == '0' " @click="dodajUKorpu(artikal)"  >  Dodaj u korpu </button> <br>
             	</div>
+				<div v-show="!kupacPregleda">Prijavite se kao kupac da biste nastavili kupovinu.</div>
             </li>
         </ul>
         <!-- Kraj card za artikle -->
@@ -169,6 +172,9 @@ Vue.component("pregled-restorana", {
     </div>
     `,
     methods: {
+		dodajUKorpu: function (artikal){
+			
+		},
         initForMap: function (lon,lat) {
         	var place = [parseFloat(lon),parseFloat(lat)];
         	var center = ol.proj.fromLonLat(place);
@@ -376,6 +382,12 @@ Vue.component("pregled-restorana", {
                     	this.komentari.push(el);
                 });
                 return this.komentari;
+            });
+	axios
+            .get('rest/korisnici/daLiJeKorisnikKupac')
+            .then(response => {
+                this.kupacPregleda = response.data;
+                return this.kupacPregleda;
             });
     },
     computed: {

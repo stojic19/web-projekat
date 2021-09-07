@@ -133,6 +133,21 @@ public class KorisnikServis {
 	}
 	
 	@GET
+	@Path("/daLiJeKorisnikKupac")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response daLiJeKorisnikKupac(@Context HttpServletRequest request) {
+		
+		if(korisnikJeKupac(request)) {
+			return Response
+					.status(Response.Status.ACCEPTED)
+					.entity(true)
+					.build();
+		}
+		return Response.status(Response.Status.ACCEPTED)
+				.entity(false).build();
+	}
+	
+	@GET
 	@Path("/dobaviSveKorisnike")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dobaviSveKorisnike(@Context HttpServletRequest request) {
