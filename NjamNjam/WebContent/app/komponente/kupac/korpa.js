@@ -117,7 +117,7 @@ Vue.component("korpa", {
 				<div class="kolicina">
       				<input @change="azuriranaKolicina(artikal)" type="number" min="1" v-model="artikal.kolicinaZaKupovinu">
     			</div>
-				
+				<button type="button" @click="ukloniArtikal(artikal)" class="brisanjeStyle button" ><i class="fa fa-trash" aria-hidden="true"></i>  Ukloni </button> <br>
 			  </div>
             </li>
         </ul>
