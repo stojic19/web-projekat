@@ -1,19 +1,21 @@
 package beans;
 
-import java.util.Map;
+import java.util.HashMap;
 
 public class Korpa {
 
 	private Integer ID;
 	
-	private  Map<Integer, Integer> artikli;	// Id artikla kljuc, vrednost kolicina
+	private  HashMap<Integer, Integer> artikli;	// Id artikla kljuc, vrednost kolicina
 	private Integer cena;
+	private Integer popust;					// Azurira se kada korisnik predje na novi tip
 	
-	public Korpa(Integer iD, Map<Integer, Integer> artikli, Integer cena) {
+	public Korpa(Integer iD) {
 		super();
 		ID = iD;
-		this.artikli = artikli;
-		this.cena = cena;
+		this.artikli = new HashMap<Integer, Integer>();
+		this.cena = 0;
+		this.popust = 0;
 	}
 
 	public Integer getID() {
@@ -24,11 +26,11 @@ public class Korpa {
 		ID = iD;
 	}
 
-	public Map<Integer, Integer> getArtikli() {
+	public HashMap<Integer, Integer> getArtikli() {
 		return artikli;
 	}
 
-	public void setArtikli(Map<Integer, Integer> artikli) {
+	public void setArtikli(HashMap<Integer, Integer> artikli) {
 		this.artikli = artikli;
 	}
 
@@ -40,5 +42,20 @@ public class Korpa {
 		this.cena = cena;
 	}
 	
-	
+	public Integer getPopust() {
+		return popust;
+	}
+
+	public void setPopust(Integer popust) {
+		this.popust = popust;
+	}
+
+	public void dodajArtikal(Integer idArtikla, Integer kolicina)
+	{
+		if(artikli.containsKey(idArtikla))
+		{
+			Integer staraKolicina = artikli.get(idArtikla);
+			artikli.put(idArtikla, staraKolicina + kolicina);
+		}
+	}
 }
