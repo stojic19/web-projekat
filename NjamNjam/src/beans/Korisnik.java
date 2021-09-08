@@ -17,10 +17,10 @@ public class Korisnik {
 	private String datumRodjenja;
 	private String uloga;
 	
-	private List<Integer> idPorudzbina;			// sve porudzbine kupca / dostavljaca
+	private List<String> idPorudzbina;			// sve porudzbine kupca / dostavljaca
 	private Integer idKorpe;								// korpa kupca
 	private Integer idRestorana;							// restoran menadzera
-	private Integer brojSakupljenihBodova;
+	private Double brojSakupljenihBodova;
 	private TipKupca tip;
 	private Integer brojOtkazanihPorudzbina;
 	
@@ -49,10 +49,10 @@ public class Korisnik {
 		this.pol = pol;
 		this.datumRodjenja = datumRodjenja;
 		this.uloga = uloga;
-		this.idPorudzbina = new ArrayList<Integer>();
+		this.idPorudzbina = new ArrayList<String>();
 		this.idKorpe = -1;
 		this.idRestorana = -1;
-		this.brojSakupljenihBodova = 0;
+		this.brojSakupljenihBodova = 0.0;
 		this.brojOtkazanihPorudzbina = 0;
 		// this.tip = tip;	//TODO: RESITI OVO ZA TIPOVE KUPCA
 	}
@@ -137,11 +137,11 @@ public class Korisnik {
 		this.uloga = uloga;
 	}
 
-	public List<Integer> getIdPorudzbina() {
+	public List<String> getIdPorudzbina() {
 		return idPorudzbina;
 	}
 
-	public void setIdPorudzbina(List<Integer> idPorudzbina) {
+	public void setIdPorudzbina(List<String> idPorudzbina) {
 		this.idPorudzbina = idPorudzbina;
 	}
 
@@ -161,11 +161,11 @@ public class Korisnik {
 		this.idRestorana = idRestorana;
 	}
 
-	public Integer getBrojSakupljenihBodova() {
+	public Double getBrojSakupljenihBodova() {
 		return brojSakupljenihBodova;
 	}
 
-	public void setBrojSakupljenihBodova(Integer brojSakupljenihBodova) {
+	public void setBrojSakupljenihBodova(Double brojSakupljenihBodova) {
 		this.brojSakupljenihBodova = brojSakupljenihBodova;
 	}
 
@@ -177,4 +177,14 @@ public class Korisnik {
 		this.tip = tip;
 	}
 	
+	public void dodajIdPorudzbine(String id) {
+		idPorudzbina.add(id);
+	}
+	
+	public void dodajBodove(Double cena) {
+		this.brojSakupljenihBodova += (cena/1000) * 133;
+	}
+	public void oduzmiBodove(Double cena) {
+		this.brojSakupljenihBodova -= (cena/1000) * 133 * 4;
+	}
 }

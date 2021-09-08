@@ -64,7 +64,7 @@ Vue.component("menadzer-dodavanje-artikla", {
 		potvrdiDodavanje: function () {
             this.kodZaSliku = document.getElementById("slikaId").src;
             this.DTO.putanjaDoSlike = this.kodZaSliku;
-
+			console.log(this.DTO);
             if (!this.DTO.naziv || !this.DTO.tip 
 				|| !this.DTO.cena) {
                 toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");

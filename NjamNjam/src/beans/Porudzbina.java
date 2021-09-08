@@ -1,22 +1,24 @@
 package beans;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class Porudzbina {
 
 	private String ID;
 	
-	private List<Integer> idArtikala;
+	private HashMap<Integer, Integer> idArtikala;
 	private Integer idRestorana;
 	private String vremePorudzbine;
-	private String cena;
+	private Double cena;
 	private String imePrezimeKupca;
 	private String status;
 	
 	private String imeRestorana;
 	private String tipRestorana;
 	
-	public Porudzbina(String iD, List<Integer> idArtikala, Integer idRestorana, String imeRestorana, String tipRestorana, String vremePorudzbine, String cena,
+	public Porudzbina() {}
+	
+	public Porudzbina(String iD, HashMap<Integer, Integer> idArtikala, Integer idRestorana, String imeRestorana, String tipRestorana, String vremePorudzbine, Double cena,
 			String imePrezimeKupca, String status) {
 		super();
 		ID = iD;
@@ -28,9 +30,22 @@ public class Porudzbina {
 		this.status = status;
 		
 		this.setImeRestorana(imeRestorana);
-		this.idRestorana = idRestorana;
+		this.tipRestorana = tipRestorana;
 	}
-
+	
+	public Porudzbina(Integer idRestorana, String imeRestorana, String tipRestorana, String vremePorudzbine,String imePrezimeKupca) {
+		super();
+		ID = getAlphaNumericString();
+		this.idArtikala = new HashMap<Integer, Integer>();
+		this.idRestorana = idRestorana;
+		this.vremePorudzbine = vremePorudzbine;
+		this.cena = 0.0;
+		this.imePrezimeKupca = imePrezimeKupca;
+		this.status = "OBRADA";
+		this.imeRestorana = imeRestorana;
+		this.tipRestorana = tipRestorana;
+	}
+	
 	public String getID() {
 		return ID;
 	}
@@ -39,11 +54,11 @@ public class Porudzbina {
 		ID = iD;
 	}
 
-	public List<Integer> getIdArtikala() {
+	public HashMap<Integer, Integer> getIdArtikala() {
 		return idArtikala;
 	}
 
-	public void setIdArtikala(List<Integer> idArtikala) {
+	public void setIdArtikala(HashMap<Integer, Integer> idArtikala) {
 		this.idArtikala = idArtikala;
 	}
 
@@ -63,11 +78,11 @@ public class Porudzbina {
 		this.vremePorudzbine = vremePorudzbine;
 	}
 
-	public String getCena() {
+	public Double getCena() {
 		return cena;
 	}
 
-	public void setCena(String cena) {
+	public void setCena(Double cena) {
 		this.cena = cena;
 	}
 
@@ -103,5 +118,35 @@ public class Porudzbina {
 		this.imeRestorana = imeRestorana;
 	}
 	
+	public void dodajArtikal(Integer idArtikla, Integer kolicina, Double cenaArtikla,Integer popust) {
+		idArtikala.put(idArtikla, kolicina);
+		cena += ((100-popust)/100) * (kolicina * cenaArtikla);
+	}
 	
+	static String getAlphaNumericString()
+    {
+  
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                    + "0123456789"
+                                    + "abcdefghijklmnopqrstuvxyz";
+  
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(10);
+  
+        for (int i = 0; i < 10; i++) {
+  
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                = (int)(AlphaNumericString.length()
+                        * Math.random());
+  
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                          .charAt(index));
+        }
+  
+        return sb.toString();
+    }
 }

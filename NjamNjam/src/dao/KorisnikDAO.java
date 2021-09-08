@@ -119,7 +119,22 @@ public class KorisnikDAO {
 		}
 		return false;
 	}
-	
+	public Boolean promeniKorisnikaNakonKupovine(Korisnik azuriranKorisnik) {
+
+		for (Korisnik korisnik : korisnici.values()) {
+			if (korisnik.getKorisnickoIme().equals(azuriranKorisnik.getKorisnickoIme())) {
+
+				korisnik.setBrojSakupljenihBodova(azuriranKorisnik.getBrojSakupljenihBodova());
+				korisnik.setIdPorudzbina(azuriranKorisnik.getIdPorudzbina());
+				// korisnik.setTip(azuriranKorisnik.getTip());	TODO: OTKOMENTARISATI KADA SE RESI TIP KUPCA
+				
+				sacuvajKorisnikeJSON();
+
+				return true;
+			}
+		}
+		return false;
+	}
 	public Korisnik nadjiKorisnikaPoID(Integer id) {
 		for (Korisnik korisnik : getValues()) {
 			if(korisnik.getID() == id)

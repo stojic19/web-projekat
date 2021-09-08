@@ -47,7 +47,7 @@ Vue.component("korpa", {
 		<br>
 		<div>
 		<button type="button" @click="ukloniSve()" class="brisanjeStyle btn" ><i class="fa fa-trash" aria-hidden="true"></i>  Ukloni sve </button>
-		<button type="button" class="btn"><i class="fa fa-plus" aria-hidden="true"></i> Poruči </button>
+		<button type="button" @click="poruci()" class="btn"><i class="fa fa-plus" aria-hidden="true"></i> Poruči </button>
 		</div>
 		<br>
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
@@ -135,6 +135,26 @@ Vue.component("korpa", {
     </div>
     `,
     methods: {
+    	poruci: function(){
+    		axios
+                    .get('rest/korpa/poruci')
+                    .then(response => {
+                        toastr["success"]("Porudžbine uspešno poslate. " , "Uspešno ažuriranje!");
+                		if(response.data == "")
+               			{
+                			this.imaArtikle = false;
+                		}
+                		else
+                		{
+                			this.artikli = response.data;
+                			this.imaArtikle = true;
+                		}
+                    })
+                    .catch(err =>{ 
+                    console.log(err);
+                    toastr["error"]("Neuspešno poručivanje!", "Greška");
+                })
+    	},
     	ukloniSve: function(){
     		axios
                     .get('rest/korpa/ukloniSveIzKorpe')
