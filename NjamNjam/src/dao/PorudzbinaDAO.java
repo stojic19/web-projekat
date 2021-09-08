@@ -155,4 +155,19 @@ public class PorudzbinaDAO {
 		}
 		return nedostavljene;
 	}
+
+	public ArrayList<Porudzbina> dobaviPorudzbineKupca(List<String> idPorudzbina) {
+		ArrayList<Porudzbina> porudzbineKupca = new ArrayList<Porudzbina>();
+		for(Porudzbina porudzbina : getValues()) {
+			for(String id : idPorudzbina)
+			{
+				if(porudzbina.getID().contains(id))
+				{
+					porudzbineKupca.add(porudzbina);
+					break;
+				}
+			}
+		}
+		return porudzbineKupca;
+	}
 }

@@ -26,6 +26,26 @@ public class PorudzbinaServis {
 	ServletContext ctx;
 	
 	@GET
+	@Path("/dobaviPorudzbineKupca")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviPorudzbineKupca(@Context HttpServletRequest request) {	
+		
+			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
+			if(korisnik != null)
+			if(korisnik.getUloga().equals("KUPAC")) {
+			{			
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(porudzbine.dobaviPorudzbineKupca(korisnik.getIdPorudzbina()))
+						.build();	
+			}
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@GET
 	@Path("/dobaviPorudzbine")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Porudzbina> dobaviPorudzbine() {	
