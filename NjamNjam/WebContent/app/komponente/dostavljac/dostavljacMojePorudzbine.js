@@ -118,8 +118,13 @@ Vue.component("moje-porudzbine-dostavljac", {
             if (!porudzbina.imeRestorana.match(this.pretraga.imeRestorana))
                 return false;
 
-            if (porudzbina.cena < this.pretraga.minCena || porudzbina.cena > this.pretraga.maxCena)
+            if (porudzbina.cena < this.pretraga.minCena)
                 return false;
+
+                        if(this.pretraga.maxCena != ''){
+                if(porudzbina.cena > this.pretraga.maxCena) 
+                    return false;
+			}
 
             var minParts = this.pretraga.minDatum.split('-');
             var maxParts = this.pretraga.maxDatum.split('-');
