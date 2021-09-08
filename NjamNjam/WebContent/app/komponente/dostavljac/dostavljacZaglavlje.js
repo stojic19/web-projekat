@@ -6,7 +6,7 @@ Vue.component("dostavljac-zaglavlje",{
     }
     ,
     template: `
-    <div id="divZaglavlje">
+    <div id="divHeaderGuest">
         <nav>
             <ul>
             	<li><router-link to="/home" exact>Početna stranica</router-link></li>

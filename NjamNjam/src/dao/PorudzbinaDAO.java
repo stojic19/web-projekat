@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class PorudzbinaDAO {
 	
 	public void ucitajPorudzbine() {
 		ObjectMapper objectMapper = new ObjectMapper();
-
+		
 		File file = new File(this.imeFajla);
 
 		List<Porudzbina> ucitanePorudzbine = new ArrayList<Porudzbina>();
@@ -51,7 +52,7 @@ public class PorudzbinaDAO {
 
 		for (Porudzbina p : ucitanePorudzbine) {
 			porudzbine.put(p.getID(), p);
-		}
+		}	
 	}
 	
 	public void sacuvajPorudzbineJSON() {

@@ -4,8 +4,10 @@ Vue.component("moje-porudzbine-dostavljac", {
             porudzbine: [],
             pretraga: {
                 imeRestorana: '',
-				cena: '',
-                datum : ''
+				minCena: '',
+                maxCena: '',
+                minDatum : '',
+                maxDatum : ''
             },
             podaciZaFiltriranje: {
                 tipRestorana: "",
@@ -34,8 +36,10 @@ Vue.component("moje-porudzbine-dostavljac", {
             <form method='post' >
 
                 <input type="text" v-model="pretraga.imeRestorana" v-bind:class="{filledInput: pretraga.imeRestorana != '' }" placeholder="Restoran" >
-                <input type="text" v-model="pretraga.cena" v-bind:class="{filledInput: pretraga.cena != '' }" placeholder="Cena" >
-                <input type="text" v-model="pretraga.datum" v-bind:class="{filledInput: pretraga.datum != '' }" placeholder="Datum" >           
+                <input type="text" v-model="pretraga.minCena" v-bind:class="{filledInput: pretraga.minCena != '' }" placeholder="Minimalna cena" >
+                <input type="text" v-model="pretraga.maxCena" v-bind:class="{filledInput: pretraga.maxCena != '' }" placeholder="Maksimalna cena" >
+                <input type="text" v-model="pretraga.minDatum" v-bind:class="{filledInput: pretraga.minDatum != '' }" placeholder="Od (format: DD-MM-YYYY)" >
+                <input type="text" v-model="pretraga.maxDatum" v-bind:class="{filledInput: pretraga.maxDatum != '' }" placeholder="Do (format: DD-MM-YYYY)" >         
 
             </form>
         </div>
@@ -47,7 +51,7 @@ Vue.component("moje-porudzbine-dostavljac", {
                 <select v-model="podaciZaFiltriranje.tipRestorana" @change="onchangeTipRestorana()">
                     <option value="">Bez filtera za tip restorana</option>
                     <option>Brza hrana</option>
-                    <option>Roötilj</option>
+                    <option>Ro≈°tilj</option>
 					<option>Burgeri</option>
 					<option>Italijanski</option>
 					<option>Picerija</option>
@@ -67,7 +71,7 @@ Vue.component("moje-porudzbine-dostavljac", {
         <!-- Kraj filtriranja porudzbina -->
 
         <!-- Sortiranje porudzbina -->
-        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranje">
+        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranjePorudzbine">
             <form method='post'>
 
                 <button type="button" @click="sortirajRestoran"><i class="fa fa-sort" aria-hidden="true"></i> Restoran </button>
@@ -114,10 +118,15 @@ Vue.component("moje-porudzbine-dostavljac", {
             if (!porudzbina.imeRestorana.match(this.pretraga.imeRestorana))
                 return false;
 
-            if (!porudzbina.cena.match(this.pretraga.cena))
+            if (porudzbina.cena < this.pretraga.minCena || porudzbina.cena > this.pretraga.maxCena)
                 return false;
 
-            if (!porudzbina.datum.match(this.pretraga.datum))
+            var minParts = this.pretraga.minDatum.split('-');
+            var maxParts = this.pretraga.maxDatum.split('-');
+            var datmin = new Date(minParts[2], minParts[1] - 1, minParts[0]);
+            var datmax = new Date(maxParts[2], maxParts[1] - 1, maxParts[0]);
+            var datpor = new Date(porudzbina.vremePorudzbine);
+            if (datpor < datmin || datpor > datmax)
                 return false;
 
             return true;
@@ -141,7 +150,7 @@ Vue.component("moje-porudzbine-dostavljac", {
             }
 		},
         dostaviPorudzbinu: function(porudzbina){
-            axios.post('rest/Porudzbina/dostaviPorudzbinu', porudzbina).then(response => (this.porudzbine = response.data));
+            axios.post('rest/Porudzbina/dostaviPorudzbinu', {porudzbina}).then(response => (this.porudzbine = response.data));
 		},
         sortirajRestoran: function () {
             this.restoranBrojac ++;
