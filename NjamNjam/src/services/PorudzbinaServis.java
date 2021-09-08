@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.ServletContext;
@@ -19,6 +20,8 @@ import beans.Porudzbina;
 import dao.KorisnikDAO;
 import dao.KorpaDAO;
 import dao.PorudzbinaDAO;
+import dto.PorudzbinaDostavljacDTO;
+import dto.PorudzbinaDostavljacJSONDTO;
 import dto.PorudzbinaJSONDTO;
 
 @Path("/Porudzbina")
@@ -84,6 +87,49 @@ public class PorudzbinaServis {
 			porudzbine.dodajNovuPorudzbinu(porudzbina.porudzbina);
 		}
 
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@POST
+	@Path("/posaljiZahtev")                  //izmeniti: salju se podaci i porudzbina se tek ovde kreira
+	@Consumes(MediaType.APPLICATION_JSON)          //dodati racunanje bodova
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response posaljiZahtev(PorudzbinaDostavljacJSONDTO porudzbinaDTO, @Context HttpServletRequest request) {
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+		if(korisnikJeDostavljac(request)) {
+			PorudzbinaDAO porudzbineDAO = dobaviPorudzbineDAO();
+			porudzbineDAO.dodajZahtevUListuPorudzbine(porudzbinaDTO.porudzbina.ID, korisnik.getID());
+			
+			ArrayList<Porudzbina> porudzbine = porudzbineDAO.dobaviPorudzbineZaDostavu();
+			ArrayList<PorudzbinaDostavljacDTO> porudzbineZaPrikaz = new ArrayList<PorudzbinaDostavljacDTO>();
+			for(Porudzbina porudzbina : porudzbine)
+			{
+				PorudzbinaDostavljacDTO porudzbinaZaPrikaz = new PorudzbinaDostavljacDTO();
+				porudzbinaZaPrikaz.ID = porudzbina.getID();
+				porudzbinaZaPrikaz.cena = porudzbina.getCena();
+				porudzbinaZaPrikaz.idRestorana = porudzbina.getIdRestorana();
+				porudzbinaZaPrikaz.imePrezimeKupca = porudzbina.getImePrezimeKupca();
+				porudzbinaZaPrikaz.imeRestorana = porudzbina.getImeRestorana();
+				porudzbinaZaPrikaz.status = porudzbina.getStatus();
+				porudzbinaZaPrikaz.tipRestorana = porudzbina.getTipRestorana();
+				porudzbinaZaPrikaz.vremePorudzbine = porudzbina.getVremePorudzbine();
+				porudzbinaZaPrikaz.poslatZahtev = 0;
+				for(Integer id : porudzbina.getZahteviOdDostavljaca())
+				{
+					if(id == korisnik.getID())
+					{
+						porudzbinaZaPrikaz.poslatZahtev = 1;
+						break;
+					}
+				}
+				porudzbineZaPrikaz.add(porudzbinaZaPrikaz);
+			}
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+					.entity(porudzbineZaPrikaz)
+					.build();
+		}
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();
 	}
@@ -202,11 +248,41 @@ public class PorudzbinaServis {
 	@GET
 	@Path("/dobaviPorudzbineZaDostavu")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response dobaviPorudzbineZaDostavu() {	
-		return Response
-				.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
-				.entity(dobaviPorudzbineDAO().dobaviPorudzbineZaDostavu())
-				.build();
+	public Response dobaviPorudzbineZaDostavu( @Context HttpServletRequest request) {	
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");	
+		if(korisnikJeDostavljac(request)) {
+			ArrayList<Porudzbina> porudzbine = dobaviPorudzbineDAO().dobaviPorudzbineZaDostavu();
+			ArrayList<PorudzbinaDostavljacDTO> porudzbineZaPrikaz = new ArrayList<PorudzbinaDostavljacDTO>();
+			for(Porudzbina porudzbina : porudzbine)
+			{
+				PorudzbinaDostavljacDTO porudzbinaZaPrikaz = new PorudzbinaDostavljacDTO();
+				porudzbinaZaPrikaz.ID = porudzbina.getID();
+				porudzbinaZaPrikaz.cena = porudzbina.getCena();
+				porudzbinaZaPrikaz.idRestorana = porudzbina.getIdRestorana();
+				porudzbinaZaPrikaz.imePrezimeKupca = porudzbina.getImePrezimeKupca();
+				porudzbinaZaPrikaz.imeRestorana = porudzbina.getImeRestorana();
+				porudzbinaZaPrikaz.status = porudzbina.getStatus();
+				porudzbinaZaPrikaz.tipRestorana = porudzbina.getTipRestorana();
+				porudzbinaZaPrikaz.vremePorudzbine = porudzbina.getVremePorudzbine();
+				porudzbinaZaPrikaz.poslatZahtev = 0;
+				for(Integer id : porudzbina.getZahteviOdDostavljaca())
+				{
+					if(id == korisnik.getID())
+					{
+						porudzbinaZaPrikaz.poslatZahtev = 1;
+						break;
+					}
+				}
+				porudzbineZaPrikaz.add(porudzbinaZaPrikaz);
+			}
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+					.entity(porudzbineZaPrikaz)
+					.build();
+		}
+		
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
 	}
 	
 	@GET

@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Porudzbina {
@@ -16,6 +17,8 @@ public class Porudzbina {
 	private String imeRestorana;
 	private String tipRestorana;
 	
+	private ArrayList<Integer> zahteviOdDostavljaca;
+	
 	public Porudzbina() {}
 	
 	public Porudzbina(String iD, HashMap<Integer, Integer> idArtikala, Integer idRestorana, String imeRestorana, String tipRestorana, String vremePorudzbine, Double cena,
@@ -31,6 +34,7 @@ public class Porudzbina {
 		
 		this.setImeRestorana(imeRestorana);
 		this.tipRestorana = tipRestorana;
+		this.zahteviOdDostavljaca = new ArrayList<Integer>();
 	}
 	
 	public Porudzbina(Integer idRestorana, String imeRestorana, String tipRestorana, String vremePorudzbine,String imePrezimeKupca) {
@@ -44,6 +48,7 @@ public class Porudzbina {
 		this.status = "OBRADA";
 		this.imeRestorana = imeRestorana;
 		this.tipRestorana = tipRestorana;
+		this.zahteviOdDostavljaca = new ArrayList<Integer>();
 	}
 	
 	public String getID() {
@@ -123,6 +128,25 @@ public class Porudzbina {
 		cena += ((100-popust)/100) * (kolicina * cenaArtikla);
 	}
 	
+	public void dodajZahtevOdDostavljaca(Integer idDostavljaca) {
+		if(this.zahteviOdDostavljaca == null)
+			this.zahteviOdDostavljaca = new ArrayList<Integer>();
+		if(!this.zahteviOdDostavljaca.contains(idDostavljaca))
+			this.zahteviOdDostavljaca.add(idDostavljaca);
+	}
+	
+	public ArrayList<Integer> getZahteviOdDostavljaca() {
+		if(zahteviOdDostavljaca == null)
+		{
+			zahteviOdDostavljaca = new ArrayList<Integer>();
+		}
+		return zahteviOdDostavljaca;
+	}
+
+	public void setZahteviOdDostavljaca(ArrayList<Integer> zahteviOdDostavljaca) {
+		this.zahteviOdDostavljaca = zahteviOdDostavljaca;
+	}
+
 	static String getAlphaNumericString()
     {
   

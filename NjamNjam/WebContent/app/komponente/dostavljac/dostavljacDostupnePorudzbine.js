@@ -93,17 +93,19 @@ Vue.component("dostupne-porudzbine-dostavljac", {
                         <th> Kupac </th>
                         <th> Cena </th>
                         <th> Status </th>
+                        <th> Akcije </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="porudzbina in filtriranePorudzbine">
-                        <td> {{ porudzbina.id }} </td>
+                        <td> {{ porudzbina.ID }} </td>
                         <td> {{ porudzbina.imeRestorana }} </td>
                         <td> {{ porudzbina.vremePorudzbine }} </td>
                         <td> {{ porudzbina.imePrezimeKupca }}  </td> 
                         <td> {{ porudzbina.cena }}  </td>
                         <td> {{ porudzbina.status }}  </td>
-                        <td> <button type="button" @click="transportujPorudzbinu(porudzbina)"><i class="fa fa-sort" aria-hidden="true"></i> Transportuj </button> </td>     
+                        <td v-show=" porudzbina.poslatZahtev == '0' "> <button type="button" class="brisanjeStyle button" v-if=" porudzbina.poslatZahtev == '0'" @click="posaljiZahtev(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Pošalji zahtev </button></td> 
+						<td v-show=" porudzbina.status == 'U TRANSPORTU' "> <button type="button" class="btn" v-if=" porudzbina.status == 'U TRANSPORTU'" @click="dostavi(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Dostavljena </button></td>    
                     </tr>
                 </tbody>                
             </table>
@@ -114,6 +116,17 @@ Vue.component("dostupne-porudzbine-dostavljac", {
      </div>
      `,
      methods: {
+     	posaljiZahtev: function (porudzbina){
+     	axios.post('rest/Porudzbina/posaljiZahtev', {porudzbina})
+            		.then(response => {
+                        toastr["success"]("Uspešno poslat zahtev za " + porudzbina.ID + "." , "Uspešno prihvatanje!");
+                        this.porudzbine = response.data;
+                    })
+                    .catch(err =>{ 
+                    console.log(err);
+                    toastr["error"]("Neuspešno slanje zahteva!", "Greška");
+                })
+     	},
         poklapaSeSaPretragom: function (porudzbina) {
 
             if (!porudzbina.imeRestorana.match(this.pretraga.imeRestorana))

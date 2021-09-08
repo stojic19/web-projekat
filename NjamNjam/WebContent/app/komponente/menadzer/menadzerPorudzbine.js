@@ -4,10 +4,10 @@ Vue.component("menadzer-porudzbine", {
             porudzbine: [],
             pretraga: {
 				imeRestorana: '',
-				minCena: '',
-                maxCena: '',
-                minDatum : '',
-                maxDatum : ''
+				cenaOd: '',
+                cenaDo: '',
+                datumOd : '',
+                datumDo : ''
             },
             podaciZaFiltriranje: {
                 statusPorudzbine: ""

@@ -1,6 +1,5 @@
 package dao;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -180,5 +179,15 @@ public class PorudzbinaDAO {
 				}
 		}
 		return porudzbineRestorana;
+	}
+	public void dodajZahtevUListuPorudzbine(String idPorudzbine, Integer idKorisnika) {
+		for(Porudzbina porudzbina : getValues()) {
+			if(porudzbina.getID().contains(idPorudzbine))
+			{
+				porudzbina.dodajZahtevOdDostavljaca(idKorisnika);
+				sacuvajPorudzbineJSON();
+				return;
+			}
+		}
 	}
 }
