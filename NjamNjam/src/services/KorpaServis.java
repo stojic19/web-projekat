@@ -190,7 +190,7 @@ public class KorpaServis {
 	}
 	
 	private String vremePorudzbine() {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		return dtf.format(now);
 	}

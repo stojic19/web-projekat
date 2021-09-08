@@ -38,9 +38,9 @@ Vue.component("kupac-porudzbine", {
 
                 <input type="text" v-model="pretraga.imeRestorana" v-bind:class="{filledInput: pretraga.imeRestorana != '' }" placeholder="Naziv restorana" >
                 <input type="number" min="0" v-model="pretraga.cenaOd" v-bind:class="{filledInput: pretraga.cenaOd != '' }" placeholder="Cena od" >
-				<input type="number" min="0" v-model="pretraga.cenaOd" v-bind:class="{filledInput: pretraga.cenaDo != '' }" placeholder="Cena do" >
-                <input type="date" v-model="pretraga.datumOd" v-bind:class="{filledInput: pretraga.datumOd != '' }" placeholder="Datum od" >
-				<input type="date" v-model="pretraga.datumDo" v-bind:class="{filledInput: pretraga.datumDo != '' }" placeholder="Datum do" >            
+				<input type="number" min="0" v-model="pretraga.cenaDo" v-bind:class="{filledInput: pretraga.cenaDo != '' }" placeholder="Cena do" >
+                <input type="text" v-model="pretraga.datumOd" v-bind:class="{filledInput: pretraga.datumOd != '' }" placeholder="Datum od" >
+				<input type="text" v-model="pretraga.datumDo" v-bind:class="{filledInput: pretraga.datumDo != '' }" placeholder="Datum do" >            
 
             </form>
         </div>
@@ -118,18 +118,25 @@ Vue.component("kupac-porudzbine", {
      `,
     methods: {
         poklapaSeSaPretragom: function (porudzbina) {
-/*
-            if (!porudzbina.imeRestorana.match(this.pretraga.imeRestorana))
+			if (!porudzbina.imeRestorana.match(this.pretraga.imeRestorana))
                 return false;
 
-            if (!porudzbina.cena < parseInt(this.pretraga.cenaOd))
-                return false;
-			if (!porudzbina.cena > parseInt(this.pretraga.cenaDo))
+            if (porudzbina.cena < this.pretraga.cenaOd)
                 return false;
 
-            //if (!porudzbina.datum.match(this.pretraga.datum))
-            //    return false;
-*/
+            if(this.pretraga.cenaDo != ''){
+                if(porudzbina.cena > this.pretraga.cenaDo) 
+                    return false;
+			}
+
+            var minParts = this.pretraga.datumOd.split('-');
+            var maxParts = this.pretraga.datumDo.split('-');
+            var datmin = new Date(minParts[2], minParts[1], minParts[0]);
+            var datmax = new Date(maxParts[2], maxParts[1], maxParts[0]);
+            var datpor = new Date(porudzbina.vremePorudzbine);
+            if (datpor < datmin || datpor > datmax)
+                return false;
+
             return true;
         },
         onchangeTipRestorana: function () {
