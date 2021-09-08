@@ -368,7 +368,7 @@ table{
 
 /* PORUDZBINE - PRETRAGA */
 .pretragaPorudzbina{
-	width: 60%;
+	width: 90%;
     height: 80px;
     padding: 15px;
     border-radius: 10px;
@@ -1291,6 +1291,28 @@ td button{
 
 /* ARTIKLI - SORTIRANJE */
 
+/* PORUDZBINE SORTIRANJE */
+.porudzbineSortiranje{
+	width: 60%;
+    height: 90px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #edfdfb;
+    margin-bottom: 20px;
+}
+
+.porudzbineSortiranje button{
+	height: 30px;
+    border-radius: 10px;
+    width: 200px;
+	border: 2px solid black;
+    background-color: #b9bab8;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* PORUDZBINE SORTIRANJE */
 .filledInput{
 	height: 30px;
     border-radius: 10px;

@@ -25,7 +25,7 @@ Vue.component("kupac-porudzbine", {
 
     template: `
      <div id = "stilZaPorudzbine">
-     <div>
+     <div v-show="imaPorudzbine">
 
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
@@ -74,7 +74,7 @@ Vue.component("kupac-porudzbine", {
         <!-- Kraj filtriranja porudzbina -->
 
         <!-- Sortiranje porudzbina -->
-        <div v-if="prostorZaSortiranjeVidljiv" class="sortiranje">
+        <div v-if="prostorZaSortiranjeVidljiv" class="porudzbineSortiranje">
             <form method='post'>
 
                 <button type="button" @click="sortirajRestoran"><i class="fa fa-sort" aria-hidden="true"></i> Restoran </button>
@@ -111,8 +111,9 @@ Vue.component("kupac-porudzbine", {
             </table>
         </div>
      </div>
-
-
+	<div v-show="!imaPorudzbine">
+		<h2>Trenutno nema porudžbina za prikazivanje.</h2>
+	</div>
      </div>
      `,
     methods: {
@@ -264,7 +265,6 @@ Vue.component("kupac-porudzbine", {
                 {
                 	this.imaPorudzbine= true;
                 }
-                console.log(response.data);
                 return this.porudzbine,this.imaPorudzbine;
             });
      },
