@@ -127,4 +127,9 @@ public class Restoran {
 		this.idKupaca = idKupaca;
 	}
 	
+	public void dodajKupcaUListuMusterija(Integer id)
+	{
+		if(!idKupaca.contains(id))
+			idKupaca.add(id);
+	}
 }

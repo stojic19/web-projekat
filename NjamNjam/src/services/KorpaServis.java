@@ -164,10 +164,12 @@ public class KorpaServis {
 						porudzbina.dodajArtikal(artikal.id, artikal.kolicinaZaKupovinu, artikal.cena, korpa.getPopust());	
 					}
 				}
-				//Dodavanje ID porudzbine kupcu
+				// Dodavanje ID porudzbine kupcu
 				korisnik.dodajIdPorudzbine(porudzbina.getID());
 				// Dodavanje porudzbine u datoteku
 				porudzbine.dodajNovuPorudzbinu(porudzbina);
+				// Dodavanje kupca u listu musterija restorana ukoliko se tamo vec ne nalazi
+				restorani.dodajKupcaUListuMusterija(restoran, korisnik.getID());
 			}
 			// Dodavanje bodova kupcu, provera da li je promenio tip, cuvanje promena u fajlu i u sesiji
 			korisnik.dodajBodove(korpa.getCena());

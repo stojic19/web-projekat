@@ -160,4 +160,17 @@ public class RestoranDAO {
 			}
 		}
 	}
+	public Boolean dodajKupcaUListuMusterija(Integer idRestorana, Integer idKupca) {
+
+		for (Restoran restoran: getValues()) {
+			if (restoran.getID() == idRestorana) {
+				
+				restoran.dodajKupcaUListuMusterija(idKupca);
+				sacuvajRestoraneJSON();
+
+				return true;
+			}
+		}
+		return false;
+	}
 }
