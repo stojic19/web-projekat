@@ -170,4 +170,14 @@ public class PorudzbinaDAO {
 		}
 		return porudzbineKupca;
 	}
+	public ArrayList<Porudzbina> dobaviPorudzbinePoIdRestorana(Integer idRestorana) {
+		ArrayList<Porudzbina> porudzbineRestorana = new ArrayList<Porudzbina>();
+		for(Porudzbina porudzbina : getValues()) {
+				if(porudzbina.getIdRestorana() == idRestorana)
+				{
+					porudzbineRestorana.add(porudzbina);
+				}
+		}
+		return porudzbineRestorana;
+	}
 }

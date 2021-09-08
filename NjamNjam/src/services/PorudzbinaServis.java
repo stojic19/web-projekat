@@ -26,6 +26,26 @@ public class PorudzbinaServis {
 	ServletContext ctx;
 	
 	@GET
+	@Path("/dobaviPorudzbineMenadzera")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviPorudzbineMenadzera(@Context HttpServletRequest request) {	
+		
+			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
+			if(korisnik != null)
+			if(korisnik.getUloga().equals("MENADZER")) {
+			{			
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(porudzbine.dobaviPorudzbinePoIdRestorana(korisnik.getIdRestorana()))
+						.build();	
+			}
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@GET
 	@Path("/dobaviPorudzbineKupca")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dobaviPorudzbineKupca(@Context HttpServletRequest request) {	
@@ -71,6 +91,7 @@ public class PorudzbinaServis {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response pripremiPorudzbinu(PorudzbinaJSONDTO porudzbina, @Context HttpServletRequest request) {
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		if(korisnikJeMenadzer(request)) {
 			
 			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
@@ -78,7 +99,7 @@ public class PorudzbinaServis {
 			
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
-					.entity(dobaviPorudzbineDAO().getValues())
+					.entity(porudzbine.dobaviPorudzbinePoIdRestorana(korisnik.getIdRestorana()))
 					.build();
 		}
 		
@@ -91,6 +112,7 @@ public class PorudzbinaServis {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response cekaDostavljacaPorudzbina(PorudzbinaJSONDTO porudzbina, @Context HttpServletRequest request) {
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		if(korisnikJeMenadzer(request)) {
 			
 			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
@@ -98,7 +120,7 @@ public class PorudzbinaServis {
 			
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
-					.entity(dobaviPorudzbineDAO().getValues())
+					.entity(porudzbine.dobaviPorudzbinePoIdRestorana(korisnik.getIdRestorana()))
 					.build();
 		}
 		
@@ -152,6 +174,7 @@ public class PorudzbinaServis {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response otkaziPorudzbinu(PorudzbinaJSONDTO porudzbina, @Context HttpServletRequest request) {
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		if(korisnikJeKupac(request) && porudzbina.porudzbina.getStatus().equals("OBRADA")) {
 			
 			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
@@ -159,7 +182,7 @@ public class PorudzbinaServis {
 			
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
-					.entity(dobaviPorudzbineDAO().getValues())
+					.entity(porudzbine.dobaviPorudzbineKupca(korisnik.getIdPorudzbina()))
 					.build();
 		}
 		
