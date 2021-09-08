@@ -129,6 +129,8 @@ public class Restoran {
 	
 	public void dodajKupcaUListuMusterija(Integer id)
 	{
+		if(idKupaca == null)
+			idKupaca = new ArrayList<Integer>();
 		if(!idKupaca.contains(id))
 			idKupaca.add(id);
 	}

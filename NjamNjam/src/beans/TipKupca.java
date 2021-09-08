@@ -6,6 +6,8 @@ public class TipKupca {
 	private Integer popust;
 	private Integer trazeniBrojBodova;
 	
+	public TipKupca() {}
+	
 	public TipKupca(String ime, Integer popust, Integer trazeniBrojBodova) {
 		super();
 		this.ime = ime;

@@ -173,12 +173,12 @@ public class KorpaServis {
 			}
 			// Dodavanje bodova kupcu, provera da li je promenio tip, cuvanje promena u fajlu i u sesiji
 			korisnik.dodajBodove(korpa.getCena());
-			//TODO: provera za tip korisnika
 			KorisnikDAO korisnici = dobaviKorisnike();
 			korisnici.promeniKorisnikaNakonKupovine(korisnik);
 			request.getSession().setAttribute("ulogovanKorisnik", korisnik);
 			//Nakon kreiranja porudzbina, korpa se prazni
 			korpa.ukloniSveIzKorpe();
+			korpa.setPopust(korisnik.getTip().getPopust());
 			korpe.azurirajKorpu(korpa);
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")

@@ -126,7 +126,8 @@ public class KorisnikDAO {
 
 				korisnik.setBrojSakupljenihBodova(azuriranKorisnik.getBrojSakupljenihBodova());
 				korisnik.setIdPorudzbina(azuriranKorisnik.getIdPorudzbina());
-				// korisnik.setTip(azuriranKorisnik.getTip());	TODO: OTKOMENTARISATI KADA SE RESI TIP KUPCA
+				korisnik.setTip(azuriranKorisnik.getTip());
+				korisnik.setBrojOtkazanihPorudzbina(azuriranKorisnik.getBrojOtkazanihPorudzbina());
 				
 				sacuvajKorisnikeJSON();
 

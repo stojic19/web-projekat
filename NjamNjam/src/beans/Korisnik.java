@@ -3,6 +3,8 @@ package beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.TipKupcaDAO;
+
 public class Korisnik {
 	
 	private Integer ID;
@@ -183,8 +185,27 @@ public class Korisnik {
 	
 	public void dodajBodove(Double cena) {
 		this.brojSakupljenihBodova += (cena/1000) * 133;
+		proveriTip();
 	}
 	public void oduzmiBodove(Double cena) {
 		this.brojSakupljenihBodova -= (cena/1000) * 133 * 4;
+		this.brojOtkazanihPorudzbina ++;
+		proveriTip();
+	}
+	public void proveriTip() {
+		ArrayList<TipKupca> tipovi = dobaviTipove().getTipovi();
+		for(TipKupca tip : tipovi)
+		{
+			if(tip.getTrazeniBrojBodova() < this.brojSakupljenihBodova)
+			{
+				this.tip = tip;
+			}
+		}
+	}
+
+	private TipKupcaDAO dobaviTipove() {
+		TipKupcaDAO tipovi = new TipKupcaDAO();
+		tipovi.ucitajTipove();
+		return tipovi;
 	}
 }

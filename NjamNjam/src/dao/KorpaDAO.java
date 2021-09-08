@@ -84,6 +84,7 @@ public class KorpaDAO {
 			{
 				korpa.setArtikli(korpaZaAzuriranje.getArtikli());
 				korpa.setCena(korpaZaAzuriranje.getCena());
+				korpa.setPopust(korpaZaAzuriranje.getPopust());
 				sacuvajKorpeJSON();
 				return;
 			}

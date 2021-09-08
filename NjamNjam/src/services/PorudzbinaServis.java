@@ -14,8 +14,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
+import beans.Korpa;
 import beans.Porudzbina;
 import dao.KorisnikDAO;
+import dao.KorpaDAO;
 import dao.PorudzbinaDAO;
 import dto.PorudzbinaJSONDTO;
 
@@ -170,16 +172,22 @@ public class PorudzbinaServis {
 	
 	
 	@POST
-	@Path("/otkaziPorudzbinu")                                //dodati racunanje bodova
+	@Path("/otkaziPorudzbinu")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response otkaziPorudzbinu(PorudzbinaJSONDTO porudzbina, @Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		if(korisnikJeKupac(request) && porudzbina.porudzbina.getStatus().equals("OBRADA")) {
-			
+			korisnik.oduzmiBodove(porudzbina.porudzbina.getCena());
+			KorisnikDAO korisnici = dobaviKorisnike();
+			korisnici.promeniKorisnikaNakonKupovine(korisnik);
+			request.getSession().setAttribute("ulogovanKorisnik", korisnik);
 			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
 			porudzbine.otkaziPorudzbinu(porudzbina.porudzbina);
-			
+			KorpaDAO korpe = dobaviKorpeDAO();
+			Korpa korpa = korpe.nadjiKorpuPoId(korisnik.getIdKorpe());
+			korpa.setPopust(korisnik.getTip().getPopust());
+			korpe.azurirajKorpu(korpa);
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
 					.entity(porudzbine.dobaviPorudzbineKupca(korisnik.getIdPorudzbina()))
@@ -265,5 +273,13 @@ public class PorudzbinaServis {
 		}
 		return korisnici;
 	}
-	
+	private KorpaDAO dobaviKorpeDAO() {
+		KorpaDAO korpe = (KorpaDAO) ctx.getAttribute("korpe");
+		if (korpe == null) {
+			korpe = new KorpaDAO();
+			korpe.ucitajKorpe();
+			ctx.setAttribute("korpe", korpe);
+		}
+		return korpe;
+	}
 }
