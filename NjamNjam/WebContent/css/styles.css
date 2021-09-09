@@ -998,9 +998,11 @@ img.logoRestorana{
 table, th, td {
 	border: 1px solid #04030f;
 	border-collapse: collapse;
+	border-style: hidden;
 }
 
 th, td {
+	border: 1px solid #04030f;
 	padding: 10px;
 	text-align: left;
 }
