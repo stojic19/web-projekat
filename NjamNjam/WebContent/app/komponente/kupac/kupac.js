@@ -20,5 +20,5 @@ const router = new VueRouter({
 
 var kupacApp = new Vue({
     router,
-    el: '#guestID'
+    el: '#kupacID'
 });
