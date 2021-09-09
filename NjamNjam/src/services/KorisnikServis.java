@@ -91,11 +91,7 @@ public class KorisnikServis {
 			return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/dostavljac.html").build();
 		}
 
-		return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/#/loginaaa").build(); // redirect to login
-																									// when is login
-																									// accepted
-		// return Response.ok().build();
-
+		return Response.status(Response.Status.ACCEPTED).entity("/NjamNjam/#/prijava").build(); 
 	}
 	
 	@POST

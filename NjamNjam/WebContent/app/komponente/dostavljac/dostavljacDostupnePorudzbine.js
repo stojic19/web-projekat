@@ -75,7 +75,7 @@ Vue.component("dostupne-porudzbine-dostavljac", {
 
         
         <div>
-            <table class="styleForTable" style="width:80%">
+            <table class="stilZaTabelu" style="width:80%">
                 <thead>
                     <tr>
                         <th> ID </th> 

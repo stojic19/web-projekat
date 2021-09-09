@@ -29,7 +29,7 @@ Vue.component("registracija", {
         }
     },
     template: `
-    <div class ="forica">
+    <div class ="pocetna">
 
         <form id='register-form' @submit="proveriRegistraciju" method='post'>
 

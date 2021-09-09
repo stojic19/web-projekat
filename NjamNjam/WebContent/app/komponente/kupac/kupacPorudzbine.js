@@ -89,7 +89,7 @@ Vue.component("kupac-porudzbine", {
         <!-- Kraj sortiranja porudzbina -->
         
         <div>
-            <table class="styleForTable" style="width:80%">
+            <table class="stilZaTabelu" style="width:80%">
                 <thead>
                     <tr>
                         <th> ID </th> 
@@ -145,6 +145,19 @@ Vue.component("kupac-porudzbine", {
      `,
     methods: {
     	dodajKomentar: function(){
+    		if (!this.komentar.tekst || !this.komentar.ocena) {
+                toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
+                return;
+            }
+            if(isNaN(this.komentar.ocena))
+            {
+            	toastr["warning"]("Ocena sme biti samo broj!", "Proverite unos!");
+                return;
+            }
+            if(this.komentar.ocena > 5)
+            	this.komentar.ocena = 5;
+            if(this.komentar.ocena < 1)
+            	this.komentar.ocena = 1;
     		axios.post('rest/Porudzbina/dodajKomentar', {
 						"idPorudzbine": this.porudzbinaZaKomentar.ID,
                         "idRestorana": this.porudzbinaZaKomentar.idRestorana,

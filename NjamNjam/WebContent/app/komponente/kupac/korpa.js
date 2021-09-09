@@ -46,7 +46,7 @@ Vue.component("korpa", {
         <!-- Pocetak prikaza artikala -->
 		<div v-show="imaArtikle" style="margin: 10px auto">
 		<br>
-		<h1>Artikli</h1>
+		<h1>Sadržaj</h1>
 		<br>
 		<div>
 			<h2> Cena : {{korpa.cena}} din</h2>
@@ -139,7 +139,9 @@ Vue.component("korpa", {
         <!-- Kraj card za artikle -->
 		</div>
 		<div v-show="!imaArtikle">
+		<br>
 		<h2>U korpi trenutno nema artikala.</h2>
+		<br>
 		</div>
 		<!-- Kraj prikaza artikala -->	
     </div>

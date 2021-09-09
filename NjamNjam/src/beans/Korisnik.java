@@ -56,7 +56,7 @@ public class Korisnik {
 		this.idRestorana = -1;
 		this.brojSakupljenihBodova = 0.0;
 		this.brojOtkazanihPorudzbina = 0;
-		// this.tip = tip;	//TODO: RESITI OVO ZA TIPOVE KUPCA
+		this.tip = new TipKupca("Nema",0,0);
 	}
 
 	public Integer getID() {

@@ -73,7 +73,7 @@ Vue.component("admin-sumnjivi-korisnici", {
 
         <!-- Tabela korisnika -->
         <div >
-            <table class="styleForTable" style="width:100%">
+            <table class="stilZaTabelu" style="width:100%">
 
                 <thead>
                     <tr>
@@ -95,7 +95,7 @@ Vue.component("admin-sumnjivi-korisnici", {
                         <td> {{korisnik.brojSakupljenihBodova}} </td>
                         <td align ="center" >
                             <button v-if="korisnik.blokiran == '1' && korisnik.uloga != 'ADMIN' " type="button" @click="odblokirajKorisnika(korisnik)" ><i class="fa fa-check" aria-hidden="true"></i> Odblokiraj </button>
-                            <button v-if="korisnik.blokiran == '0' && korisnik.uloga != 'ADMIN' " type="button" @click="blokirajKorisnika(korisnik)" class="blockUser" ><i class="fa fa-ban" aria-hidden="true"></i> Blokiraj </button>
+                            <button v-if="korisnik.blokiran == '0' && korisnik.uloga != 'ADMIN' " type="button" @click="blokirajKorisnika(korisnik)" class="blokirajKorisnika" ><i class="fa fa-ban" aria-hidden="true"></i> Blokiraj </button>
                         </td>
                     </tr>
                 </tbody>                

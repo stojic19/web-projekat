@@ -120,7 +120,7 @@ Vue.component("pregled-restorana", {
         </div>
         <!-- Kraj sortiranja restorana -->
 
-		<!-- Card za restoran -->
+		<!-- Card za artikle -->
         <ul>
             <li v-for="artikal in filtriraniArtikli">
             	<div class="cardsArtikliDiv">
@@ -167,7 +167,10 @@ Vue.component("pregled-restorana", {
 			
 		<!-- Pocetak prikaza komentara -->
 		<div v-show="komentari.length>0">
-            <table class="styleForTable">
+		<br>
+			<h2>Komentari</h2>
+           <br> 
+            <table class="stilZaTabelu">
                 <thead>
                     <tr>
                         <th> Tekst </th>
@@ -183,7 +186,9 @@ Vue.component("pregled-restorana", {
             </table>
         </div>
 		<div v-show="komentari.length==0">
+		<br>
 		<h2>Restoran trenutno nema komentara za prikazivanje.</h2>
+		<br>
 		</div>
 		<!-- Kraj prikaza komentara -->
     </div>

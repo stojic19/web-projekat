@@ -27,7 +27,7 @@ Vue.component("prijava",{
         }
     },
     template:`
-    <div class ="forica">
+    <div class ="pocetna">
 
         <form id='login-form' @submit="proveriPrijavu" method='post'>
 

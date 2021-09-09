@@ -81,7 +81,7 @@ Vue.component("menadzer-kupci", {
 
         <!-- Tabela korisnika -->
         <div >
-            <table class="styleForTable" style="width:100%">
+            <table class="stilZaTabelu" style="width:100%">
 
                 <thead>
                     <tr>
@@ -89,6 +89,7 @@ Vue.component("menadzer-kupci", {
                         <th> Ime </th>
                         <th> Prezime </th>
                         <th> Broj bodova </th>
+                        <th> Tip </th>
                     </tr>
                 </thead>
 
@@ -98,6 +99,7 @@ Vue.component("menadzer-kupci", {
                         <td> {{korisnik.ime}} </td>
                         <td> {{korisnik.prezime }} </td>
                         <td> {{korisnik.brojSakupljenihBodova}} </td>
+                        <td> {{korisnik.tip.ime }} </td>
                     </tr>
                 </tbody>                
 

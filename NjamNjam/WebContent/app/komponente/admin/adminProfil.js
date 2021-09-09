@@ -32,10 +32,10 @@ Vue.component("admin-profil", {
         }
     },
     template: `
-    <div id = "styleForProfile">
+    <div id = "stilZaProfil">
         <h1> Pozdrav {{korisnik.korisnickoIme}} ! </h1>
         
-        <table class="tableInProfil">
+        <table class="tabelaUProfilu">
             <tr>
                 <th>  </th>
                 <th> Trenutno </th>
@@ -76,7 +76,7 @@ Vue.component("admin-profil", {
         </table>
 
         <br><br>
-        <button @click="sacuvajPromene()" class="saveChanges" ><i class="fa fa-check" aria-hidden="true"></i> Sačuvaj izmene </button>
+        <button @click="sacuvajPromene()" class="sacuvajPromene" ><i class="fa fa-check" aria-hidden="true"></i> Sačuvaj izmene </button>
 
     </div>
     `,

@@ -50,7 +50,7 @@ Vue.component("menadzer-zahtevi", {
         <!-- Kraj sortiranja porudzbina -->
         
         <div v-for="porudzbina in filtriranePorudzbine">
-            <table class="styleForTable" style="width:80%">
+            <table class="stilZaTabelu" style="width:80%">
                 <thead>
                     <tr>
                         <th> ID </th> 
@@ -69,7 +69,7 @@ Vue.component("menadzer-zahtevi", {
 				
 				<div v-show="porudzbina.dostavljaci.length > 0">
 				<h2>Zahtevi za dostavu:</h2>
-				<table class="styleForTable" style="width:80%">
+				<table class="stilZaTabelu" style="width:80%">
                 <thead>
                     <tr>
                         <th> Korisničko ime </th> 

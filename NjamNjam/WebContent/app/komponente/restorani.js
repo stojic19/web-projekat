@@ -155,7 +155,7 @@ Vue.component("restorani", {
                     });
 
             } else {
-                let filterRestorana = (this.restorani).filter(restoran => restoran.tip == this.podaciZaFiltriranjeKorisnika.otvoreni);
+                let filterRestorana = (this.restorani).filter(restoran => restoran.tip == this.podaciZaFiltriranjeRestorana.tip);
                 this.restorani = filterRestorana;
             }
         },

@@ -83,7 +83,7 @@ Vue.component("admin-korisnici", {
 
         <!-- Tabela korisnika -->
         <div >
-            <table class="styleForTable" style="width:100%">
+            <table class="stilZaTabelu" style="width:100%">
 
                 <thead>
                     <tr>
@@ -93,6 +93,7 @@ Vue.component("admin-korisnici", {
                         <th> Prezime </th>
                         <th> Uloga </th>
                         <th> Broj bodova </th>
+                        <th> Tip </th>
                         <th> Blokiranje </th>
                     </tr>
                 </thead>
@@ -105,9 +106,10 @@ Vue.component("admin-korisnici", {
                         <td> {{korisnik.prezime }} </td>
                         <td> {{korisnik.uloga }} </td>
                         <td> {{korisnik.brojSakupljenihBodova}} </td>
+                        <td> {{korisnik.tip.ime }} </td>
                         <td align ="center" >
                             <button v-if="korisnik.blokiran == '1' && korisnik.uloga != 'ADMIN' " type="button" @click="odblokirajKorisnika(korisnik)" ><i class="fa fa-check" aria-hidden="true"></i> Odblokiraj </button>
-                            <button v-if="korisnik.blokiran == '0' && korisnik.uloga != 'ADMIN' " type="button" @click="blokirajKorisnika(korisnik)" class="blockUser" ><i class="fa fa-ban" aria-hidden="true"></i> Blokiraj </button>
+                            <button v-if="korisnik.blokiran == '0' && korisnik.uloga != 'ADMIN' " type="button" @click="blokirajKorisnika(korisnik)" class="blokirajKorisnika" ><i class="fa fa-ban" aria-hidden="true"></i> Blokiraj </button>
                         </td>
                     </tr>
                 </tbody>                
@@ -229,7 +231,7 @@ Vue.component("admin-korisnici", {
             return true;
         },
 		onchangeUlogaKorisnika: function () {
-            if (this.podaciZaFiltriranjeKorisnika.uloga == "") {
+            if (this.podaciZaFiltriranjeKorisnika.uloga == "" || this.podaciZaFiltriranjeKorisnika.uloga == "Bez filtera za ulogu") {
                 axios
                     .get('rest/korisnici/dobaviKorisnikeBezAdmina')
                     .then(response => {
@@ -247,20 +249,20 @@ Vue.component("admin-korisnici", {
             }
         },
         onchangeTipKorisnika: function () {
-            if (this.podaciZaFiltriranjeKorisnika.status == "") {
+            if (this.podaciZaFiltriranjeKorisnika.tip == "" || this.podaciZaFiltriranjeKorisnika.tip == "Bez filtera za tip") {
                 axios
                     .get('rest/apartments/dobaviKorisnikeBezAdmina')
                     .then(response => {
                         this.korisnici = [];
                         response.data.forEach(el => {
-                            if (el.tip != null)
+                            if (el.uloga != "ADMIN")
                                 this.korisnici.push(el);
                         });
                         return this.korisnici;
                     });
 
             } else {
-                let filterKorisnici = (this.korisnici).filter(korisnik => korisnik.tip == this.podaciZaFiltriranjeKorisnika.tip);
+                let filterKorisnici = (this.korisnici).filter(korisnik => korisnik.tip.naziv == this.podaciZaFiltriranjeKorisnika.tip);
                 this.korisnici = filterKorisnici;
             }
         },

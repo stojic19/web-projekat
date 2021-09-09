@@ -67,7 +67,7 @@ html {
   background-attachment: fixed;
 }
 
-/* Style for navbar & header */
+/*  Navigacija, heder */
 
 h1{
     color: #edfdfb;
@@ -109,32 +109,32 @@ table{
 
 }
 
-/* End of style for navbar & header */
+/* Navigacija, heder */
 
 
 
-/* For registration form style*/
-.forica form {
+/* REGISTRACIJA - PRIJAVA */
+.pocetna form {
     margin: 75px;
     width:300px;
 }
-.forica input {
+.pocetna input {
   	margin: 10px;
  	padding:10px;
   	width: 100%;
   	border: 3px solid #d4ffe6;
 }
-.forica button {
+.pocetna button {
   padding:10px
 }
-.forica select {
+.pocetna select {
 	margin: 10px;
  	padding:10px;
   	width: 100%;
   	border: 3px solid #d4ffe6;
 }
 
-/* End of registration form style */
+/* REGISTRACIJA - PRIJAVA */
 
 /* ADMIN - KORISNICI - dijalogZaDodavanjeKorisnika */
 
@@ -450,7 +450,7 @@ table{
 /*  */
 
 /* Style for button at navbar in guest mode */
-#divHeaderGuest nav ul li button {
+#divZaglavlje nav ul li button {
     border: none;
     cursor:pointer;
     text-decoration: none;
@@ -479,7 +479,7 @@ table{
 }
 /* Style for Profile */
 
-#styleForProfile{
+#stilZaProfil{
 	background-color: #b9bab8;
 	width: 80%;
     max-width: 1000px;
@@ -488,16 +488,14 @@ table{
     box-sizing: border-box;
     border-radius: 30px;
 }
-#styleForProfile h1{
+#stilZaProfil h1{
 	color: black;
 	padding: 20px;
 }
-#styleForProfile h2{
+#stilZaProfil h2{
 	font-size: 30px;
 	padding: 20px;
 }
-
-/* End of style for button at navbar in guest mode */
 
 #stilZaPregledRestorana{
     width: 100%;
@@ -539,15 +537,7 @@ table{
 	background-color: #bfffcc;
 }
 
-.tableInCards{
-	border-collapse: separate !important;
-    background-color: #cdf3b9;
-    color: black;
-    font-weight: bold;
-    border: 3px solid white;
-    width: 100%;
-    border-radius: 10px;
-}
+/*	RESTORANI - CARDS	*/
 
 .cardsRestoran{
 	border-collapse: separate !important;
@@ -575,6 +565,8 @@ table{
 .cardsRestoranDiv h1{
 	color: #04030f;
 }
+/*	RESTORANI - CARDS	*/
+
 /* CARD - PREGLED JEDNOG RESTORANA	*/
 .cardsRestoranPregled{
 	border-collapse: separate !important;
@@ -639,7 +631,7 @@ table{
 	border: 3px solid #f8e9f2;
 }
 /* CARD - ARTIKLI	*/
-.tableInProfil{
+.tabelaUProfilu{
 	border-collapse: separate !important;
     background-color: #edfdfb;
     color: black;
@@ -651,15 +643,15 @@ table{
 }
 
 
-.tableInProfil th{
+.tabelaUProfilu th{
 	border:2px solid white !important;
 }
 
-.tableInProfil td{
+.tabelaUProfilu td{
 	border: 2px solid white!important;
 }
 
-.tableInProfil input {
+.tabelaUProfilu input {
     height: 30px;
     border-radius: 10px;
     width: 100%;
@@ -668,7 +660,7 @@ table{
 	font-weight: bold;
 }
 
-.tableInProfil select {
+.tabelaUProfilu select {
     height: 30px;
     border-radius: 10px;
     width: 100%;
@@ -677,7 +669,7 @@ table{
 	font-weight: bold;
 }
 
-.saveChanges{
+.sacuvajPromene{
 	height: 30px;
     border-radius: 10px;
     width: 150px;
@@ -689,13 +681,10 @@ table{
     margin: -10px 20px 35px 40px;
 }
 
-button.saveChanges:hover{
+button.sacuvajPromene:hover{
 	background-color: #bdffca;
 }
 
-.tableInCards td{
-	border:none !important;
-}
 
 .cardsRestoran td{
 	border:none !important;
@@ -726,10 +715,6 @@ button.saveChanges:hover{
     margin: 3px;
 }
 
-.endButtonStyle{
-	background-color: #81d8f3 !important;
-}
-
 button.izmenaStyle:hover{
 	background-color: rgb(255, 225, 168) !important;
 }
@@ -738,19 +723,15 @@ button.brisanjeStyle:hover{
 	background-color: #fd9a79 !important;
 }
 
-button.endButtonStyle:hover{
-	background-color: #b1edff;
-}
-
 button.dodajUKorpu{
 	background-color: #ff0022;
 }
 button.dodajUKorpu:hover{
 	background-color: #b1edff;
 }
-/* Style for apartments view */
+/*  */
 
-/* Style for dialog part */
+/* Dijalog */
 .bgModal {
 	background-color: rgba(0, 0, 0, 0.8);
 	width: 100%;
@@ -766,19 +747,6 @@ button.dodajUKorpu:hover{
 	background-color: rgba(0, 0, 0, 0.8);
 	width: 100%;
 	height: 1300px;
-	position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.bgModalShowAmenities {
-	background-color: rgba(0, 0, 0, 0.8);
-	width: 100%;
-	height: 900px;
 	position: absolute;
     top: 0;
     left: 0;
@@ -816,122 +784,15 @@ button.dodajUKorpu:hover{
 	transform: rotate(45deg);
 	cursor: pointer;
 }
-/* End of style for dialog part*/
+/* Dijalog */
 
-/* Style for dialog of change amenities */
-
-#dialogForAmenities .modal-contents {
-	z-index: 1;
-	height: 135px;
-	width: 500px;
-	background-color: white;
-	text-align: center;
-	padding: 20px;
-	position: relative;
-	border-radius: 4px;
-}
-
-#dialogForAmenities input {
-	margin: 15px auto;
-	display: block;
-	width: 50%;
-	padding: 8px;
-	border: 1px solid gray;
-}
-
-#dialogForAmenities .close {
-	position: absolute;
-	top: 0;
-	right: 10px;
-	font-size: 42px;
-	color: #333;
-	transform: rotate(45deg);
-	cursor: pointer;
-}
-/* End of style for dialog of change amenities */
-
-
-/* Style for dialog of adding amenities */
-
-#addDialogForAmenities .modal-contents {
-	z-index: 1;
-	height: 135px;
-	width: 500px;
-	background-color: white;
-	text-align: center;
-	padding: 20px;
-	position: relative;
-	border-radius: 4px;
-}
-
-#addDialogForAmenities input {
-	margin: 15px auto;
-	display: block;
-	width: 50%;
-	padding: 8px;
-	border: 1px solid gray;
-}
-
-#addDialogForAmenities .close {
-	position: absolute;
-	top: 0;
-	right: 10px;
-	font-size: 42px;
-	color: #333;
-	transform: rotate(45deg);
-	cursor: pointer;
-}
-/* End of style for dialog of adding amenities */
-
-/* Style for dialog of adding apartments of HOST */
-
-#addDialogForApartments .modal-contents {
-	z-index: 1;
-	height: 800px;
-	width: 500px;
-	background-color: white;
-	text-align: center;
-	padding: 20px;
-	position: relative;
-	border-radius: 4px;
-}
-
-#addDialogForApartments input {
-	margin: 15px auto;
-	display: block;
-	width: 50%;
-	padding: 8px;
-	border: 1px solid gray;
-}
-
-#addDialogForApartments .close {
-	position: absolute;
-	top: 0;
-	right: 10px;
-	font-size: 42px;
-	color: #333;
-	transform: rotate(45deg);
-	cursor: pointer;
-}
-/* End of style for dialog of adding apartments of HOST */
-
-/* Style for map chosing location */
-
-/* In host mode */
+/* MAPA  */
 .map {
 	height: 500px;
 	width: 800px;
 }
 
-/* In admin mode */
-.mapSearch{
-	height: 500px;
-	width: 800px;
-}
 
-/* End of style for map chosing location */
-
-/* MAPA - PRETRAGA */
 
 .mapaPretraga{
 	height: 400px;
@@ -947,7 +808,7 @@ button.dodajUKorpu:hover{
 	padding: 10px 10px;
 	margin-bottom: 20px;
 }
-/* 	*/
+/* MAPE PRETRAGA */
 
 /* MAPA PRIKAZ LOKACIJE RESTORANA	*/
 
@@ -957,6 +818,7 @@ button.dodajUKorpu:hover{
 }
 
 /*	*/
+
 /* logo */
 
 img.logoRestorana{
@@ -966,11 +828,9 @@ img.logoRestorana{
 	height: 220px;
 	width: 350px;
 }
-
 /*  */
 
-
-/* Style for buttons */
+/* Stil za dugme */
 .btn {
 	background-color: #edfdfb;
 	border: 1px solid #222;
@@ -990,10 +850,8 @@ img.logoRestorana{
   }
 
 
-/* End of style for buttons */
-
-
-/* Style for tables */
+/* Stil za dugme */
+/* Stilovi za tabele */
 
 table, th, td {
 	border: 1px solid #04030f;
@@ -1016,11 +874,11 @@ td button{
 	background-color: #edfdfb;
 }
 
-.blockUser{
+.blokirajKorisnika{
 	background-color: #ff0022 !important;
 }
 
-.styleForTable {
+.stilZaTabelu {
 	width: 500px;    
 	border-radius: 15px;
 	background-color: #edfdfb;
@@ -1030,113 +888,10 @@ td button{
 	margin: 10px;
   }
 
-/* End of style for tables */
+/* Stilovi za tabele */
 
 
-/* Style for search, sort, filters */
-
-/* Search on home page for unregister users */
-.searchFilterSortApartmentsUnregister{
-	width: 500px;
-    height: 230px;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #e1f7df;
-}
-
-.searchFilterSortApartmentsUnregister input{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid white;
-    text-align: center;
-}
-
-.searchFilterSortApartmentsUnregister button{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid white;
-    background-color: #95ffaa;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-}
-/* End of search on home page for unregister users */
-
-/* Start style for search of users HOST */
-
-.searchUsers{
-	width: 700px;
-    height: 88px;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #e1f7df;
-}
-
-.searchUsers input{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid white;
-    text-align: center;
-}
-
-.searchUsers button{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid gray;
-    background-color: #95dfff;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-}
-/* End style for search of users HOST */
-
-/* Start of style for search of guest in reservations */
-
-.searchGuestsByUsername{
-	width: 500px;
-    height: 88px;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #e1f7df;
-}
-.searchGuestsByUsername input{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid white;
-    text-align: center;
-}
-
-/* End of style for search of guest in reservations */
-
-
-/* Start style filter for ADMIN apartments */
-.filterForAdminApartments{
-	width: 500px;
-    height: 200px;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #e1f7df;
-}
-
-.filterForAdminApartments select{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid white;
-    text-align: center;
-}
-
-.multipleSelectAmenities {
-	height: 90px !important;
-    width: 400px !important;
-}
-
-/* End style filter for ADMIN apartments */
+/* Pretraga, sortiranje, filteri */
 
 /* ADMIN - KORISNICI - FILTER */
 .filterZaKorisnikeAdmin{
@@ -1182,7 +937,7 @@ td button{
 
 /*  */
 
-/* RESTORAN - FILTER */
+/* ARTIKLI - FILTER */
 .filterZaArtikle{
 	width: 60%;
     height: 80px;
@@ -1226,46 +981,6 @@ td button{
 	margin: 10px 10px;
 }
 /*  */
-
-/* Start style filter for reservations */
-.filterForReservationsStatus{
-	width: 500px;
-    height: 85px;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #e1f7df;
-}
-
-.filterForReservationsStatus select{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-    border: 2px solid white;
-    text-align: center;
-}
-/* End of style for filter reservations (status of reservation) */
-
-/* Sort in app */
-.sortInApp{
-	width: 500px;
-    height: 80px;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #e1f7df;
-}
-
-.sortInApp button{
-	height: 30px;
-    border-radius: 10px;
-    width: 200px;
-	border: 2px solid black;
-    background-color: #edfdfb;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* End of sort in app */
 
 /* SORTIRANJE */
 .sortiranje{
@@ -1395,7 +1110,7 @@ td button{
     font-size: 14px;
     font-weight: bold;
 }
-/* End of style for search, sort, filters */
+/* Pretraga, sortiranje, filteri */
 
 /* RESTORAN - DODAVANJE */
 

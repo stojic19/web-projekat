@@ -11,7 +11,7 @@ Vue.component("admin-komentari", {
 		<div v-show="komentariCekanje.length>0 || komentariOstali.length>0">
         <!-- Komentari koji cekaju na odobrenje -->
         <div v-show="komentariCekanje.length > 0">
-            <table class="styleForTable">
+            <table class="stilZaTabelu">
                 <thead>
                     <tr>
                         <th> Tekst </th>
@@ -24,14 +24,14 @@ Vue.component("admin-komentari", {
                         <td> {{ komentar.tekst }} </td>
                         <td> {{ komentar.ocena }} </td>
 						<td><button type="button" @click="prihvatiKomentar(komentar)"><i class="fa fa-check" aria-hidden="true"></i> Odobri </button></td>
-						<td><button type="button" @click="odbijKomentar(komentar)" class="blockUser"><i class="fa fa-ban" aria-hidden="true"></i> Odbij </button></td> 
+						<td><button type="button" @click="odbijKomentar(komentar)" class="blokirajKorisnika"><i class="fa fa-ban" aria-hidden="true"></i> Odbij </button></td> 
                     </tr>
                 </tbody>                
             </table>
         </div>
 		<!-- Ostali komentari -->
         <div>
-            <table class="styleForTable">
+            <table class="stilZaTabelu">
                 <thead>
                     <tr>
                         <th> Tekst </th>
