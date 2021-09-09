@@ -136,6 +136,20 @@ public class KorisnikDAO {
 		}
 		return false;
 	}
+	public Boolean dodajPorudzbinuDostavljacu(Integer idKorisnika, String idPorudzbine) {
+
+		for (Korisnik korisnik : korisnici.values()) {
+			if (korisnik.getID() == idKorisnika) {
+
+				korisnik.dodajIdPorudzbine(idPorudzbine);
+				
+				sacuvajKorisnikeJSON();
+
+				return true;
+			}
+		}
+		return false;
+	}
 	public Korisnik nadjiKorisnikaPoID(Integer id) {
 		for (Korisnik korisnik : getValues()) {
 			if(korisnik.getID() == id)

@@ -7,6 +7,7 @@ const DodavanjeArtiklaKomponenta 	= { template: '<menadzer-dodavanje-artikla></m
 const KomentariKomponenta 			= { template: '<admin-komentari></admin-komentari>'}
 const PregledRestoranaKomponenta 	= { template: '<pregled-restorana></pregled-restorana>'}
 const PorudzbineKomponenta 			= { template: '<menadzer-porudzbine></menadzer-porudzbine>'}
+const ZahteviKomponenta 			= { template: '<menadzer-zahtevi></menadzer-zahtevi>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -20,8 +21,8 @@ const router = new VueRouter({
 			{path: '/dodavanjeArtikla', component: DodavanjeArtiklaKomponenta},
 			{path: '/komentari', component: KomentariKomponenta},
 			{path: '/pregledPonude', component: PregledRestoranaKomponenta},
-        	{path : '/porudzbine', component: PorudzbineKomponenta}
-			//{path: '/aktivnePorudzbine', component: AktivnePorudzbineKomponenta},
+        	{path : '/porudzbine', component: PorudzbineKomponenta},
+			{path: '/zahtevi', component: ZahteviKomponenta},
     ]
 })
 

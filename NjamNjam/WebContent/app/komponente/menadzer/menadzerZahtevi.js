@@ -1,4 +1,4 @@
-Vue.component("menadzer-porudzbine", {
+Vue.component("menadzer-zahtevi", {
     data() {
         return {
             porudzbine: [],
@@ -7,9 +7,6 @@ Vue.component("menadzer-porudzbine", {
                 cenaDo: '',
                 datumOd : '',
                 datumDo : ''
-            },
-            podaciZaFiltriranje: {
-                statusPorudzbine: ""
             },
             cenaBrojac : 0,
             datumBrojac : 0,
@@ -25,7 +22,6 @@ Vue.component("menadzer-porudzbine", {
      <div v-show="imaPorudzbine">
 
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
-        <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
         <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
         <br><br>
      	
@@ -42,23 +38,6 @@ Vue.component("menadzer-porudzbine", {
         </div>
         <!-- Kraj pretrage -->
 
-        <!-- Filtriranje porudzbina -->
-        <div class="filterZaPorudzbine" v-if="prostorZaFiltereVidljiv">
-            <form method='post'>
-
-                <select v-model="podaciZaFiltriranje.statusPorudzbine" @change="onchangeStatusPorudzbine()">
-                    <option value="">Bez filtera za status</option>
-					<option>Nedostavljene</option>
-					<option>OBRADA</option>
-                    <option>U PRIPREMI</option>
-                    <option>CEKA DOSTAVLJACA</option>
-                    <option>U TRANSPORTU</option>
-                    <option>DOSTAVLJENA</option>
-                </select>
-            </form>
-        </div>
-        <!-- Kraj filtriranja porudzbina -->
-
         <!-- Sortiranje porudzbina -->
         <div v-if="prostorZaSortiranjeVidljiv" class="porudzbineSortiranje">
             <form method='post'>
@@ -70,7 +49,7 @@ Vue.component("menadzer-porudzbine", {
         </div>
         <!-- Kraj sortiranja porudzbina -->
         
-        <div>
+        <div v-for="porudzbina in filtriranePorudzbine">
             <table class="styleForTable" style="width:80%">
                 <thead>
                     <tr>
@@ -78,20 +57,41 @@ Vue.component("menadzer-porudzbine", {
                         <th> Vreme </th>
                         <th> Kupac </th>
                         <th> Cena </th>
-                        <th> Status </th>
-						<th> Akcija </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="porudzbina in filtriranePorudzbine">
-                        <td> {{ porudzbina.id }} </td>
+                    <tr >
+                        <td> {{ porudzbina.ID }} </td>
                         <td> {{ porudzbina.vremePorudzbine }} </td>
                         <td> {{ porudzbina.imePrezimeKupca }}  </td> 
-                        <td> {{ porudzbina.cena }}  </td>
-                        <td> {{ porudzbina.status }}  </td>
-                        <td v-show=" porudzbina.status == 'OBRADA' "> <button type="button" class="brisanjeStyle button" v-if=" porudzbina.status == 'OBRADA'" @click="prihvatiPorudzbinu(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Prihvati </button></td> 
-						<td v-show=" porudzbina.status == 'U PRIPREMI' "> <button type="button" class="btn" v-if=" porudzbina.status == 'U PRIPREMI'" @click="cekaDostavljaca(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Završi pripremu </button></td>    
+                        <td> {{ porudzbina.cena }}  </td>					   
                     </tr>
+				
+				<div v-show="porudzbina.dostavljaci.length > 0">
+				<h2>Zahtevi za dostavu:</h2>
+				<table class="styleForTable" style="width:80%">
+                <thead>
+                    <tr>
+                        <th> Korisničko ime </th> 
+                        <th> Ime </th>
+                        <th> Prezime </th>
+                        <th> Akcija </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="korisnik in porudzbina.dostavljaci">
+                        <td> {{ korisnik.korisnickoIme }} </td>
+                        <td> {{ korisnik.ime }} </td>
+                        <td> {{ korisnik.prezime }}  </td> 
+                        <td> <button type="button" class="btn" @click="izaberiDostavljaca(porudzbina, korisnik)"><i class="fa fa-sign-in" aria-hidden="true"></i> Izaberi </button></td> 					   
+                    </tr>
+					
+                </tbody> 
+				</table>
+				</div>
+				<div v-show="porudzbina.dostavljaci.length == 0">
+				<h2>Trenutno nema zahteva za prikazivanje.</h2>
+				</div>
                 </tbody>                
             </table>
         </div>
@@ -121,39 +121,17 @@ Vue.component("menadzer-porudzbine", {
 
             return true;
         },
-        onchangeStatusPorudzbine: function(){
-            if (this.podaciZaFiltriranje.statusPorudzbine == "" || this.podaciZaFiltriranje.statusPorudzbine == "Bez filtera za status") {
-                axios.get('rest/Porudzbina/dobaviPorudzbineKupca').then(response => (this.porudzbine = response.data));
-
-            } else if( this.podaciZaFiltriranje.statusPorudzbine == "Nedostavljene"){
-            	let filterPorudzbine = (this.porudzbine).filter(porudzbina => porudzbina.status != "DOSTAVLJENA");
-                this.porudzbine = filterPorudzbine;
-            }
-             else {
-                let filterPorudzbine = (this.porudzbine).filter(porudzbina => porudzbina.status == this.podaciZaFiltriranje.statusPorudzbine);
-                this.porudzbine = filterPorudzbine;
-            }
-		},
-        prihvatiPorudzbinu: function(porudzbina){	
-            axios.post('rest/Porudzbina/pripremiPorudzbinu', {porudzbina})
+        izaberiDostavljaca: function(porudzbina, dostavljac){	
+		porudzbina.dostavljaci = [];
+		porudzbina.dostavljaci = [dostavljac];
+            axios.post('rest/Porudzbina/transportujPorudzbinu', {porudzbina})
             		.then(response => {
-                        toastr["success"]("Uspešno prihvaćena porudžbina " + porudzbina.id + "." , "Uspešno prihvatanje!");
+                        toastr["success"]("Uspešno dodeljena porudžbina " + porudzbina.ID + "." , "Uspešno dodeljena!");
                         this.porudzbine = response.data;
                     })
                     .catch(err =>{ 
                     console.log(err);
-                    toastr["error"]("Neuspešno prihvatanje!", "Greška");
-                })
-		},
-		cekaDostavljaca: function(porudzbina){	
-            axios.post('rest/Porudzbina/cekaDostavljacaPorudzbina', {porudzbina})
-            		.then(response => {
-                        toastr["success"]("Porudžbina " + porudzbina.id + " čeka dostavljača." , "Priprema završena!");
-                        this.porudzbine = response.data;
-                    })
-                    .catch(err =>{ 
-                    console.log(err);
-                    toastr["error"]("Neuspešna promena stanja!", "Greška");
+                    toastr["error"]("Neuspešna dodela!", "Greška");
                 })
 		},
         sortirajRestoran: function () {
@@ -245,12 +223,13 @@ Vue.component("menadzer-porudzbine", {
     },
      mounted() {
              axios
-            .get('rest/Porudzbina/dobaviPorudzbineMenadzera')
+            .get('rest/Porudzbina/dobaviZahteve')
             .then(response => {
 				this.porudzbine = response.data;
+				console.log(response.data);
                 if(response.data == "")
                	{
-                		this.imaPorudzbine = false;
+                	this.imaPorudzbine = false;
                 }
                 else
                 {

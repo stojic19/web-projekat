@@ -96,10 +96,10 @@ public class PorudzbinaDAO {
 		sacuvajPorudzbineJSON();
 	}
 	
-	public void transportujPorudzbinu(Porudzbina porudzbina) {
+	public void transportujPorudzbinu(String porudzbina) {
 
 		for(Porudzbina p : getValues()) {
-			if(p.getID().equals(porudzbina.getID())) {
+			if(p.getID().contains(porudzbina)) {
 				p.setStatus("U TRANSPORTU");
 			}		
 		}
