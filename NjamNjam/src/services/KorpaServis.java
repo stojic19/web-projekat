@@ -131,6 +131,24 @@ public class KorpaServis {
 	}
 	
 	@GET
+	@Path("/dobaviKorpu")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviKorpu(@Context HttpServletRequest request) {	
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+		if(korisnik != null)
+		if(korisnik.getUloga().contains("KUPAC")) {
+			KorpaDAO korpe = dobaviKorpeDAO();
+			Korpa korpa = korpe.nadjiKorpuPoId(korisnik.getIdKorpe());
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+					.entity(korpa)
+					.build();
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@GET
 	@Path("/poruci")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response poruci(@Context HttpServletRequest request) {	

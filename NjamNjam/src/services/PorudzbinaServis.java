@@ -312,7 +312,7 @@ public class PorudzbinaServis {
 			// dostavljacu dodajemo porudzbinu u listu
 			Korisnik dostavljac = porudzbina.porudzbina.dostavljaci.get(0);
 			dobaviKorisnike().dodajPorudzbinuDostavljacu(dostavljac.getID(), porudzbina.porudzbina.ID);
-			ArrayList<PorudzbinaZahteviDTO> zahteviZaPrikaz = dobaviZahteveZaPrikaz(korisnik.getID());
+			ArrayList<PorudzbinaZahteviDTO> zahteviZaPrikaz = dobaviZahteveZaPrikaz(korisnik.getIdRestorana());
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
 					.entity(zahteviZaPrikaz)
