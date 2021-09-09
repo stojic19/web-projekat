@@ -266,6 +266,55 @@ table{
 }
 /*  */
 
+/* Korisnik - komentar - dijalogZaKomentarisanje */
+
+#dijalogZaKomentarisanje .modal-contents {
+	z-index: 1;
+	height: 260px;
+	width: 600px;
+	background-color: #b9bab8;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#dijalogZaKomentarisanje input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+#dijalogZaKomentarisanje select {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+#dijalogZaKomentarisanje .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+#dijalogZaKomentarisanje button {
+	padding:10px;
+	width: 100px
+}
+#dijalogZaKomentarisanje label {
+	text-align: left;
+}
+/*  */
+
 /* ADMIN - KORISNICI - PRETRAGA */
 
 .pretragaKorisnikaAdmin{

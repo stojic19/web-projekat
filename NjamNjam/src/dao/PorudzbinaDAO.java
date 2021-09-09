@@ -101,6 +101,7 @@ public class PorudzbinaDAO {
 		for(Porudzbina p : getValues()) {
 			if(p.getID().contains(porudzbina)) {
 				p.setStatus("U TRANSPORTU");
+				p.setZahteviOdDostavljaca(new ArrayList<Integer>());
 			}		
 		}
 		sacuvajPorudzbineJSON();

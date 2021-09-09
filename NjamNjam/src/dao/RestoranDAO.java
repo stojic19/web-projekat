@@ -173,4 +173,17 @@ public class RestoranDAO {
 		}
 		return false;
 	}
+	public Boolean azurirajProsecnuOcenuRestorana(Integer idRestorana, Double ocena) {
+
+		for (Restoran restoran: getValues()) {
+			if (restoran.getID() == idRestorana) {
+				
+				restoran.setProsecnaOcena(ocena);
+				sacuvajRestoraneJSON();
+
+				return true;
+			}
+		}
+		return false;
+	}
 }

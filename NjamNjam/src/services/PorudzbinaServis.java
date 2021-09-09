@@ -14,9 +14,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.Komentar;
 import beans.Korisnik;
 import beans.Korpa;
 import beans.Porudzbina;
+import dao.KomentarDAO;
 import dao.KorisnikDAO;
 import dao.KorpaDAO;
 import dao.PorudzbinaDAO;
@@ -106,18 +108,47 @@ public class PorudzbinaServis {
 	public Response dobaviPorudzbineKupca(@Context HttpServletRequest request) {	
 		
 			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
 			if(korisnik != null)
 			if(korisnik.getUloga().equals("KUPAC")) {
 			{			
+				
 				return Response
 						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
-						.entity(porudzbine.dobaviPorudzbineKupca(korisnik.getIdPorudzbina()))
-						.build();	
+						.entity(dobaviPorudzbineKupca(korisnik))
+						.build();
 			}
 		}
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	private ArrayList<PorudzbinaDostavljacDTO> dobaviPorudzbineKupca(Korisnik korisnik)
+	{
+		ArrayList<Porudzbina> porudzbine = dobaviPorudzbineDAO().dobaviPorudzbineKupca(korisnik.getIdPorudzbina());
+		ArrayList<PorudzbinaDostavljacDTO> porudzbineZaPrikaz = new ArrayList<PorudzbinaDostavljacDTO>();
+		for(Porudzbina porudzbina : porudzbine)
+		{
+			PorudzbinaDostavljacDTO porudzbinaZaPrikaz = new PorudzbinaDostavljacDTO();
+			porudzbinaZaPrikaz.ID = porudzbina.getID();
+			porudzbinaZaPrikaz.cena = porudzbina.getCena();
+			porudzbinaZaPrikaz.idRestorana = porudzbina.getIdRestorana();
+			porudzbinaZaPrikaz.imePrezimeKupca = porudzbina.getImePrezimeKupca();
+			porudzbinaZaPrikaz.imeRestorana = porudzbina.getImeRestorana();
+			porudzbinaZaPrikaz.status = porudzbina.getStatus();
+			porudzbinaZaPrikaz.tipRestorana = porudzbina.getTipRestorana();
+			porudzbinaZaPrikaz.vremePorudzbine = porudzbina.getVremePorudzbine();
+			porudzbinaZaPrikaz.poslatZahtev = 0;
+			for(Integer id : porudzbina.getZahteviOdDostavljaca())
+			{
+				if(id == korisnik.getID())
+				{
+					porudzbinaZaPrikaz.poslatZahtev = 1;
+					break;
+				}
+			}
+			porudzbineZaPrikaz.add(porudzbinaZaPrikaz);
+		}
+		return porudzbineZaPrikaz;
 	}
 	
 	@GET
@@ -156,6 +187,29 @@ public class PorudzbinaServis {
 			porudzbine.dodajNovuPorudzbinu(porudzbina.porudzbina);
 		}
 
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@POST
+	@Path("/dodajKomentar")                  //izmeniti: salju se podaci i porudzbina se tek ovde kreira
+	@Consumes(MediaType.APPLICATION_JSON)          //dodati racunanje bodova
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dodajKomentar(Komentar komentar, @Context HttpServletRequest request) {
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+		if(korisnik != null)
+		if(korisnik.getUloga().equals("KUPAC")) {		
+			PorudzbinaDAO porudzbineDAO = dobaviPorudzbineDAO();
+			porudzbineDAO.dodajZahtevUListuPorudzbine(komentar.getIdPorudzbine(), korisnik.getID());
+			komentar.setIdKupca(korisnik.getID());
+			// Dodavanje komentara u fajl
+			dobaviKomentareDAO().dodajKomentar(komentar);
+
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+					.entity(dobaviPorudzbineKupca(korisnik))
+					.build();
+		}
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();
 	}
@@ -431,5 +485,16 @@ public class PorudzbinaServis {
 			ctx.setAttribute("korpe", korpe);
 		}
 		return korpe;
+	}
+	private KomentarDAO dobaviKomentareDAO() {
+		KomentarDAO komentari = (KomentarDAO) ctx.getAttribute("komentari");
+		
+		if(komentari == null) {
+			komentari = new KomentarDAO();
+			komentari.ucitajKomentare();
+			
+			ctx.setAttribute("komentari", komentari);
+		}
+		return komentari;		
 	}
 }

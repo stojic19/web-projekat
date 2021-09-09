@@ -6,16 +6,16 @@ public class Komentar {
 	
 	private Integer idKupca;
 	private Integer idRestorana;
-	private Integer idPorudzbine;
+	private String idPorudzbine;
 	private String tekst;
-	private Integer ocena;
+	private Double ocena;
 	private String status;
 	
 	public Komentar() {
 		
 	}
 
-	public Komentar(Integer iD, Integer idKupca, Integer idRestorana, Integer idPorudzbine, String tekst, Integer ocena, String status) {
+	public Komentar(Integer iD, Integer idKupca, Integer idRestorana, String idPorudzbine, String tekst, Double ocena, String status) {
 		super();
 		ID = iD;
 		this.idKupca = idKupca;
@@ -26,11 +26,11 @@ public class Komentar {
 		this.status = status;
 	}
 
-	public Integer getIdPorudzbine() {
+	public String getIdPorudzbine() {
 		return idPorudzbine;
 	}
 
-	public void setIdPorudzbine(Integer idPorudzbine) {
+	public void setIdPorudzbine(String idPorudzbine) {
 		this.idPorudzbine = idPorudzbine;
 	}
 
@@ -66,11 +66,11 @@ public class Komentar {
 		this.tekst = tekst;
 	}
 
-	public Integer getOcena() {
+	public Double getOcena() {
 		return ocena;
 	}
 
-	public void setOcena(Integer ocena) {
+	public void setOcena(Double ocena) {
 		this.ocena = ocena;
 	}
 

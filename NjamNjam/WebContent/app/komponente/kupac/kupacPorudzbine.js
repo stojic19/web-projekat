@@ -19,7 +19,10 @@ Vue.component("kupac-porudzbine", {
             prostorZaPretraguVidljiv: false,
             prostorZaFiltereVidljiv: false,
             prostorZaSortiranjeVidljiv: false,
-			imaPorudzbine: false
+			imaPorudzbine: false,
+			komentarisanjeSakriveno: true,
+			porudzbinaZaKomentar:{},
+			komentar:{}
         }
     },
 
@@ -99,17 +102,41 @@ Vue.component("kupac-porudzbine", {
                 </thead>
                 <tbody>
                     <tr v-for="porudzbina in filtriranePorudzbine">
-                        <td> {{ porudzbina.id }} </td>
+                        <td> {{ porudzbina.ID }} </td>
                         <td> {{ porudzbina.imeRestorana }} </td>
                         <td> {{ porudzbina.vremePorudzbine }} </td>
                         <td> {{ porudzbina.imePrezimeKupca }}  </td> 
                         <td> {{ porudzbina.cena }}  </td>
                         <td> {{ porudzbina.status }}  </td>
-                        <td> <button type="button" class="brisanjeStyle button" v-if=" porudzbina.status == 'OBRADA'" @click="otkaziPorudzbinu(porudzbina)"><i class="fa fa-trash" aria-hidden="true"></i> Otkaži </button></td>     
+                        <td v-show=" porudzbina.status == 'OBRADA'"> <button type="button" class="brisanjeStyle button" v-if=" porudzbina.status == 'OBRADA'" @click="otkaziPorudzbinu(porudzbina)"><i class="fa fa-trash" aria-hidden="true"></i> Otkaži </button></td> 
+                        <td v-show=" porudzbina.status == 'DOSTAVLJENA' && porudzbina.poslatZahtev == '0' "> <button type="button" class="brisanjeStyle button" v-if=" porudzbina.status == 'DOSTAVLJENA' && porudzbina.poslatZahtev == '0' " @click="ostaviKomentar(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Ostavi komentar </button></td>     
                     </tr>
                 </tbody>                
             </table>
         </div>
+        
+         <!-- Modalni dijalog za komenarisanje -->
+        <div id = "dijalogZaKomentarisanje" v-bind:class="{bgModal: komentarisanjeSakriveno, bgModalShow: !komentarisanjeSakriveno}">
+            <div class="modal-contents">
+        
+                <div class="close" @click="komentarisanjeSakriveno = !komentarisanjeSakriveno">+</div>
+
+                <form method='post'>
+                    
+					<label for="tekst">Tekst:</label>
+                    <input name="tekst" type="text" v-model="komentar.tekst"  placeholder="Tekst" required>
+
+                    <label for="ocena">Ocena:</label>
+                    <input name="ocena" min="1" max="5" type="number" v-model="komentar.ocena"  placeholder="Ocena" required>
+                                  
+                    <button type="button" @click="dodajKomentar" class="btn">Potvrdi</button>
+                    <button type="button" @click="komentarisanjeSakriveno = !komentarisanjeSakriveno" class="btn">Odustani</button>
+
+                </form>
+            </div>
+        </div> 
+        <!-- Kraj modalnog dijaloga -->
+        
      </div>
 	<div v-show="!imaPorudzbine">
 		<h2>Trenutno nema porudžbina za prikazivanje.</h2>
@@ -117,6 +144,28 @@ Vue.component("kupac-porudzbine", {
      </div>
      `,
     methods: {
+    	dodajKomentar: function(){
+    		axios.post('rest/Porudzbina/dodajKomentar', {
+						"idPorudzbine": this.porudzbinaZaKomentar.ID,
+                        "idRestorana": this.porudzbinaZaKomentar.idRestorana,
+                        "tekst": this.komentar.tekst,
+                        "ocena": this.komentar.ocena,
+					})
+            		.then(response => {
+                        toastr["success"]("Uspešno ostavljen komentar na porudžbinu " + this.porudzbinaZaKomentar.ID + "." , "Uspešno komentarisanje!");
+                        this.porudzbine = response.data;
+                    })
+                    .catch(err =>{ 
+                    console.log(err);
+                    toastr["error"]("Neuspešno komentarisanje!", "Greška");
+                })
+               this.komentar = {};
+               this.komentarisanjeSakriveno = true;
+    	},
+    	ostaviKomentar: function(porudzbina){
+			this.komentarisanjeSakriveno = false;
+			this.porudzbinaZaKomentar = porudzbina;
+		},
         poklapaSeSaPretragom: function (porudzbina) {
 			if (!porudzbina.imeRestorana.match(this.pretraga.imeRestorana))
                 return false;
@@ -164,7 +213,7 @@ Vue.component("kupac-porudzbine", {
         otkaziPorudzbinu: function(porudzbina){	// Vratiti true ili false da li je porudzbina uspesno otkazana
             axios.post('rest/Porudzbina/otkaziPorudzbinu', {porudzbina})
             		.then(response => {
-                        toastr["success"]("Uspešno otkazana porudžbina " + porudzbina.id + "." , "Uspešno otkazivanje!");
+                        toastr["success"]("Uspešno otkazana porudžbina " + porudzbina.ID + "." , "Uspešno otkazivanje!");
                         this.porudzbine = response.data;
                     })
                     .catch(err =>{ 

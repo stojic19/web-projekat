@@ -28,11 +28,11 @@ public class KomentarDAO {
 		this.komentari = new ArrayList<Komentar>();
 		// fejkKomentari();
 	}
-	public void fejkKomentari() {
+	/*public void fejkKomentari() {
 		komentari.add(new Komentar(1, 1, 1, 1, "Tekst", 5, "CEKANJE"));
 		komentari.add(new Komentar(2, 2, 2, 2, "Tekst", 4, "Odobren"));
 		komentari.add(new Komentar(3, 3, 3, 3, "Tekst", 3, "Odbijen"));
-	}
+	}*/
 	public void ucitajKomentare() {
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -97,5 +97,22 @@ public class KomentarDAO {
 				komentariRestorana.add(komentar);
 		}
 		return komentariRestorana;	
+	}
+	public Double dobaviProsecnuOcenuZaRestoran(Integer idRestorana) {
+		ArrayList<Komentar> komentariRestorana = dobaviKomentareZaRestoran(idRestorana);
+		Double ukupno = 0.0;
+		for(Komentar komentar : komentariRestorana)
+		{
+			if(komentar.getOcena()!=null)
+				ukupno += komentar.getOcena();
+		}
+		Double prosek = ukupno / komentariRestorana.size();
+		return prosek;
+	}
+	public void dodajKomentar(Komentar komentar)
+	{
+		Komentar noviKomentar = new Komentar( komentari.size()+1, komentar.getIdKupca(),komentar.getIdRestorana(),komentar.getIdPorudzbine(),komentar.getTekst(),komentar.getOcena(),"CEKANJE");
+		komentari.add(noviKomentar);
+		sacuvajKomentareJSON();
 	}
 }

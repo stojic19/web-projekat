@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import beans.Korisnik;
 import beans.Restoran;
 import dao.KomentarDAO;
+import dao.RestoranDAO;
 import dto.KomentarJSONDTO;
 
 /**
@@ -72,7 +73,9 @@ public class KomentarServis {
 	public Response prihvatiKomentar(KomentarJSONDTO komentar,@Context HttpServletRequest request){
 		if(korisnikJeAdmin(request) || korisnikJeMenadzer(request)) {
 			KomentarDAO komentari = dobaviKomentareDAO();
-			komentari.prihvatiKomentar(komentar.komentar.getID());		
+			komentari.prihvatiKomentar(komentar.komentar.getID());	
+			dobaviRestoraneDAO().azurirajProsecnuOcenuRestorana(komentar.komentar.getIdRestorana(),
+					komentari.dobaviProsecnuOcenuZaRestoran(komentar.komentar.getIdRestorana()));
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS BLOCK")
 					.entity(dobaviKomentareDAO().getKomentari())
@@ -113,6 +116,15 @@ public class KomentarServis {
 			ctx.setAttribute("komentari", komentari);
 		}
 		return komentari;		
+	}
+	private RestoranDAO dobaviRestoraneDAO() {
+		RestoranDAO restorani = (RestoranDAO) ctx.getAttribute("restorani");
+		if (restorani == null) {
+			restorani = new RestoranDAO();
+			restorani.ucitajRestorane();
+			ctx.setAttribute("restorani", restorani);
+		}
+		return restorani;
 	}
 	@SuppressWarnings("unused")
 	private boolean korisnikJeMenadzer(@Context HttpServletRequest request) {

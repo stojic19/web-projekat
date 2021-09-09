@@ -11,7 +11,6 @@ Vue.component("dostupne-porudzbine-dostavljac", {
             },
             podaciZaFiltriranje: {
                 tipRestorana: "",
-                statusPorudzbine: ""
             },
             restoranBrojac : 0,
             cenaBrojac : 0,
@@ -58,14 +57,6 @@ Vue.component("dostupne-porudzbine-dostavljac", {
                     <option>Kineski</option>
                     <option>Azijska kuhinja</option>
                 </select>
-
-                <select v-model="podaciZaFiltriranje.status" @change="onchangeStatusPorudzbine()">
-                    <option value="">Bez filtera za tip</option>
-                    <option>U PRIPREMI</option>
-                    <option>CEKA DOSTAVLJACA</option>
-                    <option>U TRANSPORTU</option>
-                    <option>DOSTAVLJENA</option>
-                </select>
             </form>
         </div>
         <!-- Kraj filtriranja porudzbina -->
@@ -105,6 +96,7 @@ Vue.component("dostupne-porudzbine-dostavljac", {
                         <td> {{ porudzbina.cena }}  </td>
                         <td> {{ porudzbina.status }}  </td>
                         <td v-show=" porudzbina.poslatZahtev == '0' "> <button type="button" class="brisanjeStyle button" v-if=" porudzbina.poslatZahtev == '0'" @click="posaljiZahtev(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Pošalji zahtev </button></td> 
+                        <td v-show=" porudzbina.poslatZahtev == '1' "> Zahtev poslat </td> 
                     </tr>
                 </tbody>                
             </table>
