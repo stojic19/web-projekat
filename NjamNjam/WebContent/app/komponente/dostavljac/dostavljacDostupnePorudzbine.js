@@ -105,7 +105,6 @@ Vue.component("dostupne-porudzbine-dostavljac", {
                         <td> {{ porudzbina.cena }}  </td>
                         <td> {{ porudzbina.status }}  </td>
                         <td v-show=" porudzbina.poslatZahtev == '0' "> <button type="button" class="brisanjeStyle button" v-if=" porudzbina.poslatZahtev == '0'" @click="posaljiZahtev(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Pošalji zahtev </button></td> 
-						<td v-show=" porudzbina.status == 'U TRANSPORTU' "> <button type="button" class="btn" v-if=" porudzbina.status == 'U TRANSPORTU'" @click="dostavi(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Dostavljena </button></td>    
                     </tr>
                 </tbody>                
             </table>

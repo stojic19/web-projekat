@@ -226,7 +226,6 @@ Vue.component("menadzer-zahtevi", {
             .get('rest/Porudzbina/dobaviZahteve')
             .then(response => {
 				this.porudzbine = response.data;
-				console.log(response.data);
                 if(response.data == "")
                	{
                 	this.imaPorudzbine = false;

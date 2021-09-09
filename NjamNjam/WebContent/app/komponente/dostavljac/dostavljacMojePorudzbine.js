@@ -102,7 +102,7 @@ Vue.component("moje-porudzbine-dostavljac", {
                         <td> {{ porudzbina.imePrezimeKupca }}  </td> 
                         <td> {{ porudzbina.cena }}  </td>
                         <td> {{ porudzbina.status }}  </td>
-                        <td> <button type="button" @click="dostaviPorudzbinu(porudzbina)"><i class="fa fa-sort" aria-hidden="true"></i> Dostavi </button> </td>     
+                        <td v-show=" porudzbina.status == 'U TRANSPORTU' "> <button type="button" class="btn" v-if=" porudzbina.status == 'U TRANSPORTU'" @click="dostaviPorudzbinu(porudzbina)"><i class="fa fa-sign-in" aria-hidden="true"></i> Dostavljena </button></td>    
                     </tr>
                 </tbody>                
             </table>
@@ -245,7 +245,7 @@ Vue.component("moje-porudzbine-dostavljac", {
         },
     },
      mounted() {
-             axios.get('rest/Porudzbina/dobaviNedostavljenePorudzbine').then(response => (this.porudzbine = response.data));
+             axios.get('rest/Porudzbina/dobaviPorudzbineDostavljaca').then(response => (this.porudzbine = response.data));
      },
      computed: {
         filtriranePorudzbine: function () {

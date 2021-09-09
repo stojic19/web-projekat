@@ -121,6 +121,25 @@ public class PorudzbinaServis {
 	}
 	
 	@GET
+	@Path("/dobaviPorudzbineDostavljaca")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dobaviPorudzbineDostavljaca(@Context HttpServletRequest request) {	
+			Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
+			if(korisnik != null)
+			if(korisnik.getUloga().equals("DOSTAVLJAC")) {
+			{			
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
+						.entity(porudzbine.dobaviPorudzbineKupca(korisnik.getIdPorudzbina()))
+						.build();	
+			}
+		}
+		return Response.status(403).type("text/plain")
+				.entity("Nedozvoljen pristup!").build();
+	}
+	
+	@GET
 	@Path("/dobaviPorudzbine")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Porudzbina> dobaviPorudzbine() {	
@@ -255,14 +274,15 @@ public class PorudzbinaServis {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dostaviPorudzbinu(PorudzbinaJSONDTO porudzbina, @Context HttpServletRequest request) {
-		if(korisnikJeMenadzer(request)) {
+		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+		if(korisnikJeDostavljac(request)) {
 			
 			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
 			porudzbine.dostaviPorudzbinu(porudzbina.porudzbina);
 			
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
-					.entity(dobaviPorudzbineDAO().getValues())
+					.entity(porudzbine.dobaviPorudzbineKupca(korisnik.getIdPorudzbina()))
 					.build();
 		}
 		

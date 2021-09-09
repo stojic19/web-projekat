@@ -1,14 +1,13 @@
-const ProfilKomponenta 					= { template: '<dostavljac-profil></dostavljac-profil>'}
+const ProfilKomponenta 					= { template: '<admin-profil></admin-profil>'}
 const DostupnePorudzbineKomponenta 		= { template: '<dostupne-porudzbine-dostavljac></dostupne-porudzbine-dostavljac>'}
 const MojePorudzbineKomponenta			= { template: '<moje-porudzbine-dostavljac></moje-porudzbine-dostavljac>'}
 const RestoraniKomponenta 				= { template: '<restorani></restorani>'}
-const PregledRestoranaKomponenta 	= { template: '<pregled-restorana></pregled-restorana>'}
 
 const router = new VueRouter({
     mode: 'hash',
     routes:[
-      	    {path : '/', component: DostupnePorudzbineKomponenta},
-      	    { path: '/pregledPonude', component: PregledRestoranaKomponenta},
+      	    {path : '/', component: RestoraniKomponenta},
+      	    {path : '/home', component: RestoraniKomponenta},
       	    {path : '/dostupnePorudzbine', component: DostupnePorudzbineKomponenta},
         	{path : '/mojePorudzbine', component: MojePorudzbineKomponenta},
         	{path : '/profil', component: ProfilKomponenta}
