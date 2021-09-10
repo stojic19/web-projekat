@@ -4,6 +4,7 @@ const ProfilKomponenta 				= { template: '<admin-profil></admin-profil>'}
 const KorisniciKomponenta 			= { template: '<admin-korisnici></admin-korisnici>'}
 const DodavanjeRestoranaKomponenta 	= { template: '<admin-dodavanje-restorana></admin-dodavanje-restorana>'}
 const KomentariKomponenta 			= { template: '<admin-komentari></admin-komentari>'}
+const PregledRestoranaKomponenta = { template: '<pregled-restorana></pregled-restorana>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -14,7 +15,8 @@ const router = new VueRouter({
         	{path : '/profil', component: ProfilKomponenta},
         	{path : '/korisnici', component: KorisniciKomponenta},
         	{path : '/dodavanjeRestorana', component: DodavanjeRestoranaKomponenta},
-        	{path : '/komentari', component: KomentariKomponenta}
+        	{path : '/komentari', component: KomentariKomponenta},
+        	{ path: '/pregledPonude', component: PregledRestoranaKomponenta}
     ]
 })
 

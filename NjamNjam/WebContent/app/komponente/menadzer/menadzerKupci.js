@@ -27,8 +27,7 @@ Vue.component("menadzer-kupci", {
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
         <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
-        <button type="button" @click="dodajNovogKorisnika()" class="btn"><i class="fa fa-plus" aria-hidden="true"></i>Dodaj korisnika</button>
-        <br><br>
+         <br><br>
 
         <!-- Pretraga -->
         <div class="pretragaKorisnikaAdmin" v-if="prostorZaPretraguVidljiv" >

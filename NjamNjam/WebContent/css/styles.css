@@ -219,6 +219,55 @@ table{
 
 /* ADMIN - RESTORANI - dijalogZaIzmenuKorisnika */
 
+#dijalogZaIzmenuKorisnika .modal-contents {
+	z-index: 1;
+	height: 560px;
+	width: 600px;
+	background-color: #b9bab8;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#dijalogZaIzmenuKorisnika input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+#dijalogZaIzmenuKorisnika select {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+	border-radius: 10px;
+}
+
+#dijalogZaIzmenuKorisnika .close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+#dijalogZaIzmenuKorisnika button {
+	padding:10px;
+	width: 100px
+}
+#dijalogZaIzmenuKorisnika label {
+	text-align: left;
+}
+/*  */
+
+/* ADMIN - RESTORANI - dijalogZaIzmenuRestorana*/
+
 #dijalogZaIzmenuRestorana .modal-contents {
 	z-index: 1;
 	height: 860px;

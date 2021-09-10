@@ -25,63 +25,118 @@ Vue.component("admin-profil", {
         return {
             korisnik: {},
             izmeneProfila: {
-                password: '',
-                name: '',
-                surname: '',
+                lozinka: '',
+                ime: '',
+                prezime: '',
+                datum: '',
+                pol:''
             },
+            dijalogZaIzmenuSakriven: true
         }
     },
     template: `
     <div id = "stilZaProfil">
+    	<div class="cardsRestoranPregledDiv">
         <h1> Pozdrav {{korisnik.korisnickoIme}} ! </h1>
         
-        <table class="tabelaUProfilu">
+        <table class="cardsRestoranPregled">
             <tr>
                 <th>  </th>
                 <th> Trenutno </th>
-                <th> Novo </th>
+
             </tr>
 
             <tr>
                 <td> Lozinka </td>
                 <td>  {{korisnik.lozinka}} </td>
-                <td> <input type="password" v-model="izmeneProfila.lozinka" placeholder="Lozinka"> </td>
+
             </tr>
 
             <tr>
                 <td> Ime </td>
                 <td> {{korisnik.ime}} </td>
-                <td> <input type="text" v-model="izmeneProfila.ime" placeholder="Ime"> </td>
             </tr>
 
             <tr>
                 <td> Prezime </td>
                 <td> {{korisnik.prezime}} </td>
-                <td> <input type="text" v-model="izmeneProfila.prezime" placeholder="Prezime"> </td>
+
             </tr>
     	    <tr>
                 <td> Pol </td>
                 <td> {{korisnik.pol }} </td>
-                <td> <select type="text" v-model="korisnik.pol">
-                        <option>Ženski</option>
-                        <option>Muški</option>
-                    </select>
-                </td>
+
             </tr>
             <tr>
                 <td> Datum rođenja </td>
                 <td> {{korisnik.datumRodjenja}} </td>
-                <td> <input type="date" v-model="korisnik.datumRodjenja"> </td>
+
             </tr>
         </table>
-
+        <br>
+		<button type="button" @click="izmeniPodatke()" class="izmenaStyle btn" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
         <br><br>
-        <button @click="sacuvajPromene()" class="sacuvajPromene" ><i class="fa fa-check" aria-hidden="true"></i> Sačuvaj izmene </button>
+        <!-- Modalni dijalog za izmenu podataka -->
+        <div id = "dijalogZaIzmenuKorisnika" v-bind:class="{bgModal: dijalogZaIzmenuSakriven, bgModalShow: !dijalogZaIzmenuSakriven}">
+            <div class="modal-contents">
+        
+                <div class="close" @click="dijalogZaIzmenuSakriven = !dijalogZaIzmenuSakriven">+</div>
 
+                <form method='post'>
+                    
+                    <label for="ime">Ime:</label>
+                    <input name="ime" type="text" v-model="izmeneProfila.ime" placeholder="Ime" required>
+					
+					<label for="pol">Pol:</label>
+					<select name="pol" v-model="izmeneProfila.pol" required>
+                        <option>Muški</option>
+                        <option>Ženski</option>
+            		</select>
+
+                    <label for="prezime">Prezime:</label>
+                    <input name="prezime" type="text" v-model="izmeneProfila.prezime" placeholder="prezime">
+                    
+                    <label for="datum">Datum rođenja:</label>
+                    <input name="datum" type="date" v-model="izmeneProfila.datumRodjenja" placeholder="Datum rođenja">
+                    
+                    <label for="lozinka">Lozinka:</label>
+                    <input  name="lozinka" type="password" v-model="izmeneProfila.lozinka" placeholder="Lozinka">
+                    
+                    <label for="ponovljenaLozinka">Ponovljena lozinka:</label>
+                    <input  name="ponovljenaLozinka" type="password" v-model="izmeneProfila.ponovljenaLozinka" placeholder="Ponovljena lozinka">
+                    
+                    <button type="button" @click="sacuvajPromene" class="btn">Potvrdi</button>
+                    <button type="button" @click="dijalogZaIzmenuSakriven = !dijalogZaIzmenuSakriven" class="btn">Odustani</button>
+
+                </form>
+
+            </div>
+        </div> <!-- Kraj modalnog dijaloga -->
+        </div>
     </div>
     `,
     methods: {
+    	izmeniPodatke: function() {
+    		this.izmeneProfila.datumRodjenja = this.korisnik.datumRodjenja;
+    		this.izmeneProfila.pol = this.korisnik.pol;
+    		this.izmeneProfila.ime = this.korisnik.ime;
+    		this.izmeneProfila.prezime = this.korisnik.prezime;
+    		this.izmeneProfila.lozinka = this.korisnik.lozinka;
+    		this.izmeneProfila.ponovljenaLozinka = this.korisnik.lozinka;
+    		this.dijalogZaIzmenuSakriven = ! this.dijalogZaIzmenuSakriven;
+    	}, 
         sacuvajPromene: function () {
+        if (!this.izmeneProfila.lozinka || !this.izmeneProfila.ime || !this.izmeneProfila.prezime
+                || !this.izmeneProfila.datumRodjenja || !this.izmeneProfila.pol)
+            {
+                	toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
+                	return;
+            }
+		if (this.izmeneProfila.lozinka != this.izmeneProfila.ponovljenaLozinka)
+            {
+                	toastr["warning"]("Lozinke se ne poklapaju!", "Proverite unos!");
+                	return;
+            }
             axios
                 .post('rest/profil/sacuvajIzmeneKorisnika', {
                     "korisnickoIme": this.korisnik.korisnickoIme,
@@ -89,8 +144,8 @@ Vue.component("admin-profil", {
                     "ime": this.izmeneProfila.ime,
                     "prezime": this.izmeneProfila.prezime,
                     "uloga": this.korisnik.uloga,
-                    "datumRodjenja":this.korisnik.datumRodjenja,
-                    "pol":this.korisnik.pol
+                    "datumRodjenja":this.izmeneProfila.datumRodjenja,
+                    "pol":this.izmeneProfila.pol
                 })
                 .then(response => {
                     toastr["success"]("Podaci upešno ažurirani!", "Uspešne izmene!");
@@ -98,6 +153,7 @@ Vue.component("admin-profil", {
                 .catch(err => {
                     toastr["error"]("Greška prilikom ažuriranja podataka.", "Greška");
                 })
+                this.dijalogZaIzmenuSakriven = ! this.dijalogZaIzmenuSakriven;
         }
     },
     mounted() {

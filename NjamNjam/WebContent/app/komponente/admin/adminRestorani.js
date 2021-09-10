@@ -126,6 +126,7 @@ Vue.component("admin-restorani", {
 					</tr>
                 </table>
 
+				<button type="button" v-if=" restoran.logickiObrisan == '0' " @click="pregledRestorana(restoran)" style="margin-bottom:10px" class="button">Pregled ponude</button> <br>
                 <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="izmeniRestoran(restoran)" class="izmenaStyle button" ><i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni </button> <br>
                 <button type="button" v-if=" restoran.logickiObrisan == '0' " @click="obrisiRestoran(restoran)" class="brisanjeStyle button" ><i class="fa fa-trash" aria-hidden="true"></i>  Obriši </button> <br>
             	</div>
@@ -197,6 +198,11 @@ Vue.component("admin-restorani", {
     </div>
     `,
     methods: {
+    	pregledRestorana: function(restoran){
+    		axios
+                .post('rest/restoran/restoranZaPregled', {restoran})
+         		.then(response => {router.push("/pregledPonude")});
+    	},
         dodajRestoran: function () {
             window.location.href = "http://localhost:8080/NjamNJam/admin.html#/dodavanjeRestorana";
         },
@@ -270,7 +276,7 @@ Vue.component("admin-restorani", {
                 return false;
             
             //prosecna ocena
-            if (restoran.prosecnaOcena > parseFloat(this.pretraga.prosecnaOcena))
+            if (restoran.prosecnaOcena < parseFloat(this.pretraga.prosecnaOcena))
                 return false;
 
             return true;
@@ -487,6 +493,7 @@ Vue.component("admin-restorani", {
             .get('rest/restoran/dobaviRestorane')
             .then(response => {
                 this.restorani = [];
+                console.log(response.data);
                 response.data.forEach(el => this.restorani.push(el));
                 return this.restorani;
             });
