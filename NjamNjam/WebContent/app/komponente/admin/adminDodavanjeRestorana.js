@@ -102,7 +102,7 @@ Vue.component("admin-dodavanje-restorana", {
                     <tr>
                         <td> Logo  </td>
                         <td> 
-                            <input type="file" onchange="slikaUUrl(this)" placeholder="Izaberite sliku"/>
+                            <input type="file" onchange="slikaUUrlDodavanje(this)" placeholder="Izaberite sliku"/>
                         </td>
                     </tr>
 					
@@ -195,7 +195,7 @@ Vue.component("admin-dodavanje-restorana", {
                 .post('rest/restoran/dodajNoviRestoran', this.DTO)
                 .then(response => {
                     toastr["success"]("Uspešno dodavanje restorana!", "Uspešno dodavanje!");
-                    return this.restorani;
+                    router.push("/home");
                 });
         },
 		potvrdiDodavanjeSaNovim: function () {
@@ -221,7 +221,7 @@ Vue.component("admin-dodavanje-restorana", {
                 .post('rest/restoran/dodajNoviRestoranIMenadzera', this.DTO)
                 .then(response => {
                     toastr["success"]("Uspešno dodavanje restorana i menadžera!", "Uspešno dodavanje!");
-                    return this.restorani;
+                    router.push("/home");
                 })
                 .catch(err => {
                 	console.log(err);
@@ -299,7 +299,7 @@ function reverseGeocode(coords) {
 
         });
 }
-function slikaUUrl(element) {
+function slikaUUrlDodavanje(element) {
     var file = element.files[0];
     var reader = new FileReader();
     reader.onloadend = function () {

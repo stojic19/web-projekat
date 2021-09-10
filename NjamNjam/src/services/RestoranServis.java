@@ -152,8 +152,15 @@ public class RestoranServis {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response izmeniRestoran(RestoranIzmenaDTO restoran,@Context HttpServletRequest request) {
 		if(korisnikJeAdmin(request) || korisnikJeMenadzer(request)) {
+			SlikaDAO slike = dobaviSlike();
+			if(!isNumeric(restoran.putanjaDoSlike))
+			{
+				Slika slika = slike.dodajNovuSliku(restoran.putanjaDoSlike);
+				restoran.putanjaDoSlike = Integer.toString(slika.getID()); 	
+			}
+			
 			RestoranDAO restorani = dobaviRestoraneDAO();
-			restorani.izmeniRestoran(restoran);// TODO: dodati izmenu restorana u dao
+			restorani.izmeniRestoran(restoran);
 	
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
@@ -164,6 +171,15 @@ public class RestoranServis {
 				.entity("Nedozvoljen pristup!").build();
 	}
 
+	private static boolean isNumeric(String str) { 
+		  try {  
+		    Double.parseDouble(str);  
+		    return true;
+		  } catch(NumberFormatException e){  
+		    return false;  
+		  }  
+		}
+	
 	@DELETE
 	@Path("/obrisiRestoranMenadzer")
 	@Consumes(MediaType.APPLICATION_JSON)

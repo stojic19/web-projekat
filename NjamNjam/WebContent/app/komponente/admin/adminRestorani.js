@@ -219,7 +219,6 @@ Vue.component("admin-restorani", {
             this.restoranZaIzmenu.geografskaDuzina = restoran.lokacija.geografskaDuzina;
             this.restoranZaIzmenu.putanjaDoSlike = restoran.putanjaDoSlike;
             this.restoranZaIzmenu.status = restoran.status;
-            console.log(this.restoranZaIzmenu);
         },
         obrisiRestoran: function (restoran) {
             axios
@@ -247,8 +246,10 @@ Vue.component("admin-restorani", {
                 	toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
                 	return;
             }
-            this.restoranZaIzmenu.putanjaDoSlike = document.getElementById("slikaZaIzmenu").src;
-			console.log(this.restoranZaIzmenu)
+
+            if(document.getElementById("slikaZaIzmenu").src != "http://localhost:8080/NjamNjam/admin.html")
+            	this.restoranZaIzmenu.putanjaDoSlike = document.getElementById("slikaZaIzmenu").src;
+
             axios
                 .post('rest/restoran/izmeniRestoran', this.restoranZaIzmenu)
                 .then(response => {

@@ -23,6 +23,8 @@ Vue.component("admin-sumnjivi-korisnici", {
     template: `
     <div id = "stilZaKorisnike">
 
+		<div v-show="korisnici.length>0">
+		
         <button type="button" @click=" prostorZaPretraguVidljiv = !prostorZaPretraguVidljiv " class="btn"><i class="fa fa-search" aria-hidden="true"></i> Pretraga </button> 
         <button type="button" @click=" prostorZaFiltereVidljiv = !prostorZaFiltereVidljiv " class="btn"><i class="fa fa-filter" aria-hidden="true"></i> Filteri </button>
         <button type="button" @click=" prostorZaSortiranjeVidljiv = !prostorZaSortiranjeVidljiv " class="btn"><i class="fa fa-sort" aria-hidden="true"></i> Sortiranje </button>
@@ -103,6 +105,12 @@ Vue.component("admin-sumnjivi-korisnici", {
             </table>
         </div>
         <!-- kraj tabele svih korisnika -->
+        </div>
+        <div v-show="korisnici.length == 0">
+        <br>
+        <h2>Trenutno nema sumnjivih korisnika za prikaz.</h2>
+        <br>
+        </div>
 
     </div>
     `,

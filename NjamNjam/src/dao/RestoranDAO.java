@@ -104,7 +104,7 @@ public class RestoranDAO {
 
 		for (Restoran restoran: getValues()) {
 			if (restoran.getID() == azuriranRestoran.ID) {
-				// TODO: Proveriti jel sve ovo treba menjati kad se uradi front
+
 				restoran.setLokacija(new Lokacija(azuriranRestoran.geografskaDuzina, azuriranRestoran.geografskaSirina, new Adresa(azuriranRestoran.ulica,azuriranRestoran.broj,azuriranRestoran.mesto,azuriranRestoran.postanskiBroj)));
 				restoran.setNaziv(azuriranRestoran.naziv);
 				restoran.setPutanjaDoSlike(azuriranRestoran.putanjaDoSlike);
