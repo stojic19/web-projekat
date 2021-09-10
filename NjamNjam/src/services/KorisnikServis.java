@@ -31,7 +31,7 @@ public class KorisnikServis {
 	@GET
 	@Path("/odjava")
 	@Produces(MediaType.TEXT_HTML)
-	public Response logoutUser(@Context HttpServletRequest request) {
+	public Response odjava(@Context HttpServletRequest request) {
 		
 		if(korisnikJeKupac(request) || korisnikJeAdmin(request) || korisnikJeMenadzer(request) || korisnikJeDostavljac(request)) {
 		

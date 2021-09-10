@@ -125,7 +125,8 @@ public class Porudzbina {
 	
 	public void dodajArtikal(Integer idArtikla, Integer kolicina, Double cenaArtikla,Integer popust) {
 		idArtikala.put(idArtikla, kolicina);
-		cena += ((100-popust)/100) * (kolicina * cenaArtikla);
+		double doublePopust = popust;
+		this.cena += ((100.0 - doublePopust)/100.0) * (kolicina * cenaArtikla);
 	}
 	
 	public void dodajZahtevOdDostavljaca(Integer idDostavljaca) {

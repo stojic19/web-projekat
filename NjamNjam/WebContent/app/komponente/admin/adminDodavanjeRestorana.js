@@ -181,8 +181,14 @@ Vue.component("admin-dodavanje-restorana", {
             this.DTO.postanskiBroj = document.getElementById("postanskiBroj").value;
             this.DTO.geografskaSirina = document.getElementById("geoSirina").value;
             this.DTO.geografskaDuzina = document.getElementById("geoDuzina").value;
-            this.kodZaSliku = document.getElementById("slikaId").src;
-            this.DTO.putanjaDoSlike = this.kodZaSliku;
+            
+            if(document.getElementById("slikaId").src != "http://localhost:8080/NjamNjam/admin.html")
+            {
+            	this.kodZaSliku = document.getElementById("slikaId").src;
+            	this.DTO.putanjaDoSlike = this.kodZaSliku;
+            }else{
+            	this.DTO.putanjaDoSlike = "nema";
+            }
 
             if (!this.DTO.naziv || !this.DTO.postanskiBroj 
 				|| !this.DTO.mesto ||
@@ -205,8 +211,14 @@ Vue.component("admin-dodavanje-restorana", {
             this.DTO.postanskiBroj = document.getElementById("postanskiBroj").value;
             this.DTO.geografskaSirina = document.getElementById("geoSirina").value;
             this.DTO.geografskaDuzina = document.getElementById("geoDuzina").value;
-            this.kodZaSliku = document.getElementById("slikaId").src;
-            this.DTO.putanjaDoSlike = this.kodZaSliku;
+			
+			if(document.getElementById("slikaId").src != "http://localhost:8080/NjamNjam/admin.html")
+            {
+            	this.kodZaSliku = document.getElementById("slikaId").src;
+            	this.DTO.putanjaDoSlike = this.kodZaSliku;
+            }else{
+            	this.DTO.putanjaDoSlike = "nema";
+            }
 
             if (!this.DTO.naziv || !this.DTO.postanskiBroj 
 				|| !this.DTO.mesto ||

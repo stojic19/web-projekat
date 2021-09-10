@@ -62,9 +62,14 @@ Vue.component("menadzer-dodavanje-artikla", {
     `,
     methods: {
 		potvrdiDodavanje: function () {
-            this.kodZaSliku = document.getElementById("slikaId").src;
-            this.DTO.putanjaDoSlike = this.kodZaSliku;
-			console.log(this.DTO);
+			if(document.getElementById("slikaId").src != "http://localhost:8080/NjamNjam/menadzer.html")
+            {
+            	this.kodZaSliku = document.getElementById("slikaId").src;
+            	this.DTO.putanjaDoSlike = this.kodZaSliku;
+			}else{
+				this.DTO.putanjaDoSlike = "nema";
+			}
+			
             if (!this.DTO.naziv || !this.DTO.tip 
 				|| !this.DTO.cena) {
                 toastr["warning"]("Sva polja su obavezna!", "Proverite unos!");
@@ -76,6 +81,7 @@ Vue.component("menadzer-dodavanje-artikla", {
 					})
                 .then(response => {
                     toastr["success"]("Uspešno dodavanje atikal!", "Uspešno dodavanje!");
+                    router.push("/artikli");
                 })
                 .catch(err => {
                 	console.log(err);

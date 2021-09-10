@@ -193,8 +193,9 @@ Vue.component("menadzer-artikli", {
                 	toastr["warning"]("Polja naziv i cena su obavezna!", "Proverite unos!");
                 	return;
             }
-            this.artikalZaIzmenu.putanjaDoSlike = document.getElementById("slikaZaIzmenu").src;
-			console.log(this.artikalZaIzmenu)
+            if(document.getElementById("slikaZaIzmenu").src != "http://localhost:8080/NjamNjam/menadzer.html")
+            	this.artikalZaIzmenu.putanjaDoSlike = document.getElementById("slikaZaIzmenu").src;
+
             axios
                 .post('rest/artikal/izmeniArtikal', this.artikalZaIzmenu)
                 .then(response => {

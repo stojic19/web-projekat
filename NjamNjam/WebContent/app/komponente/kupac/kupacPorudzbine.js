@@ -223,7 +223,7 @@ Vue.component("kupac-porudzbine", {
                 this.porudzbine = filterPorudzbine;
             }
 		},
-        otkaziPorudzbinu: function(porudzbina){	// Vratiti true ili false da li je porudzbina uspesno otkazana
+        otkaziPorudzbinu: function(porudzbina){
             axios.post('rest/Porudzbina/otkaziPorudzbinu', {porudzbina})
             		.then(response => {
                         toastr["success"]("Uspešno otkazana porudžbina " + porudzbina.ID + "." , "Uspešno otkazivanje!");

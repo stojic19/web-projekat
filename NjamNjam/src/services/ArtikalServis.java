@@ -62,8 +62,11 @@ public class ArtikalServis {
 						.build();
 		}
 		SlikaDAO slike = dobaviSlike();
-		Slika slika = slike.dodajNovuSliku(artikal.artikal.getPutanjaDoSlike());
-		artikal.artikal.setPutanjaDoSlike(Integer.toString(slika.getID())); 	
+		if(!artikal.artikal.getPutanjaDoSlike().equals("nema"))
+		{
+			Slika slika = slike.dodajNovuSliku(artikal.artikal.getPutanjaDoSlike());
+			artikal.artikal.setPutanjaDoSlike(Integer.toString(slika.getID())); 	
+		}
 		artikal.artikal.setIdRestoranaKomPripada(korisnik.getIdRestorana());
 		dobaviRestoraneDAO().dodajArtikalRestoranu(artikal.artikal);
 		dobaviArtikleDAO().dodajNoviArtikal(artikal.artikal);
@@ -185,6 +188,12 @@ public class ArtikalServis {
 	public Response izmeniArtikal(ArtikalIzmenaDTO artikal,@Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
 		if(korisnik.getUloga().contains("MENADZER")) {
+			SlikaDAO slike = dobaviSlike();
+			if(!isNumeric(artikal.putanjaDoSlike))
+			{
+				Slika slika = slike.dodajNovuSliku(artikal.putanjaDoSlike);
+				artikal.putanjaDoSlike = Integer.toString(slika.getID()); 	
+			}
 			ArtikalDAO artikli = dobaviArtikleDAO();
 			artikli.izmenaArtikla(artikal);
 	
@@ -196,6 +205,15 @@ public class ArtikalServis {
 		return Response.status(403).type("text/plain")
 				.entity("Nedozvoljen pristup!").build();
 	}
+	
+	private static boolean isNumeric(String str) { 
+		  try {  
+		    Double.parseDouble(str);  
+		    return true;
+		  } catch(NumberFormatException e){  
+		    return false;  
+		  }  
+		}
 	
 	@DELETE
 	@Path("/obrisiArtikal")

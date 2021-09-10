@@ -76,10 +76,19 @@ public class KomentarServis {
 			komentari.prihvatiKomentar(komentar.komentar.getID());	
 			dobaviRestoraneDAO().azurirajProsecnuOcenuRestorana(komentar.komentar.getIdRestorana(),
 					komentari.dobaviProsecnuOcenuZaRestoran(komentar.komentar.getIdRestorana()));
-			return Response
-					.status(Response.Status.ACCEPTED).entity("SUCCESS BLOCK")
-					.entity(dobaviKomentareDAO().getKomentari())
-					.build();
+			if(korisnikJeAdmin(request)) {
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+						.entity(dobaviKomentareDAO().getKomentari())
+						.build();
+				}
+			else{
+				Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+						.entity(dobaviKomentareDAO().dobaviKomentareZaRestoran(korisnik.getIdRestorana()))
+						.build();
+			}
 		}
 		else {
 		return Response.status(403).type("text/plain")
@@ -95,10 +104,19 @@ public class KomentarServis {
 		if(korisnikJeAdmin(request) || korisnikJeMenadzer(request)) {
 			KomentarDAO komentari = dobaviKomentareDAO();
 			komentari.odbijKomentar(komentar.komentar.getID());		
-			return Response
-					.status(Response.Status.ACCEPTED).entity("SUCCESS BLOCK")
-					.entity(dobaviKomentareDAO().getKomentari())
-					.build();
+			if(korisnikJeAdmin(request)) {
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+						.entity(dobaviKomentareDAO().getKomentari())
+						.build();
+				}
+			else{
+				Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
+				return Response
+						.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
+						.entity(dobaviKomentareDAO().dobaviKomentareZaRestoran(korisnik.getIdRestorana()))
+						.build();
+			}
 		}
 		else {
 		return Response.status(403).type("text/plain")

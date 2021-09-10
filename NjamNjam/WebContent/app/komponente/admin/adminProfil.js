@@ -40,11 +40,6 @@ Vue.component("admin-profil", {
         <h1> Pozdrav {{korisnik.korisnickoIme}} ! </h1>
         
         <table class="cardsRestoranPregled">
-            <tr>
-                <th>  </th>
-                <th> Trenutno </th>
-
-            </tr>
 
             <tr>
                 <td> Lozinka </td>
@@ -154,6 +149,7 @@ Vue.component("admin-profil", {
                     toastr["error"]("Greška prilikom ažuriranja podataka.", "Greška");
                 })
                 this.dijalogZaIzmenuSakriven = ! this.dijalogZaIzmenuSakriven;
+                location.reload();
         }
     },
     mounted() {

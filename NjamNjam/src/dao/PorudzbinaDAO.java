@@ -117,10 +117,10 @@ public class PorudzbinaDAO {
 		sacuvajPorudzbineJSON();
 	}
 	
-	public void otkaziPorudzbinu(Porudzbina porudzbina) {
+	public void otkaziPorudzbinu(String id) {
 		
 		for(Porudzbina p : getValues()) {
-			if(p.getID().equals(porudzbina.getID())) {
+			if(p.getID().equals(id)) {
 					p.setStatus("OTKAZANA");
 			}		
 		}

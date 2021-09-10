@@ -349,22 +349,22 @@ public class PorudzbinaServis {
 	@Path("/otkaziPorudzbinu")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response otkaziPorudzbinu(PorudzbinaJSONDTO porudzbina, @Context HttpServletRequest request) {
+	public Response otkaziPorudzbinu(PorudzbinaDostavljacJSONDTO porudzbina, @Context HttpServletRequest request) {
 		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-		if(korisnikJeKupac(request) && porudzbina.porudzbina.getStatus().equals("OBRADA")) {
-			korisnik.oduzmiBodove(porudzbina.porudzbina.getCena());
+		if(korisnikJeKupac(request) && porudzbina.porudzbina.status.equals("OBRADA")) {
+			korisnik.oduzmiBodove(porudzbina.porudzbina.cena);
 			KorisnikDAO korisnici = dobaviKorisnike();
 			korisnici.promeniKorisnikaNakonKupovine(korisnik);
 			request.getSession().setAttribute("ulogovanKorisnik", korisnik);
 			PorudzbinaDAO porudzbine = dobaviPorudzbineDAO();
-			porudzbine.otkaziPorudzbinu(porudzbina.porudzbina);
+			porudzbine.otkaziPorudzbinu(porudzbina.porudzbina.ID);
 			KorpaDAO korpe = dobaviKorpeDAO();
 			Korpa korpa = korpe.nadjiKorpuPoId(korisnik.getIdKorpe());
 			korpa.setPopust(korisnik.getTip().getPopust());
 			korpe.azurirajKorpu(korpa);
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGED")
-					.entity(porudzbine.dobaviPorudzbineKupca(korisnik.getIdPorudzbina()))
+					.entity(dobaviPorudzbineKupca(korisnik))
 					.build();
 		}
 		

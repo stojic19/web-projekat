@@ -1,0 +1,27 @@
+[
+  {
+    "ime": "Nema",
+    "popust": 0,
+    "trazeniBrojBodova": 0
+  },
+  {
+    "ime": "Bronza",
+    "popust": 2,
+    "trazeniBrojBodova": 1000
+  },
+  {
+    "ime": "Srebro",
+    "popust": 5,
+    "trazeniBrojBodova": 2000
+  },
+  {
+    "ime": "Zlato",
+    "popust": 7,
+    "trazeniBrojBodova": 3500
+  },
+  {
+    "ime": "Dijamant",
+    "popust": 10,
+    "trazeniBrojBodova": 5000
+  }
+]

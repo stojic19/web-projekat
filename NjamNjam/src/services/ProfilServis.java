@@ -51,6 +51,7 @@ public class ProfilServis {
 			
 			KorisnikDAO korisnici = dobaviKorisnike();
 			korisnici.promeniKorisnika(izmenjenKorisnik);
+						
 			return Response
 					.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
 					.build();

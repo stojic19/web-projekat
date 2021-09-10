@@ -173,7 +173,7 @@ public class KorpaServis {
 			for(Integer restoran : restoraniZaPorudzbine.keySet())	//Prolazimo kroz listu artikala i pravimo posebnu porudzbinu za svaki restoran
 			{
 				Restoran restoranModel = restorani.nadjiRestoranPoID(restoran);
-				Porudzbina porudzbina = new Porudzbina(restoran, restoranModel.getNaziv(), restoranModel.getTip(), vremePorudzbine(),korisnik.getIme() + korisnik.getPrezime());
+				Porudzbina porudzbina = new Porudzbina(restoran, restoranModel.getNaziv(), restoranModel.getTip(), vremePorudzbine(),korisnik.getIme() + " " + korisnik.getPrezime());
 				for(ArtikalUKorpiDTO artikal : artikliIzKorpe)
 				{
 					if(restoran == artikal.idRestoranaKomPripada)

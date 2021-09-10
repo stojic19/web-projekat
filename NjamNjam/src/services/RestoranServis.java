@@ -62,8 +62,11 @@ public class RestoranServis {
 		
 		if(korisnikJeAdmin(request)) {			
 			SlikaDAO slike = dobaviSlike();
-			Slika slika = slike.dodajNovuSliku(noviRestoran.putanjaDoSlike);
-			noviRestoran.putanjaDoSlike = Integer.toString(slika.getID()); 		
+			if(!noviRestoran.putanjaDoSlike.equals("nema"))
+			{
+				Slika slika = slike.dodajNovuSliku(noviRestoran.putanjaDoSlike);
+				noviRestoran.putanjaDoSlike = Integer.toString(slika.getID());
+			}	
 			// Dodavanje restorana u fajl
 			RestoranDAO restorani = dobaviRestoraneDAO();
 			restorani.dodajNoviRestoran(noviRestoran);
@@ -90,8 +93,11 @@ public class RestoranServis {
 		
 		if(korisnikJeAdmin(request)) {			
 			SlikaDAO slike = dobaviSlike();
-			Slika slika = slike.dodajNovuSliku(noviRestoran.putanjaDoSlike);
-			noviRestoran.putanjaDoSlike = Integer.toString(slika.getID()); 		
+			if(!noviRestoran.putanjaDoSlike.equals("nema"))
+			{
+				Slika slika = slike.dodajNovuSliku(noviRestoran.putanjaDoSlike);
+				noviRestoran.putanjaDoSlike = Integer.toString(slika.getID());
+			}		
 			
 			RestoranDAO restorani = dobaviRestoraneDAO();
 			KorisnikDAO korisnici = dobaviKorisnike();
