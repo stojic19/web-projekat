@@ -193,9 +193,11 @@ Vue.component("kupac-porudzbine", {
 
             var minParts = this.pretraga.datumOd.split('-');
             var maxParts = this.pretraga.datumDo.split('-');
-            var datmin = new Date(minParts[2], minParts[1], minParts[0]);
-            var datmax = new Date(maxParts[2], maxParts[1], maxParts[0]);
-            var datpor = new Date(porudzbina.vremePorudzbine);
+            var datporParts = porudzbina.vremePorudzbine.split(' ');
+            var datporDate = datporParts[0].split('/');
+            var datmin = new Date(minParts[2], minParts[1] - 1, minParts[0]);
+            var datmax = new Date(maxParts[2], maxParts[1] - 1, maxParts[0]);
+            var datpor = new Date(datporDate[2], datporDate[1] - 1, datporDate[0]);
             if (datpor < datmin || datpor > datmax)
                 return false;
 

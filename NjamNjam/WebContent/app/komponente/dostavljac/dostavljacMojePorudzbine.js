@@ -59,7 +59,7 @@ Vue.component("moje-porudzbine-dostavljac", {
                     <option>Azijska kuhinja</option>
                 </select>
 
-                <select v-model="podaciZaFiltriranje.status" @change="onchangeStatusPorudzbine()">
+                <select v-model="podaciZaFiltriranje.statusPorudzbine" @change="onchangeStatusPorudzbine()">
                     <option value="">Bez filtera za tip</option>
                     <option>U PRIPREMI</option>
                     <option>CEKA DOSTAVLJACA</option>
@@ -142,7 +142,7 @@ Vue.component("moje-porudzbine-dostavljac", {
         },
         onchangeTipRestorana: function () {
             if (this.podaciZaFiltriranje.tipRestorana == "") {
-                axios.get('rest/Porudzbina/dobaviNedostavljenePorudzbine').then(response => (this.porudzbine = response.data));
+                axios.get('rest/Porudzbina/dobaviPorudzbineDostavljaca').then(response => (this.porudzbine = response.data));
 
             } else {
                 let filterPorudzbine = (this.porudzbine).filter(porudzbina => porudzbina.tipRestorana == this.podaciZaFiltriranje.tipRestorana);
@@ -151,7 +151,7 @@ Vue.component("moje-porudzbine-dostavljac", {
         },
         onchangeStatusPorudzbine: function(){
             if (this.podaciZaFiltriranje.statusPorudzbine == "") {
-                axios.get('rest/Porudzbina/dobaviNedostavljenePorudzbine').then(response => (this.porudzbine = response.data));
+                axios.get('rest/Porudzbina/dobaviPorudzbineDostavljaca').then(response => (this.porudzbine = response.data));
 
             } else {
                 let filterPorudzbine = (this.porudzbine).filter(porudzbina => porudzbina.status == this.podaciZaFiltriranje.statusPorudzbine);
@@ -165,7 +165,7 @@ Vue.component("moje-porudzbine-dostavljac", {
             this.restoranBrojac ++;
             if(this.restoranBrojac % 3 == 0)
             {
-                axios.get('rest/Porudzbina/dobaviNedostavljenePorudzbine').then(response => (this.porudzbine = response.data));
+                axios.get('rest/Porudzbina/dobaviPorudzbineDostavljaca').then(response => (this.porudzbine = response.data));
             }else if(this.restoranBrojac % 3 == 1)
             {
                 this.multisort(this.porudzbine, ['imeRestorana', 'imeRestorana'], ['ASC', 'DESC']);
@@ -177,7 +177,7 @@ Vue.component("moje-porudzbine-dostavljac", {
             this.cenaBrojac ++;
             if(this.cenaBrojac % 3 == 0)
             {
-                axios.get('rest/Porudzbina/dobaviNedostavljenePorudzbine').then(response => (this.porudzbine = response.data));
+                axios.get('rest/Porudzbina/dobaviPorudzbineDostavljaca').then(response => (this.porudzbine = response.data));
             }else if(this.cenaBrojac % 3 == 1)
             {
                 this.multisort(this.porudzbine, ['cena', 'cena'], ['ASC', 'DESC']);
@@ -189,7 +189,7 @@ Vue.component("moje-porudzbine-dostavljac", {
             this.datumBrojac ++;
             if(this.datumBrojac % 3 == 0)
             {
-                axios.get('rest/Porudzbina/dobaviNedostavljenePorudzbine').then(response => (this.porudzbine = response.data));
+                axios.get('rest/Porudzbina/dobaviPorudzbineDostavljaca').then(response => (this.porudzbine = response.data));
             }else if(this.datumBrojac % 3 == 1)
             {
                 this.multisort(this.porudzbine, ['vremePorudzbine', 'vremePorudzbine'], ['ASC', 'DESC']);
